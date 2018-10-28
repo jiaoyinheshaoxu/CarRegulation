@@ -19,7 +19,7 @@
         </div>
         <div class="login_tab login_btn">
           <input @click="register_user()" type="button" value="注册"/>
-          <a  href="login.html" target="_blank" class="exists">使用已有账户登录</a>
+          <a @click="go_signIn()" class="exists">使用已有账户登录</a>
         </div>
         <div class="login_tab footer">
           <a href="">帮助</a>
@@ -55,6 +55,11 @@
         if (data) {
           console.log(data)
         }
+      },
+      go_signIn () {
+        this.$router.push({
+          name: 'SignIn'
+        })
       }
     }
   }
@@ -99,11 +104,13 @@
     color:#58595B;
     font-weight: normal;
     margin-top:27px;
+    font-size: 0.83em;
   }
   h4{
     margin-top:95px;
     margin-bottom:44px;
     text-align: left;
+    font-weight: 800;
   }
   .login_tab{
     display:block;
@@ -169,5 +176,98 @@
     font-size: 14px;
     text-align: center;
     margin-left:17%;
+  }
+  .footer{
+    border:0;
+    background: transparent;
+  }
+  .footer a{
+    color:#929395;
+    font-size: 14px;
+  }
+  .footer p{
+    font-size: 12px;
+    color:#929395;
+    margin-top:15px;
+  }
+  .footer .mid{
+    margin-left:43px;
+    margin-right:43px;
+  }
+  /*遮罩*/
+  .org_layer{
+    width:100%;
+    height:100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    z-index: 200;
+    display: none;
+  }
+  .register_success{
+    width:300px;
+    height: 150px;
+    border:1px solid #DADADA;
+    box-shadow: 0px 2px 2px 0px #DADADA;
+    background-color: #ffffff;
+    position: fixed;
+    margin-top: -100px;
+    margin-left: -140px;
+    left:50%;
+    top: 50%;
+    z-index: 300;
+    font-size: 14px;
+    display: none;
+    overflow: hidden;
+  }
+  .success_title{
+    width:80px;
+    height:40px;
+    font-size: 16px;
+    line-height: 40px;
+    margin:25px auto;
+  }
+  /*.user{
+      position:relative;
+  }*/
+  .user_login{
+    width:100%;
+    height:60px;
+    box-sizing:border-box;
+    overflow: hidden;
+  }
+  .user_login a{
+    margin:10px auto;
+    display: block;
+    width:60px;
+    height:30px;
+    background: #1C92FE;
+    border-radius: 5px;
+    line-height: 30px;
+    padding-left:9px;
+    box-sizing:border-box;
+    color:#fff;
+  }
+
+  .label_mess{
+    width:150px;
+    display: block;
+    position: absolute;
+    left: 98%;
+    top: 40%;
+  }
+  .password_mess{
+    width:150px;
+    display: block;
+    position: absolute;
+    left: 98.5%;
+    top: 50%;
+  }
+  .again_mess{
+    width:150px;
+    display: block;
+    position: absolute;
+    left: 98.5%;
+    top: 60%;
   }
 </style>
