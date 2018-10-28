@@ -10,7 +10,7 @@ export default {
   schoolId: '',
   mobile: '',
 
-  //大苏打大苏打实打实
+  //大苏打大苏打实打实阿三大啊大大撒旦f
   /*上线时需要改动的值(1)a_href; (2)system; (3)jiekou_url; (4)debug_url; (5)LOCAL_URL; (6)ut_url; (7)return_url。一共7个参数需要认真核对*/
 
 
