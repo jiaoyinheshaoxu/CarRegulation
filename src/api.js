@@ -186,7 +186,6 @@ var b64 = (function(){
     decode: decode
   };
 })()
-// system 的值 有谱 YOUPU 睿芽 RYA
 export default {
   post(url, data, obj) {
     if (obj instanceof Object) {
@@ -195,23 +194,21 @@ export default {
     if (obj_options instanceof Object && obj_options.baseUrl) {
       return axios({
         method: 'post',
-        url: url + '?system=' + global.system,
+        url,
         baseURL: obj_options.baseUrl,
         data: qs.stringify(data),
-        timeout: 600000,
+        timeout: 60000,
         headers: {
-          //'X-Requested-With': 'XMLHttpRequest',
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
         }
       }).then(checkStatus).then(checkCode)
     } else {
       return axios({
         method: 'post',
-        url: url + '?system=' + global.system,
+        url,
         data: qs.stringify(data),
-        timeout: 600000,
+        timeout: 60000,
         headers: {
-          //'X-Requested-With': 'XMLHttpRequest',
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
         }
       }).then(checkStatus).then(checkCode)
@@ -225,19 +222,16 @@ export default {
       return axios({
         method: 'get',
         baseURL: obj_options.baseUrl,
-        url: url + '?system=' + global.system,
+        url,
         params,
-        timeout: 600000
+        timeout: 60000
       }).then(checkStatus).then(checkCode)
     } else {
       return axios({
         method: 'get',
-        url: url + '?system=' + global.system,
+        url,
         params,
-        timeout: 600000/*,
-         headers: {
-         'X-Requested-With': 'XMLHttpRequest'
-         }*/
+        timeout: 60000
       }).then(checkStatus).then(checkCode)
     }
 
