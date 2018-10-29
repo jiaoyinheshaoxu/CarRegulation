@@ -83,5 +83,67 @@ a img {
   transform: translate(-50%, -50%);
 }
 
+/* 提示语公共样式 */
+.tips{
+	font-family: 'MicrosoftYaHei', 'Microsoft YaHei';
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  height: 24px;
+  line-height: 24px;
+  margin: 0 !important;
+  padding-left: 10px;
+  text-align: left;
+}
+.tips_danger{
+  color: #FF0000;
+}
+.tips_success{
+	color: lime;
+}
 
+/* 浮动 */
+.fLeft{
+	float: left;
+}
+.fRight{
+	float: right;
+}
 
+/* magin20 */
+.mTop20{
+	margin-top: 20px;
+}
+.mBottom20{
+	margin-bottom: 20px;
+}
+.mTop20_anti{
+	margin-top: -20px;
+}
+.mBottom20_anti{
+	margin-bottom: -20px;
+}
+.mTop10{
+	margin-top: 10px;
+}
+.mBottom10{
+	margin-bottom: 10px;
+}
+.mTop10_anti{
+	margin-top: -10px;
+}
+.mBottom10_anti{
+	margin-bottom: -10px;
+}
+
+/* 密码强度(去掉数字) */
+.el-progress__text{
+	display: none;
+}
+.el-progress {
+	text-align: right;
+}
+.el-progress-bar{
+	margin-right: -48px;
+	width: 90%;
+}

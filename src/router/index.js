@@ -5,7 +5,7 @@ import SignIn from '../pages/PersonalCenter/SignIn.vue'
 import SignUp from '../pages/PersonalCenter/SignUp.vue'
 import SignUpSuccess from '../pages/PersonalCenter/SignUpSuccess.vue'
 import UserCenter from '../pages/PersonalCenter/UserCenter.vue'
-import FindPassWord from '../pages/PersonalCenter/FindPassword.vue'
+import FindPassword from '../pages/PersonalCenter/FindPassword.vue'
 import AboutUs from '../pages/HomeNavigation/AboutUs.vue'
 import ContactUs from '../pages/HomeNavigation/ContactUs.vue'
 import Help from '../pages/HomeNavigation/Help.vue'
@@ -74,9 +74,9 @@ const router = new Router({
       ]
     },
     {
-      path: '/FindPassWord',
-      name: 'FindPassWord',
-      component: FindPassWord
+      path: '/FindPassword',
+      name: 'FindPassword',
+      component: FindPassword
     },
     {
       path: '/SignIn',

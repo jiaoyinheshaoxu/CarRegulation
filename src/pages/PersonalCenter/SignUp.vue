@@ -6,17 +6,29 @@
         <h5>把握未来走向，囊括行业标准，做中国第一双语法规网站</h5>
         <h4>注册</h4>
         <div class="login_tab user">
-          <!-- <a class="user_logo"></a>-->
-          <input type="text" name="email" id="email" v-model="username" placeholder="邮箱"/>
-
+          <input type="text" name="email" id="email" v-model="email" placeholder="邮箱"/>
         </div>
         <div class="login_tab password">
-          <!--<a class="password_logo"></a>-->
-          <input type="password" name="userPassword" id="userPassword" v-model="password" placeholder="6-12位密码，区分大小写"/>
+          <input type="password" name="userPassword" id="userPassword" v-model="userPassword" placeholder="6-12位密码，区分大小写"/>
         </div>
+        
         <div class="login_tab">
-          <input type="password" id="againPassword"  placeholder="确认密码"/>
+          <input type="password" id="againPassword" v-model="confirmPassword"  placeholder="确认密码"/>
         </div>
+        
+        <!-- 密码强度 -->
+        <!--<div class="progressBar">
+        	<div class="fLeft progressTitle">密码强度</div>
+	        <el-progress :percentage="0" v-if="pwHard==0" :stroke-width="10"></el-progress>
+					<el-progress :percentage="33" v-else-if="pwHard=="  :stroke-width="10"></el-progress>
+					<el-progress :percentage="66" color="#8e71c7" :stroke-width="10"></el-progress>
+					<el-progress :percentage="100" status="success" :stroke-width="10"></el-progress>
+				</div>-->
+        
+        <el-checkbox label="是否接受邮件订阅？" class="fLeft mTop10_anti mBottom20" 
+        	v-model="isSubscription" false-label="false" true-label="true">
+        </el-checkbox>
+        
         <div class="login_tab login_btn">
           <input @click="register_user()" type="button" value="注册"/>
           <a @click="go_signIn()" class="exists">使用已有账户登录</a>
@@ -39,22 +51,54 @@
   export default {
     data() {
       return {
-        username: '',
-        password: '',
-        confirmPassword: ''
+        email: '',
+        userPassword: '',
+        confirmPassword: '',
+        isSubscription: 'false',
+       	pwHard: 0
       }
     },
     methods: {
+    	// 提交注册 email  userPassword  isSubscription  subscriptionLanguage
       async register_user () {
-        let url = 'LoginService.asmx/CheckLogin'
-        let params = {
-          username: this.username,
-          password: this.password
-        }
-        let data = await this.api.post(url ,params)
-        if (data) {
-          console.log(data)
-        }
+      	if(!this.global.check_strEmpty(this.email)){
+      		this.$message.error("邮箱不能为空！");
+      		this.email = "";
+      		return;
+      	}else if(!this.global.check_emailValid(this.email)){
+      		this.$message.error("邮箱格式不正确！");
+      		this.email = "";
+      		return;
+      	}else if(!this.global.check_numberMixLetter(this.userPassword)){
+      		this.$message.error("6-12位密码，且只支持英文字母与数字的组合！");
+      		this.userPassword = "";
+      		return;
+      	}else if(this.userPassword != this.confirmPassword){
+      		this.$message.error("两次密码输入不一致，请重新输入！");
+      		this.confirmPassword = "";
+      		return;
+      	}else{
+      		// 以上验证全部通过,注册成功
+      		let url = 'LoginService.asmx/Register'
+      		let params = {
+      		  email: this.email,
+      		  userPassword: this.userPassword,
+      		  isSubscription: this.isSubscription=='true' ? true : false,
+      		  subscriptionLanguage: this.global.language == 'Chinese' ? 1 : 2
+      		}
+      		let data = await this.api.get(url ,params);
+      		console.log(data);
+      		if (data[0]) {
+      			// 注册成功 => 注册成功页面
+      			this.global.userEmail = this.email;
+        		this.$router.push({
+			        name: 'SignUpSuccess'
+			      })
+      		}else{
+      			// 注册失败 => 提示注册失败
+        		this.$message.error("注册邮箱 失败原因就一个，邮箱已存在！");
+      		}
+      	}
       },
       go_signIn () {
         this.$router.push({
@@ -79,15 +123,20 @@
   }
   #stage{
     width:100%;
-    min-height:800px;
+    height: 100%;
     background:url("../../assets/images/bg3.png")no-repeat ;
     background-size:100%;
     box-sizing: border-box;
-    padding-top:260px;
+    padding-top: 50px;
+    position: absolute;
+    margin: auto;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
   }
   #login_content{
     width:370px;
-    height:664px;
     margin:0 auto;
     text-align: center;
     box-sizing: border-box;
@@ -103,12 +152,13 @@
   h5{
     color:#58595B;
     font-weight: normal;
-    margin-top:27px;
+    margin-top:20px;
+    margin-bottom: 50px;
     font-size: 0.83em;
   }
   h4{
-    margin-top:95px;
-    margin-bottom:44px;
+    margin-top:30px;
+    margin-bottom:30px;
     text-align: left;
     font-weight: 800;
   }
@@ -151,9 +201,9 @@
     font-size:14px;
   }
   .login_btn{
+  	clear: both;
     background: transparent;
     border: 0;
-    margin-bottom: 112px;
     text-align: left;
     vertical-align: middle;
   }
@@ -179,7 +229,11 @@
   }
   .footer{
     border:0;
+    width: 50%;
     background: transparent;
+    position: fixed;
+    bottom: 20px;
+    right: 25%;
   }
   .footer a{
     color:#929395;
@@ -269,5 +323,14 @@
     position: absolute;
     left: 98.5%;
     top: 60%;
+  }
+  /* 进度条 */
+  .progressBar{
+  	height: 30px;
+  	line-height: 30px;
+  	margin-top: -10px;
+  }
+  .progressTitle{
+  	margin-top: -8px;
   }
 </style>
