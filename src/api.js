@@ -11,7 +11,6 @@ let loadOptions = {
   lock: true,
   text: 'Loading...',
   spinner: 'el-icon-loading',
-  //spinner: 'loading-pic',
   background: 'rgba(0, 0, 0, 0.5)'
 }
 axios.defaults.baseURL = global.jiekou_url

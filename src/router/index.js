@@ -4,8 +4,9 @@ import Home from '../pages/Home/Home.vue'
 import SignIn from '../pages/PersonalCenter/SignIn.vue'
 import SignUp from '../pages/PersonalCenter/SignUp.vue'
 import SignUpSuccess from '../pages/PersonalCenter/SignUpSuccess.vue'
-import UserCenter from '../pages/PersonalCenter/UserCenter.vue'
 import FindPassword from '../pages/PersonalCenter/FindPassword.vue'
+
+import UserCenter from '../pages/HomeNavigation/UserCenter.vue'
 import AboutUs from '../pages/HomeNavigation/AboutUs.vue'
 import ContactUs from '../pages/HomeNavigation/ContactUs.vue'
 import Help from '../pages/HomeNavigation/Help.vue'
@@ -70,7 +71,12 @@ const router = new Router({
           path: '/StandardSearch',
           name: 'StandardSearch',
           component: StandardSearch
-        }
+        },
+		    {
+		      path: '/UserCenter',
+		      name: 'UserCenter',
+		      component: UserCenter
+		    }
       ]
     },
     {
@@ -92,11 +98,6 @@ const router = new Router({
       path: '/SignUpSuccess',
       name: 'SignUpSuccess',
       component: SignUpSuccess
-    },
-    {
-      path: '/UserCenter',
-      name: 'UserCenter',
-      component: UserCenter
     }
   ]
 })
