@@ -10,7 +10,7 @@ export default {
 // 公共方法 
 // 1: 判断是否是空 字符串
 function check_strEmpty(str){
-	if (str.replace(/(^s*)|(s*$)/g, "").length ==0){ 
+	if (str.length ==0 || str.replace(/(^s*)|(s*$)/g, "").length ==0){ 
 		return false;
 	}else{
 		return true;

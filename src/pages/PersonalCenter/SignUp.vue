@@ -86,7 +86,7 @@
       		  isSubscription: this.isSubscription=='true' ? true : false,
       		  subscriptionLanguage: this.global.language == 'Chinese' ? 1 : 2
       		}
-      		let data = await this.api.get(url ,params);
+      		let data = await this.api.post(url ,params);
       		console.log(data);
       		if (data[0]) {
       			// 注册成功 => 注册成功页面

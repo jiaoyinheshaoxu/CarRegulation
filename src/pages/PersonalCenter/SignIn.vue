@@ -8,11 +8,11 @@
         
         <div class="login_tab user">
             <a class="user_logo"></a>
-            <input type="text" id="email" v-model="userEmail" placeholder="邮箱"/>
+            <input type="text" id="email" v-model="username" placeholder="邮箱"/>
         </div>
         <div class="login_tab password">
             <a class="password_logo"></a>
-            <input type="password" id="password" v-model="userPassword" placeholder="密码"/>
+            <input type="password" id="password" v-model="password" placeholder="密码"/>
         </div>
         <div class="login_tab forget">
             <a class="lf" @click="go_signUp()">注册账户</a>
@@ -21,7 +21,6 @@
         <div class="login_tab login_btn">
             <input type="button" value="登录"  @click="user_login()"/>
         </div>
-        
         
         <div class="login_tab footer">
           <a href="">帮助</a>
@@ -41,22 +40,39 @@
   export default {
     data() {
       return {
-        userEmail: '',
-        userPassword: '',
+        username: '',
+        password: '',
       }
     },
     methods: {
     	// 用户登录接口
       async user_login () {
-        let url = 'LoginService.asmx/CheckLogin'
-        let params = {
-          username: this.userEmail,
-          password: this.userPassword
-        }
-        let data = await this.api.post(url ,params)
-        if (data) {
-          console.log(data)
-        }
+      	
+      	
+      	if(!this.global.check_strEmpty(this.username)){
+      		this.$message.error("邮箱不能为空！");
+      		this.username = "";
+      		return;
+      	}else if(!this.global.check_emailValid(this.username)){
+      		this.$message.error("邮箱格式不正确！");
+      		this.username = "";
+      		return;
+      	}else if(!this.global.check_numberMixLetter(this.password)){
+      		this.$message.error("6-12位密码，且只支持英文字母与数字的组合！");
+      		this.password = "";
+      		return;
+      	}else{
+      		// 验证登录接口		1 登录成功，2密码不对，3邮箱不存在
+      		let url = 'LoginService.asmx/CheckLogin'
+	        let params = {
+	          username: this.username,
+	          password: this.password
+	        }
+	        let data = await this.api.post(url ,params)
+	        if (data) {
+	          console.log(data)
+	        }
+      	}
       },
       go_signUp () {
         this.$router.push({

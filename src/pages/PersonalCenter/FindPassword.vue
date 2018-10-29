@@ -8,7 +8,7 @@
         
         <div class="login_tab user">
             <a class="user_logo"></a>
-            <input type="text" id="email" v-model="userEmail" placeholder="邮箱"/>
+            <input type="text" id="email" v-model="email" placeholder="邮箱"/>
         </div>
         <p class="tips tips_danger" v-show="confirmResult == 1">该邮箱不存在！</p>
         <p class="tips tips_success" v-show="confirmResult == 2">邮箱验证成功！</p>
@@ -43,22 +43,32 @@
   export default {
     data() {
       return {
-        userEmail: '',
-        confirmResult: 1
+        email: '',
+        confirmResult: 0
       }
     },
     methods: {
     	// 发送邮箱 => 找回密码
       async send_emailComfirm () {
-        let url = 'LoginService.asmx/CheckLogin'
-        let params = {
-          username: this.username,
-          password: this.password
-        }
-        let data = await this.api.post(url ,params)
-        if (data) {
-          console.log(data)
-        }
+      	if(!this.global.check_strEmpty(this.email)){
+      		this.$message.error("邮箱不能为空！");
+      		this.email = "";
+      		return;
+      	}else if(!this.global.check_emailValid(this.email)){
+      		this.$message.error("邮箱格式不正确！");
+      		this.email = "";
+      		return;
+      	}else{
+      		let url = 'OtherService.asmx/CheckUserByEmail'
+      		let params = {
+      		  email: this.email
+      		}
+      		let data = await this.api.post(url ,params);
+      		console.log(data)
+      		if (data) {
+      		  console.log(data)
+      		}
+      	}
       },
       go_signUp () {
         this.$router.push({
