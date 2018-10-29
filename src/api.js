@@ -55,7 +55,8 @@ function checkStatus(response) {
 }
 
 function checkCode(res) {
-  if (res.data.recode == 404) {
+  return res.data;
+  /*if (res.data.recode == 404) {
     Message({
       message: '出现了未知的错误!',
       type: 'warning',
@@ -75,9 +76,10 @@ function checkCode(res) {
       //location.href = global.return_url
     }, 2000)
     return ''
-  } else if (res.data.recode == 0) {
+  } else if (res.data) {
     return res.data
-  }
+  }*/
+
 }
 var b64 = (function(){
   var PADCHAR = '=';
