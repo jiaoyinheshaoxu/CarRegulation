@@ -1,9 +1,11 @@
 export default {
   jiekou_url: 'http://47.92.160.129:8080',
-  userEmail: "",
+  userEmail: "",															// 用户邮箱
+  userPassword: "",														// 用户密码
   check_strEmpty: check_strEmpty,
   check_numberMixLetter: check_numberMixLetter,
   check_emailValid: check_emailValid,
+  memberId: "",																// 用户 id 
   
 }
 

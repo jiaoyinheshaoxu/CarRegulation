@@ -47,8 +47,6 @@
     methods: {
     	// 用户登录接口
       async user_login () {
-      	
-      	
       	if(!this.global.check_strEmpty(this.username)){
       		this.$message.error("邮箱不能为空！");
       		this.username = "";
@@ -62,15 +60,34 @@
       		this.password = "";
       		return;
       	}else{
-      		// 验证登录接口		1 登录成功，2密码不对，3邮箱不存在
+      		// 登陆接口
+      		// 返回值：  int  LoginStatus, 1 登录成功，2密码不对，3邮箱不存在
+	  			//         int  HYType1季付 2年付,
+	  			//         int  UseState访问状态  1：正常   2：超期    3：即将逾期  4：逾期
       		let url = 'LoginService.asmx/CheckLogin'
 	        let params = {
 	          username: this.username,
 	          password: this.password
 	        }
 	        let data = await this.api.post(url ,params)
-	        if (data) {
-	          console.log(data)
+	        if (data.LoginStatus == 1) {
+	          // 登录成功 => 回到首页 => 将用户 id 存入 session 和 global 中
+	          this.global.userEmail = this.username;
+	          this.global.userPassword = this.password;
+	          this.global.memberId = data.memberId;
+	          sessionStorage.setItem('userEmail', this.username);
+	          sessionStorage.setItem('userPassword', this.password);
+	          sessionStorage.setItem('memberId', data.memberId);
+	          this.$router.push({
+		          name: 'Home'
+		        })
+	        }else if(data.LoginStatus == 2){
+	        	this.password = "";
+      			this.$message.error("密码错误，请重新输入！");
+	        }else{
+	        	this.email = "";
+	        	this.password = "";
+	        	this.$message.error("邮箱不存在！");
 	        }
       	}
       },

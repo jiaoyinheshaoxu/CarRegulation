@@ -10,8 +10,9 @@
             <a class="user_logo"></a>
             <input type="text" id="email" v-model="email" placeholder="邮箱"/>
         </div>
-        <p class="tips tips_danger" v-show="confirmResult == 1">该邮箱不存在！</p>
-        <p class="tips tips_success" v-show="confirmResult == 2">邮箱验证成功！</p>
+        <p class="tips tips_success" v-show="confirmResult == 1">邮箱有效并且已发送激活邮件！</p>
+        <p class="tips tips_danger" v-show="confirmResult == 2">邮箱有效但是没查出用户！</p>
+        <p class="tips tips_danger" v-show="confirmResult == 3">系统无此邮箱！</p>
         
         <div class="login_tab login_btn">
             <input type="button" value="确认发送"  @click="send_emailComfirm()"/>
@@ -48,7 +49,7 @@
       }
     },
     methods: {
-    	// 发送邮箱 => 找回密码
+    	// 发送邮箱 => 找回密码 => 1: 邮箱有效并且已发送激活邮件！	2: 邮箱有效但是没查出用户！ 	3:系统无此邮箱！
       async send_emailComfirm () {
       	if(!this.global.check_strEmpty(this.email)){
       		this.$message.error("邮箱不能为空！");
@@ -64,9 +65,18 @@
       		  email: this.email
       		}
       		let data = await this.api.post(url ,params);
-      		console.log(data)
-      		if (data) {
-      		  console.log(data)
+      		if (data[0] == 1) {
+      		  // 邮箱已经发送到邮箱
+      		  this.confirmResult = 1;
+      		  this.$message.success("邮箱有效并且已发送激活邮件！");
+      		}else if(data[0] == 2){
+      			// 有邮箱但是没查出用户
+      			this.confirmResult = 2;
+      			this.$message.error("邮箱有效但是没查出用户！");
+      		}else{
+      			// 系统无此邮箱
+      			this.confirmResult = 3;
+      			this.$message.error("系统无此邮箱！");
       		}
       	}
       },
