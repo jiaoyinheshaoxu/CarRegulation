@@ -11,8 +11,8 @@
         <li><a @click="skipTo('Link')" :class="{'routeActive': route_name == 'Link'}">链接</a></li>
       </ul>
     </div>
-    <div class="views-box">
-      <div class="views">
+    <div id="stage">
+      <div id="content">
         <router-view></router-view>
       </div>
     </div>
@@ -84,9 +84,21 @@
     padding: 12px 20px 30px;
   }
   /*导航激活状态*/
-  .routeActive{
+  .routeActive {
     color:#fff !important;
     border-bottom: 3px solid #fff !important;
     font-weight: bold !important;
+  }
+  #stage {
+    width: 100%;
+    background: #f1f1f1;
+    padding-bottom: 80px;
+    padding-top: 40px;
+    overflow: hidden;
+  }
+  #content {
+    width: 85%;
+    min-height: 680px;
+    margin: 0 auto;
   }
 </style>

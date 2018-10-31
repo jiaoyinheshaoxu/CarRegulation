@@ -18,7 +18,7 @@ import StandardSearch from '../pages/HomeNavigation/StandardSearch.vue'
 Vue.use(Router)
 
 const router = new Router({
-  //mode: 'history',
+  mode: 'history',
   routes: [
     {
       path: '/',
