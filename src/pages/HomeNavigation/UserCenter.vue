@@ -535,14 +535,16 @@
 		},
 		methods: {
 			// 获取用户信息 OtherService.asmx/GetMemberInfo => 判断用户权限 
+			//this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
 			async getMemberInfo(){
-				let url = 'LoginService.asmx/GetMemberInfo';
+				let url = 'OtherService.asmx/GetMemberInfo';
 	      let params = {
-	        memberId:	'4c2053d1-a8fa-4ac4-9239-a3124c29e1e3' //this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
+	        memberId:	'4c2053d1-a8fa-4ac4-9239-a3124c29e1e3' 
 	      }
-	      let data = await this.api.post(url ,params)
+	      let data = await this.api.post(url,params)
 	      console.log(data);
 			},
+			
 			// 用户退出
 			user_quit(){
 				
