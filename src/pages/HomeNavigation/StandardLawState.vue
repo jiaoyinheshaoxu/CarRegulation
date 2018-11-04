@@ -66,6 +66,9 @@
       },
       goDetail (row) {
         console.log(row)
+        this.$router.push({
+          path: '/StandardLawState/NewsDetail'
+        })
       }
     }
   }

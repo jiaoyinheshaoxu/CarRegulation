@@ -6,13 +6,19 @@
     <div class="nav-content">
       <div class="nav-left">
         <ul>
-          <li><a @click="maoClick('government')">政府网站</a></li>
-          <li><a @click="maoClick('approve')">认证机构</a></li>
-          <li><a @click="maoClick('detection')">检测机构</a></li>
+          <li :class="{'li_active': cur_showType == 'government'}">
+            <a @click="maoClick('government')" :class="{'a_active': cur_showType == 'government'}">政府网站</a>
+          </li>
+          <li :class="{'li_active': cur_showType == 'approve'}">
+            <a @click="maoClick('approve')" :class="{'a_active': cur_showType == 'approve'}">认证机构</a>
+          </li>
+          <li :class="{'li_active': cur_showType == 'detection'}">
+            <a @click="maoClick('detection')" :class="{'a_active': cur_showType == 'detection'}">检测机构</a>
+          </li>
         </ul>
       </div>
       <div class="nav-right">
-        <div id="zhengfu">
+        <div id="zhengfu" v-show="cur_showType == 'government'">
           <div class="nav-header">
             <h5>政府网站</h5>
           </div>
@@ -27,7 +33,7 @@
             </ul>
           </div>
         </div>
-        <div id="renzheng">
+        <div id="renzheng" v-show="cur_showType == 'approve'">
           <div class="nav-header">
             <h5>认证机构</h5>
           </div>
@@ -42,7 +48,7 @@
             </ul>
           </div>
         </div>
-        <div id="jiance">
+        <div id="jiance" v-show="cur_showType == 'detection'">
           <div class="nav-header">
             <h5>检测机构</h5>
           </div>
@@ -66,6 +72,7 @@
   export default {
     data() {
       return {
+        cur_showType: 'government',
         governmentWebList: [
           {c_name: '工业和信息化部',e_name: 'Ministry of Industry and information Technology'},
           {c_name: '国家发展和改革委员会',e_name: 'National Development and Reform Commission'},
@@ -94,25 +101,11 @@
       }
     },
     mounted() {
-      this.getInfo()
+
     },
     methods: {
       maoClick (type) {
-        if (type == 'government') {
-          $(".nav-right").animate({top:'0'})
-        } else if (type == 'approve') {
-          $(".nav-right").animate({top:'-900px'})
-        } else if (type == 'detection') {
-          $(".nav-right").animate({top:'-1200px'})
-        }
-      },
-      async getInfo () {
-        let url = 'OtherService.asmx/GetMemberInfo'
-        let params = {
-          memberId: '4c2053d1-a8fa-4ac4-9239-a3124c29e1e3'
-        }
-        let data = await this.api.post(url, params)
-        console.log(data)
+        this.cur_showType = type
       }
     }
   }
@@ -168,6 +161,13 @@
   .nav-left a:hover{
     background-color: #e6f7ff;
     color: #2094ff;
+  }
+  .li_active{
+    background-color: #e6f7ff;
+    border-right: 2px solid #1890ff;
+  }
+  .a_active{
+    color: #2094ff !important;
   }
   .nav-left a:hover:after{
     content: '';

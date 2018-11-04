@@ -15,6 +15,8 @@ import Link from '../pages/HomeNavigation/Link.vue'
 import LatestTranslation from '../pages/HomeNavigation/LatestTranslation.vue'
 import StandardLawState from '../pages/HomeNavigation/StandardLawState.vue'
 import StandardSearch from '../pages/HomeNavigation/StandardSearch.vue'
+import StandardDetail from '../pages/HomeNavigation/StandardDetail.vue'
+import NewsDetail from '../pages/HomeNavigation/NewsDetail.vue'
 Vue.use(Router)
 
 const router = new Router({
@@ -70,7 +72,32 @@ const router = new Router({
           path: '/StandardSearch',
           name: 'StandardSearch',
           component: StandardSearch
-        }
+        },
+        {
+          path: '/StandardLawState/NewsDetail',
+          name: '/StandardLawState/NewsDetail',
+          component: NewsDetail
+        },
+        {
+          path: '/Index/StandardDetail',
+          name: '/Index/StandardDetail',
+          component: StandardDetail
+        },
+        {
+          path: '/LawSearch/StandardDetail',
+          name: '/LawSearch/StandardDetail',
+          component: StandardDetail
+        },
+        {
+          path: '/LatestTranslation/StandardDetail',
+          name: '/LatestTranslation/StandardDetail',
+          component: StandardDetail
+        },
+        {
+          path: '/StandardSearch/StandardDetail',
+          name: '/StandardSearch/StandardDetail',
+          component: StandardDetail
+        },
       ]
     },
     {

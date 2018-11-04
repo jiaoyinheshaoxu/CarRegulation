@@ -3,12 +3,12 @@
     <!-- 导航条 -->
     <div id="commNav">
       <ul id="navContent">
-        <li><a @click="skipTo('Index')" :class="{'routeActive': route_name == 'Index'}">首页</a></li>
-        <li><a @click="skipTo('StandardSearch')" :class="{'routeActive': route_name == 'StandardSearch'}">标准检索</a></li>
-        <li><a @click="skipTo('LawSearch')" :class="{'routeActive': route_name == 'LawSearch'}">法规检索</a></li>
-        <li><a @click="skipTo('StandardLawState')" :class="{'routeActive': route_name == 'StandardLawState'}">标准法规动态</a></li>
-        <li><a @click="skipTo('LatestTranslation')" :class="{'routeActive': route_name == 'LatestTranslation'}">最新翻译</a></li>
-        <li><a @click="skipTo('Link')" :class="{'routeActive': route_name == 'Link'}">链接</a></li>
+        <li><a @click="skipTo('Index')" :class="{'routeActive': route_name.includes('Index')}">首页</a></li>
+        <li><a @click="skipTo('StandardSearch')" :class="{'routeActive': route_name.includes('StandardSearch')}">标准检索</a></li>
+        <li><a @click="skipTo('LawSearch')" :class="{'routeActive': route_name.includes('LawSearch')}">法规检索</a></li>
+        <li><a @click="skipTo('StandardLawState')" :class="{'routeActive': route_name.includes('StandardLawState')}">标准法规动态</a></li>
+        <li><a @click="skipTo('LatestTranslation')" :class="{'routeActive': route_name.includes('LatestTranslation')}">最新翻译</a></li>
+        <li><a @click="skipTo('Link')" :class="{'routeActive': route_name.includes('Link')}">链接</a></li>
       </ul>
     </div>
     <div id="stage">
@@ -35,7 +35,7 @@
         this.$router.push({
           name
         })
-        this.$store.commit('change_route', {route_name: name})
+        //this.$store.commit('change_route', {route_name: name})
       }
     }
   }

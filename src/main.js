@@ -23,6 +23,8 @@ import './assets/css/global.css'
 import './assets/css/question.css'
 
 router.beforeEach((to, from, next) => {
+  console.log(to)
+  store.commit('change_route', {route_name: to.path})
   next()
 })
 Vue.config.productionTip = false

@@ -9,9 +9,9 @@
       <!-- 右边登录注册 -->
       <div id="navright">
         <ul id="aboutus">
-          <li><a @click="skipTo('AboutUs')" :class="{'routeActive': route_name == 'AboutUs'}">关于我们</a></li>
-          <li><a @click="skipTo('ContactUs')" :class="{'routeActive': route_name == 'ContactUs'}">联系我们</a></li>
-          <li><a @click="skipTo('Help')" :class="{'routeActive': route_name == 'Help'}">帮助</a></li>
+          <li><a @click="skipTo('AboutUs')" :class="{'routeActive': route_name.includes('AboutUs')}">关于我们</a></li>
+          <li><a @click="skipTo('ContactUs')" :class="{'routeActive': route_name.includes('ContactUs')}">联系我们</a></li>
+          <li><a @click="skipTo('Help')" :class="{'routeActive': route_name.includes('Help')}">帮助</a></li>
         </ul>
         <ul id="enchina">
           <li id="china">
@@ -48,7 +48,7 @@
         this.$router.push({
           name
         })
-        this.$store.commit('change_route', {route_name: name})
+        //this.$store.commit('change_route', {route_name: name})
       }
     }
   }

@@ -6,7 +6,7 @@
         <a>
           <div class="activit_content_title">
             <b class="lf">{{row.Title}}</b>
-            <b class="rt">{{row.CreatorTime}}</b>
+            <b class="rt">{{new Date(row.CreatorTime).getTime() | formatTime('YMD')}}</b>
           </div>
           <div class="title_content">
             <p>{{row.Centent}}</p>
@@ -15,6 +15,7 @@
       </li>
     </ul>
     <el-pagination
+      v-show="standardLawList.length > 0"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
@@ -33,39 +34,41 @@
       return {
         pageSize: 10,
         currentPage: 1,
-        total: 100,
-        standardLawList: [
-          {'Id': 1, 'Title': '国家标准委关于成立全国综合交通运输标准化技术委员会等4个技术委员会', 'Centent': '国家标准化管理委员会但是房间里看书记得看了更加快乐就是卡里的感觉 三菱东京高考啦阿萨德老公家阿斯兰教工路上的感觉楼上的几个联赛等级输卵管积水的垃圾股', 'CreatorTime': '2018-08-08'},
-          {'Id': 1, 'Title': '国家标准委关于成立全国综合交通运输标准化技术委员会等4个技术委员会', 'Centent': '国家标准化管理委员会但是房间里看书记得看了更加快乐就是卡里的感觉 三菱东京高考啦阿萨德老公家阿斯兰教工路上的感觉楼上的几个联赛等级输卵管积水的垃圾股', 'CreatorTime': '2018-08-08'},
-          {'Id': 1, 'Title': '国家标准委关于成立全国综合交通运输标准化技术委员会等4个技术委员会', 'Centent': '国家标准化管理委员会但是房间里看书记得看了更加快乐就是卡里的感觉 三菱东京高考啦阿萨德老公家阿斯兰教工路上的感觉楼上的几个联赛等级输卵管积水的垃圾股国家标准委关于成立全国综合交通运输标准化技术委员会等4个技术委员会\', \'Centent\': \'国家标准化管理委员会但是房间里看书记得看了更加快乐就是卡里的感觉 三菱东京高考啦阿萨德老公家阿斯兰教工路上的感觉楼上的几个联赛等级输卵管积水的垃圾股', 'CreatorTime': '2018-08-08'}
-        ]
+        total: 0,
+        standardLawList: []
       }
     },
     mounted() {
-      //this.getStandardLawList()
+      this.getStandardLawList()
     },
     methods: {
       async getStandardLawList () {
         let url = 'DocumentService.asmx/SearchNewestList'
         let params = {
           type: 1,
-          page: 1,
-          rows: 10,
+          page: this.currentPage,
+          rows: this.pageSize,
           languageType: 1
         }
         let data = await this.api.get(url, params)
-        console.log(data)
         this.total = data.total
         this.standardLawList = data.documentList
       },
       handleSizeChange (val) {
-        console.log(val)
+        this.pageSize = val
+        this.getStandardLawList()
+        console.log(`每页 ${val} 条`);
       },
       handleCurrentChange (val) {
-        console.log(val)
+        this.currentPage = val
+        this.getStandardLawList()
+        console.log(`当前页: ${val}`);
       },
       goDetail (row) {
         console.log(row)
+        this.$router.push({
+          path: '/LatestTranslation/StandardDetail'
+        })
       }
     }
   }
