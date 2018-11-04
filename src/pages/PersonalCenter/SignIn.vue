@@ -69,12 +69,14 @@
 	          username: this.username,
 	          password: this.password
 	        }
-	        let data = await this.api.post(url ,params)
+	        let data = await this.api.post(url ,params);
+	        console.log(data);
 	        if (data.LoginStatus == 1) {
 	          // 登录成功 => 回到首页 => 将用户 id 存入 session 和 global 中
 	          this.global.userEmail = this.username;
 	          this.global.userPassword = this.password;
 	          this.global.memberId = data.memberId;
+	          this.global.HYType	= data.HYType;
 	          sessionStorage.setItem('userEmail', this.username);
 	          sessionStorage.setItem('userPassword', this.password);
 	          sessionStorage.setItem('memberId', data.memberId);
