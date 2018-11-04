@@ -52,12 +52,6 @@
 								<li>
 									<span class="main_li_title">会员级别：</span>
 									<span>{{ memberInfo.F_HYTypeName }}</span>
-
-									<!--测试用-->
-									<!--<span class="main_personal_btn" v-show="true" @click="showDialog_upgrade = true">马上升级</span>
-									<span class="main_personal_btn" v-show="true" @click="showDialog_upgrade = true">续费</span>-->
-
-									<!--正式用=>普通会员升级=>高级会员续费-->
 									<span class="main_personal_btn" v-show="memberInfo.F_HYType==0" @click="showDialog_upgrade = true">马上升级</span>
 									<span class="main_personal_btn" v-show="memberInfo.F_HYType==1 || memberInfo.F_HYType==2" @click="showDialog_upgrade = true">续费</span>
 								</li>
@@ -113,7 +107,7 @@
 							</thead>
 							<tbody>
 								<tr v-show="!DeputyMemberList.length || DeputyMemberList.length == 0">
-									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">您还没有添加任何副账户！</a></span></td>
+									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">您 还 没 有 添 加 任 何 副 账 户 ！</a></span></td>
 								</tr>
 								<tr v-show="DeputyMemberList.length || DeputyMemberList.length > 0" v-for="(item,index) in DeputyMemberList" :key="index">
 									<td>{{ index}}</td>
@@ -150,7 +144,7 @@
 							</thead>
 							<tbody>
 								<tr v-show="!myCollectList.length || myCollectList.length == 0">
-									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">您还没有添加任何收藏！</a></span></td>
+									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">您 还 没 有 添 加 任 何 收 藏 ！</a></span></td>
 								</tr>
 								<tr v-show="myCollectList.length || myCollectList.length > 0" v-for="(item,index) in myCollectList" :key="index">
 									<td>{{ index}}</td>
@@ -175,214 +169,129 @@
 				      :total="total">
 				    </el-pagination>
 				  </div>
-					
-				</div>
-				
-				<!--信息管理-->
-				<div id="main_mess" v-show="subTabBar == 'main_mess'">
-					<div id="main_mess_title">
-						<span class="mess_title_cont">消息管理</span>
-						<span class="mess_remove_btn">批量删除</span>
-					</div>
-					<div id="main_table">
-						<table>
-							<thead>
-								<tr>
-									<th class="first_total"></th>
-									<th>标题</th>
-									<th class="last_table">操作</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="first_table"></td>
-									<td>尊敬的用户：您已经申请开通vip会员服务，请根据汇款地址，及时汇款</td>
-									<td class="last_table">
-										<span><a href="#">删除</a></span>
-										<span><a href="#">查看详情</a></span>
-									</td>
-								</tr>
-								<tr>
-									<td class="first_table"></td>
-									<td>尊敬的用户：您已经申请开通vip会员服务，请根据汇款地址，及时汇款</td>
-									<td class="last_table">
-										<span><a href="#">删除</a></span>
-										<span><a href="#">查看详情</a></span>
-									</td>
-								</tr>
-								<tr>
-									<td class="first_table"></td>
-									<td>尊敬的用户：您已经申请开通vip会员服务，请根据汇款地址，及时汇款</td>
-									<td class="last_table">
-										<span><a href="#">删除</a></span>
-										<span><a href="#">查看详情</a></span>
-									</td>
-								</tr>
-								<tr>
-									<td class="first_table"></td>
-									<td>尊敬的用户：您已经申请开通vip会员服务，请根据汇款地址，及时汇款</td>
-									<td class="last_table">
-										<span><a href="#">删除</a></span>
-										<span><a href="#">查看详情</a></span>
-									</td>
-								</tr>
-								<tr>
-									<td class="last_first_table"></td>
-									<td>尊敬的用户：您已经申请开通vip会员服务，请根据汇款地址，及时汇款 尊敬的用户：您已经申请开通vip会员服务，请根据汇款地址，及时汇款 尊敬的用户：您已经申请开通vip会员服务，请根据汇款地址，及时汇款
-									</td>
-									<td class="last_table">
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<!--模拟下拉框-->
-					<div id="page_left">每页显示</div>
-					<div id="page_center">
-						<ul id="main_box">
-							<li class="select_box">
-								<span id="fisrt">10</span>
-								<ul class="son_ul">
-									<li><span>10</span></li>
-									<li><span>15</span></li>
-									<li><span>20</span></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-					<div id="page_right">
-						<ul id="main_result">
-							<li>结果</li>
-							<li>&nbsp;&nbsp;&nbsp;&nbsp;总共</li>
-							<li>80</li>
-							<li>/</li>
-							<li>629</li>
-							<li>结果</li>
-						</ul>
-						分页
-						<ul id="main_page">
-							<li>&lt;</li>
-							<li class="magin_page_current">1</li>
-							<li>2</li>
-							<li>3</li>
-							<li>4</li>
-							<li>5</li>
-							<li>&gt;</li>
-						</ul>
-					</div>
 				</div>
 				
 				<!-- 下载与打印记录 -->
 				<div id="main_down_print" v-show="subTabBar == 'main_down_print'">
-					<div id="main_down_print_title">
-						<span class="down_print_title">我的下载与打印记录</span>
-						<p class="down_print_use">
+					<div class="main_content_title">
+						<span class="mess_title_cont">我的下载与打印记录</span>
+						<p class="sub_create_btn">
 							点数消耗：
-							<span>80/120</span>
+							<span>{{ memberInfo.downloadCount }}/{{ memberInfo.downAndPrintCount }}</span>
 						</p>
 					</div>
-					<div id="main_down_table">
+					<div id="main_sub_table">
 						<table>
 							<thead>
-								<tr height="50px;">
-									<th width="15%" align="center">类别</th>
-									<th width="45%" align="center">标准名称</th>
-									<th width="10%" align="center">消耗</th>
-									<th width="30%" align="center">
-										日期
-									</th>
+								<tr>
+									<th>类别</th>
+									<th>标准名称</th>
+									<th>消耗</th>
+									<th>日期</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td width="15%" align="center">下载</td>
-									<td width="45%" align="center">汽车和挂车后下部防护要求</td>
-									<td width="10%" align="center"> -1 </td>
-									<td width="30%" align="center">2019-02-15</td>
+								<tr v-show="!downloadInfoList.length || downloadInfoList.length == 0">
+									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">您 还 没 有 任 何 下 载 或 打 印 记 录 ！</a></span></td>
 								</tr>
-								<tr>
-									<td width="15%" align="center">打印</td>
-									<td width="45%" align="center">汽车和挂车后下部防护要求</td>
-									<td width="10%" align="center"> -1 </td>
-									<td width="30%" align="center">2019-02-15</td>
-								</tr>
-								<tr>
-									<td width="15%" align="center">下载</td>
-									<td width="45%" align="center">汽车和挂车后下部防护要求</td>
-									<td width="10%" align="center"> -1 </td>
-									<td width="30%" align="center">2019-02-15</td>
-								</tr>
-								<tr>
-									<td width="15%" align="center">按章节下载</td>
-									<td width="45%" align="center">汽车和挂车后下部防护要求</td>
-									<td width="10%" align="center"> -1 </td>
-									<td width="30%" align="center">2019-02-15</td>
+								<tr v-show="downloadInfoList.length || downloadInfoList.length > 0" v-for="(item,index) in downloadInfoList" :key="index">
+									<td class="email_password_td" :title="item.Type">{{ item.Type == 1 ? "下载" : "打印" }}</td>
+									<td class="email_password_td" :title="item.Title">{{ item.Title }}</td>
+									<td>{{ item.Num }}</td>
+									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime }}</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
-					<!--模拟下拉框-->
-					<div id="page_left">每页显示</div>
-					<div id="page_center">
-						<ul id="main_box">
-							<li class="select_box">
-								<span id="fisrt">10</span>
-								<ul class="son_ul">
-									<li><span>10</span></li>
-									<li><span>15</span></li>
-									<li><span>20</span></li>
-								</ul>
-							</li>
-						</ul>
+					
+					<div class="block text-center" v-show="total != 0">
+				    <el-pagination
+				      @size-change="handleSizeChange_downLoad"
+				      @current-change="handleCurrentChange_downLoad"
+				      :current-page="page"
+				      :page-sizes="[5, 10, 20, 30, 50, 100, 200]"
+				      :page-size="rows"
+				      layout="total, sizes, prev, pager, next, jumper"
+				      :total="total">
+				    </el-pagination>
+				  </div>
+				</div>
+				
+				<!--信息管理-->
+				<div id="main_mess" v-show="subTabBar == 'main_mess'">
+					<div class="main_content_title">
+						<span class="mess_title_cont">消息管理</span>
+						<p class="sub_create_btn">
+							<span></span> 
+							<b class="sub_create_enable" @click="group_delete_message()">批量删除</b>
+						</p>
 					</div>
-					<div id="page_right">
-						<ul id="main_result">
-							<li>结果</li>
-							<li>&nbsp;&nbsp;&nbsp;&nbsp;总共</li>
-							<li>80</li>
-							<li>/</li>
-							<li>629</li>
-							<li>结果</li>
-						</ul>
-						<!-- 分页 -->
-						<ul id="main_page">
-							<li>&lt;</li>
-							<li class="magin_page_current">1</li>
-							<li>2</li>
-							<li>3</li>
-							<li>4</li>
-							<li>5</li>
-							<li>&gt;</li>
-						</ul>
+					
+					<div id="main_sub_table">
+						<table>
+							<thead>
+								<tr>
+									<th width="50"><input type="checkbox" name="checkAllOrNot" id="checkAllOrNot" value="" /></th>
+									<th>标题</th>
+									<th>留言日期</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-show="!sysMessageInfoEntityList.length || sysMessageInfoEntityList.length == 0">
+									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">您 还 未 收 到 任 何 系 统 消 息 ！</a></span></td>
+								</tr>
+								<tr v-show="sysMessageInfoEntityList.length || sysMessageInfoEntityList.length > 0" v-for="(item,index) in sysMessageInfoEntityList" :key="index">
+									<td><input type="checkbox" name="checkNode" class="checkNode" value="" :nodeId="item.Id" @change="sel_single()" /></td>
+									<td class="email_password_td" :title="item.Title">{{ item.Title }}</td>
+									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime }}</td>
+									<td class="last_sub_table">
+										<span><a href="javascript: void(0);" @click="delete_system_message(item.Id)">删除</a></span>
+										<span><a href="javascript: void(0);" @click="check_systemMsg_detail(item.Id,item.Title,item.CreatorTime)">查看详情</a></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
+					
+					<div class="block text-center" v-show="total != 0">
+				    <el-pagination
+				      @size-change="handleSizeChange_message"
+				      @current-change="handleCurrentChange_message"
+				      :current-page="page"
+				      :page-sizes="[5, 10, 20, 30, 50, 100, 200]"
+				      :page-size="rows"
+				      layout="total, sizes, prev, pager, next, jumper"
+				      :total="total">
+				    </el-pagination>
+				  </div>
 				</div>
 				
 				<!-- 修改密码 -->
 				<div id="main_merge_pwd" v-show="subTabBar == 'main_merge_pwd'">
-					<div class="main_success_msg">
-						<span class="main_msg_icon"></span>
-						<span>密码修改成功</span>
-						<span class="main_close_pwd"></span>
+					<div class="main_content_title">
+						<span class="mess_title_cont">修改密码</span>
+						<p class="sub_create_btn">
+							<span></span> 
+						</p>
 					</div>
-					<div id="main_pwd_title">
-						<span class="merge_pwd_cont">修改密码</span>
-					</div>
-					<div id="main_pwd_form">
-						<form action="#">
-							<div class="pwd">
-								<input type="password" placeholder="旧密码">
-							</div>
-							<div class="pwd">
-								<input type="password" placeholder="新密码">
-							</div>
-							<div class="pwd">
-								<input type="password" placeholder="确认密码">
-							</div>
-							<div class="submit_btn">
-								<span id="sure_btn">确定</span>
-							</div>
-						</form>
-					</div>
+					
+					<el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+					  <el-form-item label="旧密码" prop="userOldPassword">
+					    <el-input type="password" v-model="ruleForm2.userOldPassword" autoComplete="off"></el-input>
+					  </el-form-item>
+					  <el-form-item label="新密码" prop="userNewPassword">
+					    <el-input type="password" v-model="ruleForm2.userNewPassword" autoComplete="off"></el-input>
+					  </el-form-item>
+					  <el-form-item label="确认密码" prop="newPasswordConfirm">
+					    <el-input type="password" v-model="ruleForm2.newPasswordConfirm" autoComplete="off"></el-input>
+					  </el-form-item>
+					  <el-form-item>
+					    <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+					    <el-button @click="resetForm('ruleForm2')">重置</el-button>
+					  </el-form-item>
+					</el-form>
+					
 				</div>
 
 				<!--查看详情弹窗-->
@@ -453,7 +362,23 @@
 				  </span>
 				</el-dialog>
 				
+				<!-- 删除系统消息弹窗 => 刷新列表 -->
+				<el-dialog title="删除系统消息" :visible.sync="showDialog_delete_message" width="400px" left>
+					<p class="upgrade_tips dangerFont text-center">{{ (messageIds && messageIds.indexOf(',') > -1) ? "您 确 定 要 批 量 删 除 这 些 系 统 消 息 ？" : "您 确 定 要 删 除 该 条 系 统 消 息 ？"}}</p>
+					<span slot="footer" class="dialog-footer">
+				    <el-button @click="showDialog_delete_message = false">手 抖 了</el-button>
+				    <el-button type="primary" @click="confirm_delete_message()">残忍删除</el-button>
+				  </span>
+				</el-dialog>
 				
+				<!-- 查看消息详情弹窗 -->
+				<el-dialog title="消息详情" :visible.sync="showDialog_checkMsg_detail" width="400px" left>
+					<p class="upgrade_tips">消息详情：<span class="blueFont">{{ singleMessage.title }}</span></p>
+					<p class="upgrade_tips">提醒时间：<span class="blueFont">{{ singleMessage.time }}</span></p>
+					<span slot="footer" class="dialog-footer">
+				    <el-button type="primary" @click="showDialog_checkMsg_detail = false">知 道 了</el-button>
+				  </span>
+				</el-dialog>
 
 			</div>
 		</div>
@@ -463,7 +388,59 @@
 <script>
 	export default {
 		data() {
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入旧密码'));
+        }else if(!this.global.check_numberMixLetter(value)){
+        	callback(new Error('6-12位密码，且只支持英文字母与数字的组合！'));
+        } else {
+          if (this.ruleForm2.userNewPassword !== '') {
+            this.$refs.ruleForm2.validateField('userNewPassword');
+          }
+          callback();
+        }
+      };
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入新密码'));
+        } else if (value == this.ruleForm2.userOldPassword) {
+          callback(new Error('新密码不能与旧密码相同!'));
+        }else if(!this.global.check_numberMixLetter(value)){
+        	callback(new Error('6-12位密码，且只支持英文字母与数字的组合！'));
+        } else {
+          callback();
+        }
+      };
+      var validatePass3 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次确认新密码'));
+        } else if (value !== this.ruleForm2.userNewPassword) {
+          callback(new Error('两次输入密码不一致!'));
+        } else if(!this.global.check_numberMixLetter(value)){
+        	callback(new Error('6-12位密码，且只支持英文字母与数字的组合！'));
+        }else {
+          callback();
+        }
+      };
+			
 			return {
+				ruleForm2: {
+					userOldPassword: "",
+					userNewPassword: "",
+					newPasswordConfirm: ""
+        },
+        rules2: {
+          userOldPassword: [
+            { validator: validatePass, trigger: 'blur' }
+          ],
+          userNewPassword: [
+            { validator: validatePass2, trigger: 'blur' }
+          ],
+          newPasswordConfirm: [
+            { validator: validatePass3, trigger: 'blur' }
+          ]
+        },
+				
 				memberId: "",
 				subTabBar: "main_personal",
 				showDialog_upgrade: false,
@@ -471,6 +448,8 @@
 				showDialog_addOrmidify_account: false,
 				showDialog_quit_account: false,
 				showDialog_delete_account: false,
+				showDialog_delete_message: false,
+				showDialog_checkMsg_detail: false,
 				
 				page: 1,											// 默认第一页
 				rows: 10,											// 默认每页显示10条
@@ -507,14 +486,66 @@
 				DeputyMemberList: [],
 				// 收藏列表
 				myCollectList: [],
+				// 下载打印列表
+				downloadInfoList: [],
+				// 系统消息
+				sysMessageInfoEntityList: [
+					{
+						Id: 568,
+						Title: "sdarf",
+						CreatorTime:"2018-10-11"
+					},{
+						Id: 569,
+						Title: "适当方式",
+						CreatorTime:"2018-10-12"
+					},{
+						Id: 570,
+						Title: "sdfbaefd",
+						CreatorTime:"2018-10-13"
+					},
+				],
+				messageIds: "",							// 放置消息ids
+				singleMessage:{							// 单条消息
+					
+				}
 			}
 		},
 		mounted() {
 			// 获取用户信息 => 判断用户权限 => 
 			this.getMemberInfo();
-
+			var _this = this;
+			// 全选非全选
+			$("#checkAllOrNot").on("change",function() {
+				var name=$(this).attr('name');
+				var $subBox = $('input.checkNode');
+	      $subBox.prop("checked",this.checked);
+	      if(this.checked){
+	      	// 全选
+	      	var ids = "";
+	      	for(var i=0; i<$('input.checkNode').length; i++){
+	      		ids += $('input.checkNode').eq(i).attr('nodeid') + ",";
+	      	}
+	      	ids = ids.slice(0,ids.length-1);
+	      	_this.messageIds = ids;
+	      }else{
+	      	var ids = "";
+	      	_this.messageIds = ids;
+	      }
+	    });
+	    
 		},
 		methods: {
+			 // 单个选择方法
+	    sel_single(){
+	    	$('#checkAllOrNot').prop("checked",$('.checkNode').length == $('.checkNode:checked').length ? true : false);
+	    	var ids = "";
+	      for(var i=0; i<$('input.checkNode:checked').length; i++){
+	      	ids += $('input.checkNode:checked').eq(i).attr('nodeid') + ",";
+	      }
+	      ids = ids.slice(0,ids.length-1);
+	      this.messageIds = ids;
+	    },
+			
 			// 获取用户信息 OtherService.asmx/GetMemberInfo => 判断用户权限 
 			async getMemberInfo() {
 				let url = 'OtherService.asmx/GetMemberInfo';
@@ -522,7 +553,7 @@
 				let params = {
 					memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2"
 				}
-				let data = await this.api.post(url, params);
+				let data = await this.api.post(url, params, { loading: true });
 				console.log(data);
 				this.memberInfo = data;
 				if(this.memberInfo.F_HYType == 0){
@@ -541,7 +572,7 @@
 					memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2",
 					isSubscription: this.memberInfo.F_IsSubscription
 				}
-				let data = await this.api.post(url, params);
+				let data = await this.api.post(url, params, { loading: true });
 				if(data.result == true){
 					this.$message({
             showClose: true,
@@ -566,7 +597,7 @@
 				let params = {
 					memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2"
 				}
-				let data = await this.api.post(url, params);
+				let data = await this.api.post(url, params, { loading: true });
 				this.DeputyMemberList = data.memberList;
 			},
 			
@@ -616,6 +647,13 @@
 				console.log(data);
 				// 成功回调 => 刷新列表
 				if(data.result == true){
+					this.$message({
+            showClose: true,
+            message: (url == "OtherService.asmx/AddDeputyMember") ? '成功添加副账户！' : '成功修改副账户！',
+            type: 'success',
+            duration: 2000
+          })
+					this.showDialog_addOrmidify_account = false;
 					this.getDeputyMemberListByUserId();
 				}
 			},
@@ -636,17 +674,18 @@
 				console.log(data);
 				// 成功回调 => 刷新列表
 				if(data.result == true){
+					this.$message({
+            showClose: true,
+            message: '成功删除副账户！',
+            type: 'success',
+            duration: 2000
+          })
+					this.showDialog_delete_account = false;
 					this.getDeputyMemberListByUserId();
 				}
 			},
 			
 			// 获取收藏列表 OtherService.asmx/GetMyCollect
-	    // 参数： int page, int rows, string userid,int languageType 1中文2英文
-	    // 返回值： total,   myCollectList
-	    // myCollectList 包含属性：
-			// Id
-	    // Title,
-	    // CreatorTime ,
 	    async getMyCollect(){
 				let url = "OtherService.asmx/GetMyCollect";
 				let params = {
@@ -655,7 +694,7 @@
 					memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2",
 					languageType: 1
 				}
-				let data = await this.api.post(url, params);
+				let data = await this.api.post(url, params, { loading: true });
 				console.log(data);
 				this.total = data.total;
 				this.myCollectList = data.myCollectList;
@@ -671,13 +710,209 @@
 				this.getMyCollect();
 			},
 			
+			// 取消关注 OtherService.asmx/DelMyCollect
+			async delete_collect(id){
+				let url = "OtherService.asmx/DelMyCollect";
+				let params = {
+					memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2",
+					documentId: id
+				}
+				let data = await this.api.post(url, params);
+				console.log(data);
+				if(data.result == true){
+					this.$message({
+            showClose: true,
+            message: '成功取消关注！',
+            type: 'success',
+            duration: 2000
+          })
+					// 刷新列表数据
+					this.getMyCollect();
+				}else{
+					this.$message({
+            showClose: true,
+            message: data.result,
+            type: 'success',
+            duration: 2000
+          });
+				}
+			},
 			
+			// 获取下载和打印记录 OtherService.asmx/GetDownloadInfoList 
+	    async getDownloadInfoList(){
+	    	let url = "OtherService.asmx/GetDownloadInfoList";
+	    	let params = {
+	    		page: this.page,
+	    		rows: this.rows,
+	    		memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2",
+					languageType: 1
+	    	}
+	    	let data = await this.api.post(url, params, { loading: true });
+				console.log(data);
+				this.total = data.total;
+				this.downloadInfoList = data.downloadInfoList;
+	    },
+			// 下载打印分页
+			handleCurrentChange_downLoad(page){
+				this.page = page;
+				this.getDownloadInfoList();
+			},
+			handleSizeChange_downLoad(rows){
+				this.rows = rows;
+				this.getDownloadInfoList();
+			},
 			
+			// 系统消息列表： OtherService.asmx/GetSysMessageInfo
+    	async getSysMessageInfo(){
+	    	let url = "OtherService.asmx/GetSysMessageInfo";
+	    	let params = {
+	    		page: this.page,
+	    		rows: this.rows,
+	    		memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2"
+	    	}
+	    	let data = await this.api.post(url, params, { loading: true });
+				console.log(data);
+				this.total = 300;
+				// this.total = data.total;
+				// this.sysMessageInfoEntityList = data.sysMessageInfoEntityList;
+	    },
+	    
+			// 批量删除系统消息 OtherService.asmx/DelSysMessageInfo
+    	// 参数：string ids 消息id集合，用 ','分割的id集合字符串
+    	// 返回值：true 成功
+			group_delete_message(){
+				// 判断 选中的复选框个数
+				if(this.messageIds == ""){
+					this.$message({
+            showClose: true,
+            message: '请勾选您要删除的消息！',
+            type: 'warning',
+            duration: 2000
+          })
+					return;
+				}else{
+					this.showDialog_delete_message = true;
+				}
+			},
+			// 单条信息删除
+			delete_system_message(id){
+				this.messageIds = String(id);
+				this.showDialog_delete_message = true;
+			},
+			// 确认删除消息
+			async confirm_delete_message(){
+				let url = "OtherService.asmx/DelSysMessageInfo";
+				let params = {
+					ids: this.messageIds
+				}
+				let data = await this.api.post(url, params);
+				console.log(data);
+				if(data[0] == true){
+					this.$message({
+            showClose: true,
+            message: '成功删除消息！',
+            type: 'success',
+            duration: 2000
+          })
+					this.showDialog_delete_message = false;
+					this.getSysMessageInfo();
+				}else{
+					this.$message({
+            showClose: true,
+            message: data[0],
+            type: 'warning',
+            duration: 2000
+          })
+				}
+			},
+			//查看详情
+			check_systemMsg_detail(id,title,time){
+				this.singleMessage.id = id;
+				this.singleMessage.title = title;
+				this.singleMessage.time = time;
+				this.showDialog_checkMsg_detail = true;
+			},
 			
+			// 系统消息分页
+			handleCurrentChange_message(page){
+				this.page = page;
+				this.getSysMessageInfo();
+			},
+			handleSizeChange_message(rows){
+				this.rows = rows;
+				this.getSysMessageInfo();
+			},
 			
+			async getData(url,params){
+				return await this.api.post(url, params);
+			},
 			
-			
-			
+			// 修改密码
+			submitForm(formName) {
+				console.log(this.ruleForm2.userOldPassword);
+				console.log(this.ruleForm2.userNewPassword);
+				console.log(this.ruleForm2.newPasswordConfirm);
+				var _this = this;
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            let url = "OtherService.asmx/SubmitNewPassword";
+            let params = {
+            	userOldPassword: _this.ruleForm2.userOldPassword,
+            	userNewPassword: _this.ruleForm2.userNewPassword,
+            	memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2"
+            }
+            console.log(params);
+            $.ajax({
+							type: "POST",
+							url: "http://47.92.160.129:8080/" + url,
+							data: JSON.stringify(params),
+							dataType: "json",
+							contentType: "application/json;charset=utf-8",
+							success: function(data) {
+								// 1修改成功 2此用户不存在 3旧密码错误
+								if(data[0] == 1){
+									_this.$message({
+				            showClose: true,
+				            message: "密码修改成功，稍后将重新登录！",
+				            type: 'success',
+				            duration: 2000
+				          })
+									setTimeout(()=>{
+										_this.$router.push({
+			    						name: 'SignIn'
+			  						})
+									},2000)
+								}else if (data[0] == 2){
+									_this.$message({
+				            showClose: true,
+				            message: "此用户不存在！",
+				            type: 'warning',
+				            duration: 2000
+				          })
+								}else{
+									_this.$message({
+				            showClose: true,
+				            message: "旧密码错误！",
+				            type: 'warning',
+				            duration: 2000
+				          })
+								}
+							}
+						});
+          } else {
+            this.$message({
+	            showClose: true,
+	            message: '修改密码格式不对，请修改后再次提交！',
+	            type: 'warning',
+	            duration: 2000
+	          })
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      },
 			
 			
 			
@@ -708,7 +943,24 @@
 					case "main_add":
 						this.page = 1;
 						this.rows = 10;
+						this.total = 0;
 						this.getMyCollect();
+						break;
+					case "main_down_print":
+						this.page = 1;
+						this.rows = 10;
+						this.total = 0;
+						this.getDownloadInfoList();
+						break;
+					case "main_mess":
+						this.page = 1;
+						this.rows = 10;
+						this.total = 0;
+						this.getSysMessageInfo();
+						break;
+					case "main_merge_pwd":
+						break;
+					default:
 						break;
 				}
 			}
@@ -734,9 +986,10 @@
 	}
 	#main_title {
 		width: 85%;
-		height: 100px;
-		margin: 0 auto;
-		line-height: 100px;
+		height: 70px;
+		margin: 0px auto;
+		margin-top: -30px;
+		line-height: 60px;
 		font-size: 30px;
 		color: #0C7DCF;
 	}
@@ -920,16 +1173,7 @@
 		margin-right: 20px;
 	}
 	
-	
-	
-	
-	
-	
 	/*信息管理*/
-	#main_mess {
-		display: none;
-	}
-	
 	#main_mess_title,
 	.main_content_title {
 		width: 100%;
@@ -1015,13 +1259,17 @@
 		color: #1992FF;
 	}
 	
+	/* 修改密码 */
+	.modify_password_box p{
+		height: 50px;
+		line-height: 50px;
+	}
 	
 	/* 升级会员 弹窗内提示语 */
 	.upgrade_tips {
 		color: #6F6F6F;
 		padding-left: 30px;
 		padding-right: 30px;
-		font-weight: bold;
 		letter-spacing: 1px;
 		height: 40px;
 		line-height: 40px;
