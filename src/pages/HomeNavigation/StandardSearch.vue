@@ -32,10 +32,51 @@
     </div>
     <!-- 右侧列表 -->
     <div id="right_list">
-      <div class="tableData">
-
+      <div class="tableData tableBox">
+        <el-table
+          :data="standardList"
+          style="width: 100%"
+          @row-click="goDetail"
+          :default-sort = "{prop: 'date', order: 'descending'}"
+        >
+          <el-table-column
+            type="index"
+            align="center"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="title"
+            label="标准或法规名称"
+            sortable
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="fileState"
+            label="状态"
+            align="center"
+            width="100"
+            :formatter="dealFileState">
+          </el-table-column>
+          <el-table-column
+            prop="releaseDate"
+            label="发布日期"
+            sortable
+            align="center"
+            :formatter="dealReleaseDate"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="implementDate"
+            label="实施日期"
+            sortable
+            align="center"
+            :formatter="dealImplementDate"
+            width="180">
+          </el-table-column>
+        </el-table>
       </div>
       <el-pagination
+        v-show="standardList.length > 0"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
@@ -65,7 +106,12 @@
         currentPage: 1,
         pageSize: 10,
         total: 100,
-        standardList: []
+        standardList: [],
+        languageType: 1,
+        cur_fieldCode: '',
+        cur_statusCode: '',
+        cur_adoptCode: ''
+
       }
     },
     mounted() {
@@ -76,39 +122,48 @@
         if (this.cur_fieldId == row.id) {
           this.cur_fieldId = ''
           this.cur_fieldName = ''
+          this.cur_fieldCode = ''
         } else {
           this.cur_fieldId = row.id
           this.cur_fieldName = row.itemName
+          this.cur_fieldCode = row.itemCode
         }
+        this.getStandardSearch()
       },
       statusClick (row) {
         if (this.cur_statusId == row.id) {
           this.cur_statusId = ''
           this.cur_statusName= ''
+          this.cur_statusCode = ''
         } else {
           this.cur_statusId = row.id
           this.cur_statusName = row.itemName
+          this.cur_statusCode = row.itemCode
         }
+        this.getStandardSearch()
       },
       adoptClick (row) {
         if (this.cur_adoptId == row.id) {
           this.cur_adoptId = ''
           this.cur_adoptName = ''
+          this.cur_adoptCode = ''
         } else {
           this.cur_adoptId = row.id
           this.cur_adoptName = row.itemName
+          this.cur_adoptCode = row.itemCode
         }
+        this.getStandardSearch()
       },
       async getStandardSearch () {
         let url = '/DocumentService.asmx/SearchCriterionByType'
         let params = {
-          fileState: this.cur_fieldName,
-          domain: this.cur_statusName,
-          acquisitionStandard: this.cur_adoptName,
-          languageType: 1,
+          fileState: this.cur_fieldCode,
+          domain: this.cur_statusCode,
+          acquisitionStandard: this.cur_adoptCode,
+          languageType: this.languageType,
           type: 1,
-          page: 1,
-          rows: 10
+          page: this.currentPage,
+          rows: this.pageSize
         }
         let data = await this.api.post(url, params)
         if (data) {
@@ -118,9 +173,6 @@
           this.adoptList = data.caiBiaoList
           this.total = data.total
           this.standardList = data.documentList
-          /*假数据*/
-          this.total = 10
-          this.standardList = []
         }
       },
       handleSizeChange (val) {
@@ -128,6 +180,50 @@
       },
       handleCurrentChange (val) {
         console.log(val)
+      },
+      dealImplementDate(row) {
+        function addZero(val) {
+          if (val < 10) {
+            return '0' + val
+          } else {
+            return val
+          }
+        }
+        let time = new Date(row.implementDate)
+        return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
+      },
+      dealReleaseDate(row) {
+        function addZero(val) {
+          if (val < 10) {
+            return '0' + val
+          } else {
+            return val
+          }
+        }
+        let time = new Date(row.releaseDate)
+        return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
+      },
+      dealFileState(row) {
+        return row.fileState
+      },
+      goDetail (row) {
+        console.log(row)
+        this.$router.push({
+          name: '/StandardSearch/StandardDetail',
+          params: {
+            id: row.id
+          }
+        })
+      },
+      handleSizeChange (val) {
+        this.pageSize = val
+        this.getStandardSearch()
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange (val) {
+        this.currentPage = val
+        this.getStandardSearch()
+        console.log(`当前页: ${val}`);
       },
     }
   }

@@ -32,10 +32,51 @@
     </div>
     <!-- 右侧列表 -->
     <div id="right_list">
-      <div class="tableData">
-
+      <div class="tableData tableBox">
+        <el-table
+          :data="lawList"
+          style="width: 100%"
+          @row-click="goDetail"
+          :default-sort = "{prop: 'date', order: 'descending'}"
+        >
+          <el-table-column
+            type="index"
+            align="center"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="title"
+            label="标准或法规名称"
+            sortable
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="fileState"
+            label="状态"
+            align="center"
+            width="100"
+            :formatter="dealFileState">
+          </el-table-column>
+          <el-table-column
+            prop="releaseDate"
+            label="发布日期"
+            sortable
+            align="center"
+            :formatter="dealReleaseDate"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="implementDate"
+            label="实施日期"
+            sortable
+            align="center"
+            :formatter="dealImplementDate"
+            width="180">
+          </el-table-column>
+        </el-table>
       </div>
       <el-pagination
+        v-show="lawList.length > 0"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
@@ -64,51 +105,62 @@
         cur_directionName: '',
         currentPage: 1,
         pageSize: 10,
-        total: 100,
-        lawList: []
+        total: 0,
+        lawList: [],
+        cur_publishCode: '',
+        cur_statusCode: '',
+        cur_directionCode: '',
+        languageType: 1
       }
     },
     mounted() {
       this.getStandardSearch()
     },
     methods: {
-      publishClick (row) {
-        if (this.cur_publishId == row.id) {
-          this.cur_publishId = ''
-          this.cur_publishName = ''
-        } else {
-          this.cur_publishId = row.id
-          this.cur_publishName = row.itemName
+      dealImplementDate(row) {
+        function addZero(val) {
+          if (val < 10) {
+            return '0' + val
+          } else {
+            return val
+          }
         }
+        let time = new Date(row.implementDate)
+        return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
       },
-      statusClick (row) {
-        if (this.cur_statusId == row.id) {
-          this.cur_statusId = ''
-          this.cur_statusName= ''
-        } else {
-          this.cur_statusId = row.id
-          this.cur_statusName = row.itemName
+      dealReleaseDate(row) {
+        function addZero(val) {
+          if (val < 10) {
+            return '0' + val
+          } else {
+            return val
+          }
         }
+        let time = new Date(row.releaseDate)
+        return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
       },
-      directionClick (row) {
-        if (this.cur_directionId == row.id) {
-          this.cur_directionId = ''
-          this.cur_directionName = ''
-        } else {
-          this.cur_directionId = row.id
-          this.cur_directionName = row.itemName
-        }
+      dealFileState(row) {
+        return row.fileState
+      },
+      goDetail (row) {
+        console.log(row.Id)
+        this.$router.push({
+          name: '/LawSearch/StandardDetail',
+          params: {
+            id: row.id
+          }
+        })
       },
       async getStandardSearch () {
         let url = '/DocumentService.asmx/SearchRegulationByType'
         let params = {
-          fileState: this.cur_publishName,
-          publisher: this.cur_statusName,
-          direction: this.cur_directionName,
-          languageType: 1,
+          fileState: this.cur_publishCode,
+          publisher: this.cur_statusCode,
+          direction: this.cur_directionCode,
+          languageType: this.languageType,
           type: 2,
-          page: 1,
-          rows: 10
+          page: this.currentPage,
+          rows: this.pageSize
         }
         let data = await this.api.get(url, params)
         if (data) {
@@ -118,16 +170,17 @@
           this.directionList = data.directionList
           this.total = data.total
           this.lawList = data.documentList
-          /*假数据*/
-          /*this.total = 10
-          this.standardList = []*/
         }
       },
       handleSizeChange (val) {
-        console.log(val)
+        this.pageSize = val
+        this.getStandardSearch()
+        console.log(`每页 ${val} 条`);
       },
       handleCurrentChange (val) {
-        console.log(val)
+        this.currentPage = val
+        this.getStandardSearch()
+        console.log(`当前页: ${val}`);
       },
     }
   }

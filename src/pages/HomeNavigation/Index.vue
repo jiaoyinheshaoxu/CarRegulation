@@ -16,51 +16,88 @@
           </ul>
         </div>
         <input type="text" placeholder="请输入内容" class="search_input" v-model="searchStr">
-        <div id="search_btn">
-          <a @click="searchKeys()">搜索</a>
+        <div id="search_btn" @click="SearchForIndexByLabelOrTitle()">
+          <a>搜索</a>
         </div>
       </div>
       <div id="hot">
         <span>热门：</span>
         <ul>
-          <li>
-            <a href="#">电动汽车</a>
-          </li>
-          <li>
-            <a href="#">智能驾驶</a>
-          </li>
-          <li>
-            <a href="#">尾气标准</a>
-          </li>
-          <li>
-            <a href="#">二手车</a>
-          </li>
-          <li>
-            <a href="#">叉车传动</a>
-          </li>
-          <li>
-            <a href="#">充电桩租赁</a>
+          <li v-for="row in hotList" v-show="row.keys">
+            <a @click="hotClick(row)" :class="{'blue': cur_hot == row.keys}">{{row.keys}}</a>
           </li>
         </ul>
       </div>
     </div>
-    <div style="overflow: hidden; background-color: #ffffff">
+    <div class="tableBox" v-show="searchList.length > 0">
+      <el-table
+        :data="searchList"
+        style="width: 100%"
+        @row-click="goDetail"
+        :default-sort = "{prop: 'date', order: 'descending'}"
+      >
+        <el-table-column
+          type="index"
+          align="center"
+          width="100">
+        </el-table-column>
+        <el-table-column
+          prop="Title"
+          label="标准或法规名称"
+          sortable
+          align="center">
+        </el-table-column>
+        <el-table-column
+          prop="FileState"
+          label="状态"
+          align="center"
+          width="100"
+          :formatter="dealFileState">
+        </el-table-column>
+        <el-table-column
+          prop="ReleaseDate"
+          label="发布日期"
+          sortable
+          align="center"
+          :formatter="dealReleaseDate"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="ImplementDate"
+          label="实施日期"
+          sortable
+          align="center"
+          :formatter="dealImplementDate"
+          width="180">
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[10, 20, 30, 40, 50]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        class="pageStyle">
+      </el-pagination>
+    </div>
+    <div style="overflow: hidden; background-color: #ffffff" v-show="searchList.length == 0">
       <!-- 标准动态 -->
       <div id="standard_activit">
         <!-- title -->
         <div class="activit">
           <span>标准法规动态</span>
-          <a href="#">更多 ></a>
+          <a @click="goStandardRow()">更多 ></a>
         </div>
         <!-- 内容 -->
         <ul id="act_content" class="activit_content">
-          <li>
-            <a href="article.html" target="_blank">
-              <span>GB 1495-2002 汽车加速行驶外噪音限制及测量方法</span>
-              <i>2018-09-20</i>
+          <li v-for="row in LawList">
+            <a @click="standardLawsClick(row)">
+              <span class="title" :title="row.Title">{{row.Title}}</span>
+              <i>{{new Date(row.CreatorTime).getTime() | formatTime('YMD')}}</i>
             </a>
           </li>
-
         </ul>
       </div>
       <!-- 最新翻译 -->
@@ -68,62 +105,14 @@
         <!-- title -->
         <div class="activit">
           <span>最新翻译</span>
-          <a href="#">更多 ></a>
+          <a @click="goLatestTrans()">更多 ></a>
         </div>
         <!-- 内容 -->
         <ul class="activit_content">
-          <li>
-            <a href="article.html" target="_blank">
-              <span>GB 1495-2002 汽车加速行驶外噪音限制及测量方法</span>
-              <i>2018-09-20</i>
-            </a>
-          </li>
-          <li>
-            <a href="article.html" target="_blank">
-              <span>GB 1495-2002 汽车加速行驶外噪音限制及测量方法</span>
-              <i>2018-09-20</i>
-            </a>
-          </li>
-          <li>
-            <a href="article.html" target="_blank">
-              <span>GB 1495-2002 汽车加速行驶外噪音限制及测量方法</span>
-              <i>2018-09-20</i>
-            </a>
-          </li>
-          <li>
-            <a href="article.html" target="_blank">
-              <span>GB 1495-2002 汽车加速行驶外噪音限制及测量方法</span>
-              <i>2018-09-20</i>
-            </a>
-          </li>
-          <li>
-            <a href="article.html" target="_blank">
-              <span>GB 1495-2002 汽车加速行驶外噪音限制及测量方法</span>
-              <i>2018-09-20</i>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span>GB 1495-2002 汽车加速行驶外噪音限制及测量方法</span>
-              <i>2018-09-20</i>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span>GB 1495-2002 汽车加速行驶外噪音限制及测量方法</span>
-              <i>2018-09-20</i>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span>GB 1495-2002 汽车加速行驶外噪音限制及测量方法</span>
-              <i>2018-09-20</i>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span>GB 1495-2002 汽车加速行驶外噪音限制及测量方法</span>
-              <i>2018-09-20</i>
+          <li v-for="row in LatestList">
+            <a @click="newsClick(row)">
+              <span class="title" :title="row.Title">{{row.Title}}</span>
+              <i>{{new Date(row.CreatorTime).getTime() | formatTime('YMD')}}</i>
             </a>
           </li>
         </ul>
@@ -132,7 +121,9 @@
     <!-- 声明 -->
     <div id="declare">
       <h2>免责声明</h2>
-      <p>标准检索标准检索标准检索标<br>准检索标准检索标<br>准检索标准检索<br>标准检索标准检索<br>标准检索标准检索</p>
+      <p>本系统对质检总局、国家标准委自2017年1月1日后新发布的国家标准，将在《国家标准批准发布公告》发布后20个工作日内公开标准文本，其中涉及采标的推荐性国家标准的公开，将在遵守国际版权政策前提下进行。</p>
+      <p>本系统公开了质检总局、国家标准委2017年1月1日前已批准发布的所有强制性国家标准、推荐性国家标准（非采标）。</p>
+      <p></p>
     </div>
   </div>
 </template>
@@ -141,11 +132,26 @@
   export default {
     data() {
       return {
-        searchStr: ''
+        searchStr: '',
+        currentPage: 1,
+        pageSize: 10,
+        total: 0,
+        languageType: 1, //1汉语 2英语
+        searchList: [],
+        hotList: ['电动汽车', '智能驾驶', '尾气标准', '二手车', '叉车传动', '充电桩租赁'],
+        cur_hot: '',
+        List: [],
+        LatestList: [],
+        LawList: []
       }
     },
     methods: {
-      async searchKeys() {
+      hotClick(row) {
+        this.searchStr = row.keys
+        this.cur_hot = row.keys
+        this.SearchForIndexByLabelOrTitle()
+      },
+      async AddDocumentSearchKeys() {
         let url = '/OtherService.asmx/AddDocumentSearchKeys'
         let params = {
           keys: this.searchStr
@@ -155,8 +161,145 @@
           console.log(data)
         }
       },
+      async SearchForIndexByLabelOrTitle() {
+        this.AddDocumentSearchKeys()
+        if ($('#i_fisrt').html().includes("标题")) {
+          let url = 'DocumentService.asmx/SearchForIndexByLabelOrTitle'
+          let params = {
+            page: this.currentPage,
+            rows: this.pageSize,
+            keyword: this.searchStr,
+            languageType: this.languageType
+          }
+          let data = await this.api.post(url, params, {loading: true})
+          if (data) {
+            console.log(data)
+            this.searchList = data.documentList
+            this.total = data.total
+            if (this.searchList.length == 0) {
+              this.$message({
+                showClose: true,
+                message: '暂无搜索结果！'
+              });
+            }
+          }
+        } else if ($('#i_fisrt').html().includes('内容')) {
+          let url = 'DocumentService.asmx/SearchForIndexByContent'
+          let params = {
+            page: this.currentPage,
+            rows: this.pageSize,
+            keyword: this.searchStr,
+            languageType: this.languageType
+          }
+          let data = await this.api.post(url, params)
+          if (data) {
+            console.log(data)
+            this.searchList = data.documentList
+            this.total = data.total
+            if (this.searchList.length == 0) {
+              this.$message({
+                showClose: true,
+                message: '暂无搜索结果！'
+              });
+            }
+          }
+        }
+      },
+      dealImplementDate(row) {
+        function addZero(val) {
+          if (val < 10) {
+            return '0' + val
+          } else {
+            return val
+          }
+        }
+        let time = new Date(row.ImplementDate)
+        return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
+      },
+      dealReleaseDate(row) {
+        function addZero(val) {
+          if (val < 10) {
+            return '0' + val
+          } else {
+            return val
+          }
+        }
+        let time = new Date(row.ReleaseDate)
+        return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
+      },
+      dealFileState(row) {
+        return row.FileState
+      },
+      handleSizeChange (val) {
+        this.pageSize = val
+        this.SearchForIndexByLabelOrTitle()
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange (val) {
+        this.currentPage = val
+        this.SearchForIndexByLabelOrTitle()
+        console.log(`当前页: ${val}`);
+      },
+      goDetail (row) {
+        console.log(row)
+        this.$router.push({
+          name: '/Index/StandardDetail',
+          params: {
+            id: row.Id
+          }
+        })
+      },
+      newsClick(row) {
+        this.$router.push({
+          name: '/Index/StandardDetail',
+          params: {
+            id: row.Id
+          }
+        })
+      },
+      standardLawsClick(row) {
+        this.$router.push({
+          name: '/Index/NewsDetail',
+          params: {
+            id: row.Id
+          }
+        })
+      },
+      goLatestTrans() {
+        this.$router.push({
+          path: '/LatestTranslation'
+        })
+      },
+      goStandardRow() {
+        this.$router.push({
+          path: '/StandardLawState'
+        })
+      },
+      async GetIndexByTopList () {
+        let url = 'DocumentService.asmx/GetIndexByTopList'
+        let params = {
+          languageType: 1,
+          topNum: 10
+        }
+        let data = await this.api.post(url, params)
+        console.log(data)
+        this.LawList = data.informationList
+        this.LatestList = data.newestList
+      },
+      async getHotKeys() {
+        let url = 'OtherService.asmx/DocumentSearchKeysStatTop'
+        let params = {}
+        let data = await this.api.post(url, params)
+        if (data) {
+          console.log(data)
+          this.hotList = data
+        }
+      }
     },
     mounted() {
+      this.AddDocumentSearchKeys()
+      this.GetIndexByTopList()
+      this.getHotKeys()
       $('.i_son_ul').hide();
       $("#search_content").css("border-radius","5px")
       $('.i_select_box span').click(function () {
@@ -180,6 +323,20 @@
 </script>
 
 <style scoped>
+  .blue{
+    color: #1C92FE !important;
+  }
+  .title{
+    float: left;
+    width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .pageStyle{
+    text-align: center;
+    margin-top: 20px;
+  }
   #search{
     width:100%;
     height:140px;
@@ -298,7 +455,7 @@
   }
   /*热门搜索*/
   #hot{
-    width:50%;
+    width: 705px;
     margin:0 auto;
     height:25px;
     line-height: 25px;

@@ -15,10 +15,6 @@
               <button id="sun"></button>
               <button class="moon" id="moon"></button>
             </div>
-            <!--<div id="artSearch">-->
-            <!--<input type="text" placeholder="文内搜索"/>-->
-            <!--<button class="search"></button>-->
-            <!--</div>-->
           </div>
           <div>
             <div id="language">
@@ -27,11 +23,11 @@
               <button class="shu"></button>
               <button class="heng active"></button>
             </div>
-            <div id="download">
+            <div id="download" style="cursor: pointer" @click="showDownPdf">
               <button></button>
               <span>下载</span>
             </div>
-            <div id="print">
+            <div id="print" style="cursor: pointer">
               <button></button>
               <span>打印</span>
             </div>
@@ -51,23 +47,14 @@
         </div>
         <div class="line2 clearfix">
           <div class="art-title">
-            <h3 style="font-size: 22px">《乘用车企业平均燃料消耗量与新能源汽车积分并进行管理办法》解读
-
-            </h3>
-
+            <h3>{{detail.f_ChineseTitle}}<span>（{{detail.f_FileState}}）</span></h3>
+            <h3>{{detail.f_EnglishTitle}}</h3>
           </div>
-
-          <!--   <div class="en-art-title">
-                 <h3 style="font-size: 16px">Lithium-ion traction battery pack and system for Electric vehicles
-                     Part 1: Test
-                     specification for High power applications
-
-                 </h3>
-             </div>-->
         </div>
         <div class="line3">
           <div class="effectiveDate">
-            <p><span>2017-01-10</span></p>
+            <span>发布日期（Date issued）</span>{{new Date(detail.f_ReleaseDate).getTime() | formatTime('YMD')}}<span></span>
+            <span>实施日期（Effective date）</span>{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}<span></span>
           </div>
           <div class="label">
             <span>中文标签</span>
@@ -75,18 +62,26 @@
           </div>
         </div>
       </div>
-      <article id="article">
-        <p>目前，工业和信息化部惊呆了手机防水等级分类考试的九分裤圣诞节福利就是的本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。浪本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。费就是看到飞机哦is对方及饿哦就囧事登记佛绝对是减肥进口量的感觉</p>
-        <p class="ask">问：制定《办法》的背景是什么？</p>
-        <p>目前，工业和信息化部惊呆了手机防水等级分类考试的九分裤圣诞节福利就是的本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。浪本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。费就是看到飞机哦is对方及饿哦就囧事登记佛绝对是减肥进口量的感觉</p>
-        <p>目前，工业和信息化部惊呆了手机防水等级分类考试的九分裤圣诞节福利就是的本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。浪本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。费就是看到飞机哦is对方及饿哦就囧事登记佛绝对是减肥进口量的感觉</p>
-        <p class="ask">问：《办法》制定的主要思路是什么？开展了那些工作？</p>
-        <p>目前，工业和信息化部惊呆了手机防水等级分类考试的九分裤圣诞节福利就是的本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。浪本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。费就是看到飞机哦is对方及饿哦就囧事登记佛绝对是减肥进口量的感觉</p>
-        <p>目前，工业和信息化部惊呆了手机防水等级分类考试的九分裤圣诞节福利就是的本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。浪本标准在附录G中列出了本标准部分章条编号与ECER95法规章条编号的对照一览表。费就是看到飞机哦is对方及饿哦就囧事登记佛绝对是减肥进口量的感觉</p>
-      </article>
-
+      <div class="article">
+        <div v-html="detail.f_ChineseContent"></div>
+      </div>
       <button id="backTop"></button>
     </div>
+    <!--下载pdf-->
+    <el-dialog
+      :visible.sync="downDialog"
+      width="50%"
+      center>
+      <span slot="title">
+        <span>当前下载</span>
+        <sapn style="color: red">{{downTitle}}</sapn>
+      </span>
+      <span>需要注意的是内容是默认不居中的</span>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="downDialog = false">取 消</el-button>
+    <el-button type="primary" @click="confirmDown">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -94,21 +89,44 @@
   export default {
     data() {
       return {
-
+        documentId: '',
+        memberId: '',
+        detail: {},
+        downDialog: false,
+        downTitle: '汽车侧面碰撞的乘员保护.pdf'
       }
     },
     mounted() {
+      this.documentId = this.$route.params.id
+      this.memberId = this.global.memberId
       this.GetDocumentInfoById()
+      this.getDetail()
     },
     methods: {
+      showDownPdf() {
+        this.downDialog = true
+      },
       async GetDocumentInfoById() {
+        this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
+        this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'
         let url = 'DocumentService.asmx/GetDocumentInfoById'
         let params = {
-          documentId: 'bc4972fc-f442-4932-a66b-6417568e0981',
-          memberId: '4c2053d1-a8fa-4ac4-9239-a3124c29e1e3',
+          documentId: this.documentId,
+          memberId: this.memberId,
         }
         let data = await this.api.post(url, params)
         if (data) {
+          console.log(data)
+        }
+      },
+      async getDetail() {
+        let url = 'DocumentService.asmx/GetDocumentInformationInfoById'
+        let params = {
+          documentId: '250f177b-0c08-4a64-a798-6fb7f0641af3'
+        }
+        let data = await this.api.get(url, params, {loading: true})
+        if (data) {
+          this.detail = data
           console.log(data)
         }
       }

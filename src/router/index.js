@@ -20,7 +20,7 @@ import NewsDetail from '../pages/HomeNavigation/NewsDetail.vue'
 Vue.use(Router)
 
 const router = new Router({
-  mode: 'history',
+  //mode: 'history',
   routes: [
     {
       path: '/',
@@ -74,27 +74,32 @@ const router = new Router({
           component: StandardSearch
         },
         {
-          path: '/StandardLawState/NewsDetail',
+          path: '/StandardLawState/NewsDetail/:id?',
           name: '/StandardLawState/NewsDetail',
           component: NewsDetail
         },
         {
-          path: '/Index/StandardDetail',
+          path: '/Index/StandardDetail/:id?',
           name: '/Index/StandardDetail',
           component: StandardDetail
         },
         {
-          path: '/LawSearch/StandardDetail',
+          path: '/Index/NewsDetail/:id?',
+          name: '/Index/NewsDetail',
+          component: NewsDetail
+        },
+        {
+          path: '/LawSearch/StandardDetail/:id?',
           name: '/LawSearch/StandardDetail',
           component: StandardDetail
         },
         {
-          path: '/LatestTranslation/StandardDetail',
+          path: '/LatestTranslation/StandardDetail/:id?',
           name: '/LatestTranslation/StandardDetail',
           component: StandardDetail
         },
         {
-          path: '/StandardSearch/StandardDetail',
+          path: '/StandardSearch/StandardDetail/:id?',
           name: '/StandardSearch/StandardDetail',
           component: StandardDetail
         },

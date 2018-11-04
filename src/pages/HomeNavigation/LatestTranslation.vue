@@ -67,7 +67,10 @@
       goDetail (row) {
         console.log(row)
         this.$router.push({
-          path: '/LatestTranslation/StandardDetail'
+          name: '/LatestTranslation/StandardDetail',
+          params: {
+            id: row.Id
+          }
         })
       }
     }

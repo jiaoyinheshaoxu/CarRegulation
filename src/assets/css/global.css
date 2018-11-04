@@ -191,4 +191,7 @@ a img {
 .text-right{
 	text-align: right !important;
 }
+.tableBox .el-table__row{
+  cursor: pointer !important;
+}
 
