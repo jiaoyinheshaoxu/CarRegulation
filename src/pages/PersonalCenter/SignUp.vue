@@ -87,7 +87,6 @@
       		  subscriptionLanguage: this.global.language == 'Chinese' ? 1 : 2
       		}
       		let data = await this.api.post(url ,params);
-      		console.log(data);
       		if (data[0]) {
       			// 注册成功 => 注册成功页面
       			this.global.userEmail = this.email;
@@ -96,7 +95,7 @@
 			      })
       		}else{
       			// 注册失败 => 提示注册失败
-        		this.$message.error("注册邮箱 失败原因就一个，邮箱已存在！");
+        		this.$message.error("注册邮箱失败原因：邮箱已存在！");
       		}
       	}
       },

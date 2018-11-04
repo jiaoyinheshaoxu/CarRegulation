@@ -148,3 +148,47 @@ a img {
 	width: 90%;
 }
 
+/* 缩进2em */
+.marginLeft_2em{
+	margin-left: 2em;
+}
+.marginRight_2em{
+	margin-right: 2em;
+}
+.marginLeft_4em{
+	margin-left: 4em;
+}
+.marginRight_4em{
+	margin-right: 4em;
+}
+
+/* 剩余点数等文字 danger 颜色 */
+.dangerFont{
+	color: red !important;
+}
+.blueFont{
+	color: #409EFF !important;
+}
+
+/* element 相关样式 */
+.el-dialog__header {
+  border-bottom: 1px solid #b9e8f3;
+}
+.el-dialog__title{
+	color: #409EFF;
+}
+.el-dialog__footer{
+	border-top: 1px solid #b9e8f3;
+}
+
+/*居中方式*/
+.text-center{
+	text-align: center !important;
+}
+.text-left{
+	text-align: left !important;
+}
+.text-right{
+	text-align: right !important;
+}
+
