@@ -23,9 +23,13 @@
             <a href="#">英文</a>
           </li>
         </ul>
-        <ul id="reg">
+        <ul id="reg" v-show="!get_username">
           <li><a @click="skipTo('SignUp')" :class="{'routeActive': route_name == 'SignUp'}">注册</a></li>
           <li><a @click="skipTo('SignIn')" :class="{'routeActive': route_name == 'SignIn'}">登录</a></li>
+        </ul>
+        <ul id="reg" v-show="get_username">
+          <li><a style="color: #1C92FE;" @click="goUserCenter()">{{get_username}}</a></li>
+          <li><a @click="loginOut()" style="color: #1C92FE">退出登录</a></li>
         </ul>
       </div>
     </div>
@@ -41,6 +45,9 @@
     computed: {
       route_name() {
         return this.$store.state.route_name
+      },
+      get_username() {
+        return this.$store.state.username
       }
     },
     methods: {
@@ -49,6 +56,24 @@
           name
         })
         //this.$store.commit('change_route', {route_name: name})
+      },
+      loginOut() {
+        this.global.memberId = ''
+        this.userPassword = ''
+        this.userEmail = ''
+        sessionStorage.removeItem('memberId', '')
+        sessionStorage.removeItem('userPassword', '')
+        sessionStorage.removeItem('userEmail', '')
+        this.$store.commit('get_username', {username: ''})
+        this.$message({
+          showClose: true,
+          message: '退出登录成功！'
+        });
+      },
+      goUserCenter() {
+        this.$router.push({
+          path: '/UserCenter'
+        })
       }
     }
   }

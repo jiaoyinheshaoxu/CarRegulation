@@ -3,12 +3,16 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
-    route_name: ''
+    route_name: '',
+    username: ''
   },
   mutations: {
     change_route(state, payload) {
       state.route_name = payload.route_name
     },
+    get_username(state, payload) {
+      state.username = payload.username
+    }
   }
 })
 

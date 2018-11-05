@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="box">
     <div class="center">
       <div id="day" class="white">
         <div id="menu" class="clearfix" style="margin-top: -40px">
@@ -18,10 +18,10 @@
           </div>
           <div>
             <div id="language">
-              <button class="china lan font-active">中文</button>
-              <button class="english lan">EN</button>
-              <button class="shu"></button>
-              <button class="heng active"></button>
+              <button class="china lan font-active" @click="languageClick('china')">中文</button>
+              <button class="english lan" @click="languageClick('english')">EN</button>
+              <button class="shu" @click="languageClick('shu')"></button>
+              <button class="heng" @click="languageClick('heng')"></button>
             </div>
             <div id="download" style="cursor: pointer" @click="showDownPdf">
               <button></button>
@@ -56,12 +56,16 @@
             <span>发布日期（Date issued）</span>{{new Date(detail.f_ReleaseDate).getTime() | formatTime('YMD')}}<span></span>
             <span>实施日期（Effective date）</span>{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}<span></span>
           </div>
-          <div class="label">
-            <span>中文标签</span>
-            <span>English</span>
+          <div class="label" v-if="detail.f_Label">
+            <span v-for="row in detail.f_Label.split('；')" v-show="row">{{row}}</span>
           </div>
+          <span style="float: right;cursor: pointer;color: #0c7dcf" v-show="!isSave" @click="Save()">收藏</span>
+          <span style="float: right;cursor: pointer;color: #0c7dcf" v-show="isSave" @click="unSave()">已收藏</span>
         </div>
       </div>
+      <article id="article">
+
+      </article>
       <div class="article">
         <div v-html="detail.f_ChineseContent"></div>
       </div>
@@ -74,9 +78,36 @@
       center>
       <span slot="title">
         <span>当前下载</span>
-        <sapn style="color: red">{{downTitle}}</sapn>
+        <span style="color: red">{{downTitle}}</span>
       </span>
-      <span>需要注意的是内容是默认不居中的</span>
+      <div>
+        <span>选择语言：</span>
+        <el-radio-group v-model="select_language">
+          <el-radio :label="1">中文</el-radio>
+          <el-radio :label="2">英文</el-radio>
+          <el-radio :label="3">中英文（上下）</el-radio>
+        </el-radio-group>
+      </div>
+      <div>
+        <h2 style="height: 30px;line-height: 30px">选择章节：</h2>
+        <el-table
+          ref="multipleTable"
+          :data="chapterList"
+          tooltip-effect="dark"
+          style="width: 455px"
+          border
+          @selection-change="handleSelectionChange">
+          <el-table-column
+            type="selection"
+            width="55">
+          </el-table-column>
+          <el-table-column
+            label="全部选择"
+            prop="name"
+            width="400">
+          </el-table-column>
+        </el-table>
+      </div>
       <span slot="footer" class="dialog-footer">
     <el-button @click="downDialog = false">取 消</el-button>
     <el-button type="primary" @click="confirmDown">确 定</el-button>
@@ -90,26 +121,172 @@
     data() {
       return {
         documentId: '',
+        languageType: 1,
         memberId: '',
         detail: {},
         downDialog: false,
-        downTitle: '汽车侧面碰撞的乘员保护.pdf'
+        downTitle: '汽车侧面碰撞的乘员保护.pdf',
+        select_language: 1,
+        chapterList: [{
+          id: '2',
+          name: '汽车侧面碰撞的乘员保护',
+        }, {
+          id: '3',
+          name: '1 范围',
+        }, {
+          id: '4',
+          name: '2 规范性引用文件',
+        }, {
+          id: '5',
+          name: '3 术语和定义',
+        }, {
+          id: '6',
+          name: '4 技术要求',
+        }, {
+          id: '6',
+          name: '5 车辆型式的变更',
+        }],
+        multipleSelection: [],
+        isSave: false,
+        residueDownloadNum: 0
       }
     },
     mounted() {
+      $("#fontSize button").click(function () {
+        $("#fontSize button").removeClass("font-active");
+        $(this).addClass("font-active")
+      })
+      $("#small").click(function () {
+        setFongSize("12px");
+        $("#middle").removeClass("font-active");
+        $("#small").addClass("font-active");
+        $("#big").removeClass("font-active");
+      });
+      $("#middle").click(function () {
+        setFongSize("16px");
+        $("#middle").addClass("font-active");
+        $("#small").removeClass("font-active");
+        $("#big").removeClass("font-active");
+      });
+      $("#big").click(function () {
+        setFongSize("20px");
+        $("#middle").removeClass("font-active");
+        $("#small").removeClass("font-active");
+        $("#big").addClass("font-active");
+      });
+      function setFongSize(s) {
+        $("#article *").css("font-size", s);
+      }
+      //sun  article.css
+      $("#sun").click(function () {
+        $(".black").attr("class", "white");
+        $('#article').css({
+          background: '#ffffff'
+        })
+        $('#article-header').css({
+          background: '#ffffff'
+        })
+      });
+      //moon skinnight
+      $("#moon").click(function () {
+        $(".white").attr("class", "black");
+        $('#article').css({
+          background: 'gray'
+        })
+        $('#article-header').css({
+          background: 'gray'
+        })
+      });
+      $("#contents_list li").mouseover(function () {
+        $(this).children("a").addClass("active_logo");
+      })
+      //set heng shu active 中china 英english  font-active
+      $(".shu").click(function () {
+        $(".heng").removeClass("active");
+        $(".shu").addClass("active");
+        $(".china").removeClass("font-active");
+        $(".english").removeClass("font-active");
+      });
+      $(".heng").click(function () {
+        $(".heng").addClass("active");
+        $(".shu").removeClass("active");
+        $(".china").removeClass("font-active");
+        $(".english").removeClass("font-active");
+      });
+      $(".china").click(function () {
+        $(".heng").removeClass("active");
+        $(".shu").removeClass("active");
+        $(".china").addClass("font-active");
+        $(".english").removeClass("font-active");
+      });
+      $(".english").click(function () {
+        $(".heng").removeClass("active");
+        $(".shu").removeClass("active");
+        $(".china").removeClass("font-active");
+        $(".english").addClass("font-active");
+      });
+      $("#backTop").click(function () {
+        $("html,body").animate({ scrollTop: 0 }, 500);
+      });
+      console.log(this.global)
+      this.memberId = this.global.memberId
       this.documentId = this.$route.params.id
       this.memberId = this.global.memberId
       this.GetDocumentInfoById()
-      this.getDetail()
+      //this.getDetail()
+      this.GetWordContent()
     },
     methods: {
+      languageClick(str) {
+        if(str == 'shu') {
+          this.GetWordContent(1);
+        } else if (str == 'heng') {
+          this.GetWordContent(4);
+        } else if (str == 'china') {
+          this.GetWordContent(2);
+        } else if (str == 'english') {
+          this.GetWordContent(3);
+        }
+      },
+      confirmDown() {
+
+      },
+      toggleSelection(rows) {
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
+        }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
       showDownPdf() {
-        this.downDialog = true
+        this.GetMemberInfo()
+        //this.downDialog = true
       },
       async GetDocumentInfoById() {
-        this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
-        this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'
+        /*this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
+        this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'*/
         let url = 'DocumentService.asmx/GetDocumentInfoById'
+        let params = {
+          documentId: this.documentId,
+          memberId: this.memberId,
+          languageType: this.languageType
+        }
+        let data = await this.api.get(url, params)
+        if (data) {
+          console.log(data)
+          this.isSave = data.isCollect
+          this.detail = data.documentContentModel
+        }
+      },
+      async Save() {
+        /*this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
+        this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'*/
+        let url = 'OtherService.asmx/AddMyCollect'
         let params = {
           documentId: this.documentId,
           memberId: this.memberId,
@@ -117,17 +294,95 @@
         let data = await this.api.post(url, params)
         if (data) {
           console.log(data)
+          if (data[0] == true) {
+            this.$message({
+              showClose: true,
+              message: '收藏成功！'
+            });
+            this.isSave = true
+          }
+        }
+      },
+      async unSave() {
+        /*this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
+        this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'*/
+        let url = 'OtherService.asmx/DelMyCollect'
+        let params = {
+          documentId: this.documentId,
+          memberId: this.memberId,
+        }
+        let data = await this.api.post(url, params)
+        if (data) {
+          console.log(data)
+          if (data[0] == true) {
+            this.$message({
+              showClose: true,
+              message: '取消收藏成功！'
+            });
+            this.isSave = false
+          }
         }
       },
       async getDetail() {
         let url = 'DocumentService.asmx/GetDocumentInformationInfoById'
         let params = {
-          documentId: '250f177b-0c08-4a64-a798-6fb7f0641af3'
+          documentId: this.documentId,
+          languageType: this.languageType
         }
         let data = await this.api.get(url, params, {loading: true})
         if (data) {
           this.detail = data
           console.log(data)
+        }
+      },
+      async GetWordContent(type) {
+        if(!type) {
+          type = 2
+        }
+        let url = '/DocumentService.asmx/GetWordContent'
+        let params = {
+          keyword: this.documentId,
+          type: type
+        }
+        let data = await this.api.post(url, params)
+        if(data) {
+          console.log(data)
+          $("#article").html(data[0]);
+        }
+      },
+      async DownloadFile() {
+        /*this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
+        this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'*/
+        let url = 'DocumentService/DownloadFile'
+        let params = {
+          documentId: this.documentId,
+          memberId: this.memberId,
+          languageType: this.languageType
+        }
+        let data = await this.api.post(url ,params)
+        if (data) {
+          console.log(data)
+        }
+      },
+      async GetMemberInfo() {
+        /*this.memberId = 'b60b54ee-d4fb-4085-a873-e8dc95af1039'*/
+        let url = 'OtherService.asmx/GetMemberInfo'
+        let params = {
+          memberId: this.memberId
+        }
+        let data = await this.api.post(url, params)
+        if (data) {
+          console.log(data)
+          this.residueDownloadNum = data.residueDownloadNum
+          if(this.residueDownloadNum < 1) {
+            this.$message({
+              showClose: true,
+              message: '你的下载剩余下载次数不够了，请充值会员后再下载！'
+            });
+            this.DownloadFile()
+          } else {
+            this.DownloadFile()
+          }
         }
       }
     }
@@ -135,8 +390,11 @@
 </script>
 
 <style scoped>
+  td{
+    word-wrap:break-word
+  }
   .center {
-    width: 74%;
+    width: 90%;
     margin: 0px auto 50px;
   }
   .white #menu {
@@ -368,7 +626,6 @@
     height: 50px;
     box-sizing: border-box;
     padding: 15px 0;
-    background-color: #ffffff;
   }
   #bread-nav {
     float: left;
@@ -482,15 +739,16 @@
   #backTop {
     width: 40px;
     height: 40px;
-    position: relative;
+    position: fixed;
     bottom: 42px;
     border: none;
     background-color: transparent;
     border-radius: 5px;
-    right: -101%;
     vertical-align: top;
     outline: none;
     cursor: pointer;
+    top: 50%;
+    right: 4%;
   }
   #mulu {
     background: url("../../assets/images/bg.png") -80px -240px;

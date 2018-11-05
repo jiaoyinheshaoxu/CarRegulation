@@ -123,7 +123,8 @@
       <h2>免责声明</h2>
       <p>本系统对质检总局、国家标准委自2017年1月1日后新发布的国家标准，将在《国家标准批准发布公告》发布后20个工作日内公开标准文本，其中涉及采标的推荐性国家标准的公开，将在遵守国际版权政策前提下进行。</p>
       <p>本系统公开了质检总局、国家标准委2017年1月1日前已批准发布的所有强制性国家标准、推荐性国家标准（非采标）。</p>
-      <p></p>
+      <p>本系统所提供的电子文本仅供参考，请以正式标准出版物为准。</p>
+      <p>本系统所提供的电子文本仅供个人学习、研究之用，未经授权，禁止复制、发行、汇编、翻译或网络传播等，侵权必究。</p>
     </div>
   </div>
 </template>
@@ -242,6 +243,13 @@
       },
       goDetail (row) {
         console.log(row)
+        if (!this.global.memberId) {
+          this.$message({
+            showClose: true,
+            message: '登录后才可以查看，请先登录!'
+          });
+          return
+        }
         this.$router.push({
           name: '/Index/StandardDetail',
           params: {
@@ -250,6 +258,13 @@
         })
       },
       newsClick(row) {
+        if (!this.global.memberId) {
+          this.$message({
+            showClose: true,
+            message: '登录后才可以查看，请先登录!'
+          });
+          return
+        }
         this.$router.push({
           name: '/Index/StandardDetail',
           params: {
@@ -258,6 +273,13 @@
         })
       },
       standardLawsClick(row) {
+        if (!this.global.memberId) {
+          this.$message({
+            showClose: true,
+            message: '登录后才可以查看，请先登录!'
+          });
+          return
+        }
         this.$router.push({
           name: '/Index/NewsDetail',
           params: {
@@ -323,6 +345,10 @@
 </script>
 
 <style scoped>
+  #declare p{
+    min-height: 36px;
+    line-height: 36px;
+  }
   .blue{
     color: #1C92FE !important;
   }

@@ -5,7 +5,7 @@
         <div class="log"></div>
         <h5>把握未来走向，囊括行业标准，做中国第一双语法规网站</h5>
         <h4>欢迎登录</h4>
-        
+
         <div class="login_tab user">
             <a class="user_logo"></a>
             <input type="text" id="email" v-model="username" placeholder="邮箱"/>
@@ -21,7 +21,7 @@
         <div class="login_tab login_btn">
             <input type="button" value="登录"  @click="user_login()"/>
         </div>
-        
+
         <div class="login_tab footer">
           <a href="">帮助</a>
           <a href="" class="mid">隐私</a>
@@ -76,6 +76,8 @@
 	          this.global.userEmail = this.username;
 	          this.global.userPassword = this.password;
 	          this.global.memberId = data.memberId;
+	          console.log(this.global)
+            this.$store.commit('get_username', {username: this.username})
 	          this.global.HYType	= data.HYType;
 	          sessionStorage.setItem('userEmail', this.username);
 	          sessionStorage.setItem('userPassword', this.password);
@@ -169,7 +171,7 @@
     border-radius: 5px;
     background: #fff;
   }
-  
+
   input{
     border:0;
     width:90%;

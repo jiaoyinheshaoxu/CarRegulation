@@ -144,6 +144,13 @@
       },
       goDetail (row) {
         console.log(row.Id)
+        if (!this.global.memberId) {
+          this.$message({
+            showClose: true,
+            message: '登录后才可以查看，请先登录!'
+          });
+          return
+        }
         this.$router.push({
           name: '/LawSearch/StandardDetail',
           params: {
@@ -154,8 +161,8 @@
       async getStandardSearch () {
         let url = '/DocumentService.asmx/SearchRegulationByType'
         let params = {
-          fileState: this.cur_publishCode,
-          publisher: this.cur_statusCode,
+          fileState: this.cur_statusCode,
+          publisher: this.cur_publishCode,
           direction: this.cur_directionCode,
           languageType: this.languageType,
           type: 2,
@@ -181,6 +188,42 @@
         this.currentPage = val
         this.getStandardSearch()
         console.log(`当前页: ${val}`);
+      },
+      statusClick (row) {
+        if (this.cur_statusId == row.id) {
+          this.cur_statusId = ''
+          this.cur_statusName = ''
+          this.cur_statusCode = ''
+        } else {
+          this.cur_statusId = row.id
+          this.cur_statusName = row.itemName
+          this.cur_statusCode = row.itemCode
+        }
+        this.getStandardSearch()
+      },
+      publishClick (row) {
+        if (this.cur_publishId == row.id) {
+          this.cur_publishId = ''
+          this.cur_publishName= ''
+          this.cur_publishCode = ''
+        } else {
+          this.cur_publishId = row.id
+          this.cur_publishName = row.itemName
+          this.cur_publishCode = row.itemCode
+        }
+        this.getStandardSearch()
+      },
+      directionClick (row) {
+        if (this.cur_directionId == row.id) {
+          this.cur_directionId = ''
+          this.cur_directionName = ''
+          this.cur_directionCode = ''
+        } else {
+          this.cur_directionId = row.id
+          this.cur_directionName = row.itemName
+          this.cur_directionCode = row.itemCode
+        }
+        this.getStandardSearch()
       },
     }
   }

@@ -208,6 +208,13 @@
       },
       goDetail (row) {
         console.log(row)
+        if (!this.global.memberId) {
+          this.$message({
+            showClose: true,
+            message: '登录后才可以查看，请先登录!'
+          });
+          return
+        }
         this.$router.push({
           name: '/StandardSearch/StandardDetail',
           params: {
