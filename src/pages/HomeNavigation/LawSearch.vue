@@ -144,13 +144,6 @@
       },
       goDetail (row) {
         console.log(row.Id)
-        if (!this.global.memberId) {
-          this.$message({
-            showClose: true,
-            message: '登录后才可以查看，请先登录!'
-          });
-          return
-        }
         this.$router.push({
           name: '/LawSearch/StandardDetail',
           params: {
@@ -180,11 +173,25 @@
         }
       },
       handleSizeChange (val) {
+        if(!this.global.memberId) {
+          this.$message({
+            showClose: true,
+            message: '该操作只有登陆后才可以有效，请先登陆！'
+          });
+          return
+        }
         this.pageSize = val
         this.getStandardSearch()
         console.log(`每页 ${val} 条`);
       },
       handleCurrentChange (val) {
+        if(!this.global.memberId) {
+          this.$message({
+            showClose: true,
+            message: '该操作只有登陆后才可以有效，请先登陆！'
+          });
+          return
+        }
         this.currentPage = val
         this.getStandardSearch()
         console.log(`当前页: ${val}`);

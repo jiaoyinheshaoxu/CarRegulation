@@ -37,22 +37,26 @@
       <div id="article-header">
         <div class="line1 clearfix">
           <div id="bread-nav">
-            <a href="">首页</a>
+            <a v-show="route_name.includes('Index')">首页</a>
+            <a v-show="route_name.includes('StandardSearch')">标准检索</a>
+            <a v-show="route_name.includes('LawSearch')">法规检索</a>
+            <a v-show="route_name.includes('StandardLawState')">标准法规动态</a>
+            <a v-show="route_name.includes('LatestTranslation')">最新翻译</a>
             <span>/</span>
-            <a href="">标准搜索</a>
-            <span>/</span>
-            <a href="">动态详情</a>
+            <!--<a href="">标准搜索</a>
+            <span>/</span>-->
+            <a>动态详情</a>
           </div>
 
         </div>
-        <div class="line2 clearfix">
+        <div class="line2 clearfix" v-show="detail.f_ChineseTitle">
           <div class="art-title">
             <h3>{{detail.f_ChineseTitle}}<span>（{{detail.f_FileState}}）</span></h3>
             <h3>{{detail.f_EnglishTitle}}</h3>
           </div>
         </div>
         <div class="line3">
-          <div class="effectiveDate">
+          <div class="effectiveDate" v-show="detail.f_ChineseTitle">
             <span>发布日期（Date issued）</span>{{new Date(detail.f_ReleaseDate).getTime() | formatTime('YMD')}}<span></span>
             <span>实施日期（Effective date）</span>{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}<span></span>
           </div>
@@ -70,6 +74,11 @@
         <div v-html="detail.f_ChineseContent"></div>
       </div>
       <button id="backTop"></button>
+      <div id="directory" @click="directoryClick()" v-show="showDirectoryButton">
+        <div class="directory" v-show="isShowDirectory" @click.stop="muluClick()">
+
+        </div>
+      </div>
     </div>
     <!--下载pdf-->
     <el-dialog
@@ -120,6 +129,7 @@
   export default {
     data() {
       return {
+        showDirectoryButton: false,
         documentId: '',
         languageType: 1,
         memberId: '',
@@ -148,10 +158,25 @@
         }],
         multipleSelection: [],
         isSave: false,
-        residueDownloadNum: 0
+        residueDownloadNum: 0,
+        isShowDirectory: false
+      }
+    },
+    computed: {
+      route_name() {
+        return this.$store.state.route_name
       }
     },
     mounted() {
+      $(window).scroll(function (event) {
+        let w_height = $(window).height()
+        console.log(w_height)
+        if ($(window).scrollTop() > w_height) {
+          this.showDirectoryButton = true
+        } else {
+          this.showDirectoryButton = false
+        }
+      });
       $("#fontSize button").click(function () {
         $("#fontSize button").removeClass("font-active");
         $(this).addClass("font-active")
@@ -232,18 +257,18 @@
       this.memberId = this.global.memberId
       //this.GetDocumentInfoById()
       this.getDetail()
-      this.GetWordContent()
+      //this.GetWordContent()
     },
     methods: {
       languageClick(str) {
         if(str == 'shu') {
-          this.GetWordContent(1);
+          this.getDetail(1);
         } else if (str == 'heng') {
-          this.GetWordContent(4);
+          this.getDetail(4);
         } else if (str == 'china') {
-          this.GetWordContent(2);
+          this.getDetail(2);
         } else if (str == 'english') {
-          this.GetWordContent(3);
+          this.getDetail(3);
         }
       },
       confirmDown() {
@@ -321,16 +346,23 @@
           }
         }
       },
-      async getDetail() {
+      async getDetail(type) {
+        if(!type) {
+          type = 1
+        }
         let url = 'DocumentService.asmx/GetDocumentInformationInfoById'
         let params = {
           documentId: this.documentId,
-          languageType: this.languageType
+          languageType: this.languageType,
+          type: type
         }
-        let data = await this.api.get(url, params, {loading: true})
+        let data = await this.api.post(url, params, {loading: true})
         if (data) {
           this.detail = data
           console.log(data)
+          this.detail = data.documentEntity
+          $('#article').html(data.strChinese)
+          $('.directory').html(data.catalogue)
         }
       },
       async GetWordContent(type) {
@@ -382,12 +414,31 @@
             this.DownloadFile()
           }
         }
+      },
+      directoryClick() {
+        this.isShowDirectory = !this.isShowDirectory
+      },
+      muluClick() {
+        console.log('aaa')
       }
     }
   }
 </script>
 
 <style scoped>
+  .directory{
+    width: 400px;
+    height: 600px;
+    border: 2px solid #cdcdcd;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: auto;
+    position: absolute;
+    right: -60px;
+    top: -660px;
+    background-color: #ffffff;
+    z-index: 100;
+  }
   td{
     word-wrap:break-word
   }
@@ -733,7 +784,7 @@
   article p:hover {
     background: #E8E8E8;
   }
-  #mulu,
+  #directory,
   #backTop {
     width: 40px;
     height: 40px;
@@ -745,13 +796,17 @@
     vertical-align: top;
     outline: none;
     cursor: pointer;
-    top: 50%;
-    right: 4%;
+    top: 90%;
+    right: 20px;
   }
-  #mulu {
+  #directory{
+    top: 90%;
+    right: 80px;
+  }
+  #directory {
     background: url("../../assets/images/bg.png") -80px -240px;
   }
-  #mulu:hover {
+  #directory:hover {
     background: url("../../assets/images/bg.png") -160px -240px;
   }
   #backTop {

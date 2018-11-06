@@ -27,7 +27,7 @@
               <button></button>
               <span>下载</span>
             </div>
-            <div id="print" style="cursor: pointer">
+            <div id="print" style="cursor: pointer" @click="print()">
               <button></button>
               <span>打印</span>
             </div>
@@ -37,21 +37,25 @@
       <div id="article-header">
         <div class="line1 clearfix">
           <div id="bread-nav">
-            <a href="">首页</a>
+            <a v-show="route_name.includes('Index')">首页</a>
+            <a v-show="route_name.includes('StandardSearch')">标准检索</a>
+            <a v-show="route_name.includes('LawSearch')">法规检索</a>
+            <a v-show="route_name.includes('StandardLawState')">标准法规动态</a>
+            <a v-show="route_name.includes('LatestTranslation')">最新翻译</a>
             <span>/</span>
-            <a href="">标准搜索</a>
-            <span>/</span>
-            <a href="">动态详情</a>
+            <!--<a href="">标准搜索</a>
+            <span>/</span>-->
+            <a>动态详情</a>
           </div>
 
         </div>
-        <div class="line2 clearfix">
+        <div class="line2 clearfix" v-show="detail.f_ChineseTitle">
           <div class="art-title">
             <h3>{{detail.f_ChineseTitle}}<span>（{{detail.f_FileState}}）</span></h3>
             <h3>{{detail.f_EnglishTitle}}</h3>
           </div>
         </div>
-        <div class="line3">
+        <div class="line3" v-show="detail.f_ChineseTitle">
           <div class="effectiveDate">
             <span>发布日期（Date issued）</span>{{new Date(detail.f_ReleaseDate).getTime() | formatTime('YMD')}}<span></span>
             <span>实施日期（Effective date）</span>{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}<span></span>
@@ -70,6 +74,11 @@
         <div v-html="detail.f_ChineseContent"></div>
       </div>
       <button id="backTop"></button>
+      <div id="directory" @click="directoryClick()" v-show="showDirectoryButton">
+        <div class="directory" v-show="isShowDirectory" @click.stop="muluClick()">
+
+        </div>
+      </div>
     </div>
     <!--下载pdf-->
     <el-dialog
@@ -120,6 +129,7 @@
   export default {
     data() {
       return {
+        showDirectoryButton: false,
         documentId: '',
         languageType: 1,
         memberId: '',
@@ -148,10 +158,25 @@
         }],
         multipleSelection: [],
         isSave: false,
-        residueDownloadNum: 0
+        residueDownloadNum: 0,
+        isShowDirectory: false
+      }
+    },
+    computed: {
+      route_name() {
+        return this.$store.state.route_name
       }
     },
     mounted() {
+      $(window).scroll(function (event) {
+        let w_height = $(window).height()
+        console.log(w_height)
+        if ($(window).scrollTop() > w_height) {
+          this.showDirectoryButton = true
+        } else {
+          this.showDirectoryButton = false
+        }
+      });
       $("#fontSize button").click(function () {
         $("#fontSize button").removeClass("font-active");
         $(this).addClass("font-active")
@@ -234,18 +259,18 @@
       this.memberId = this.global.memberId
       this.GetDocumentInfoById()
       //this.getDetail()
-      this.GetWordContent()
+      //this.GetWordContent()
     },
     methods: {
       languageClick(str) {
         if(str == 'shu') {
-          this.GetWordContent(1);
+          this.GetDocumentInfoById(1);
         } else if (str == 'heng') {
-          this.GetWordContent(4);
+          this.GetDocumentInfoById(4);
         } else if (str == 'china') {
-          this.GetWordContent(2);
+          this.GetDocumentInfoById(2);
         } else if (str == 'english') {
-          this.GetWordContent(3);
+          this.GetDocumentInfoById(3);
         }
       },
       confirmDown() {
@@ -264,28 +289,62 @@
         this.multipleSelection = val;
       },
       showDownPdf() {
+        if(!this.global.memberId) {
+          this.$message({
+            showClose: true,
+            message: '请您先登录，游客不能打印！'
+          });
+          return
+        }
+        if(!(this.global.HYType == 1 || this.global.HYType == 1)) {
+          this.$message({
+            showClose: true,
+            message: '该操作只有高级会员才有请您先升级为高级会员！'
+          });
+          return
+        }
         this.GetMemberInfo()
         //this.downDialog = true
       },
-      async GetDocumentInfoById() {
+      async GetDocumentInfoById(type) {
+        if(!type) {
+          type = 1
+        }
         /*this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
         this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'*/
         let url = 'DocumentService.asmx/GetDocumentInfoById'
         let params = {
           documentId: this.documentId,
-          memberId: this.memberId,
-          languageType: this.languageType
+          memberId: '',
+          languageType: this.languageType,
+          type: type
         }
-        let data = await this.api.get(url, params)
+        let data = await this.api.get(url, params, {loading: true})
         if (data) {
           console.log(data)
           this.isSave = data.isCollect
-          this.detail = data.documentContentModel
+          this.detail = data.documentEntity
+          $('#article').html(data.strChinese)
+          $('.directory').html(data.catalogue)
         }
       },
       async Save() {
+        if(!this.global.memberId) {
+          this.$message({
+            showClose: true,
+            message: '请您先登录，才可以进一步操作！'
+          });
+          return
+        }
         /*this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
         this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'*/
+        if(!this.memberId) {
+          this.$message({
+            showClose: true,
+            message: '请登录以后才可以收藏！'
+          });
+          return
+        }
         let url = 'OtherService.asmx/AddMyCollect'
         let params = {
           documentId: this.documentId,
@@ -304,6 +363,13 @@
         }
       },
       async unSave() {
+        if(!this.global.memberId) {
+          this.$message({
+            showClose: true,
+            message: '请您先登录，才可以进一步操作！'
+          });
+          return
+        }
         /*this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
         this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'*/
         let url = 'OtherService.asmx/DelMyCollect'
@@ -384,12 +450,51 @@
             this.DownloadFile()
           }
         }
+      },
+      directoryClick() {
+        this.isShowDirectory = !this.isShowDirectory
+      },
+      muluClick() {
+        console.log('aaa')
+      },
+      print() {
+        if(!this.global.memberId) {
+          this.$message({
+            showClose: true,
+            message: '请您先登录，游客不能打印！'
+          });
+          return
+        }
+        if(!(this.global.HYType == 1 || this.global.HYType == 1)) {
+          this.$message({
+            showClose: true,
+            message: '该操作只有高级会员才有请您先升级为高级会员！'
+          });
+          return
+        }
+        let printHtml = document.getElementById("article").innerHTML;//这个元素的样式需要用内联方式，不然在新开打印对话框中没有样式
+        let wind = window.open("", 'newwindow', 'height=300, width=700, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+        wind.document.body.innerHTML = printHtml;
+        wind.print();
       }
     }
   }
 </script>
 
 <style scoped>
+  .directory{
+    width: 400px;
+    height: 600px;
+    border: 2px solid #cdcdcd;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: auto;
+    position: absolute;
+    right: -60px;
+    top: -660px;
+    background-color: #ffffff;
+    z-index: 100;
+  }
   td{
     word-wrap:break-word
   }
@@ -735,7 +840,7 @@
   article p:hover {
     background: #E8E8E8;
   }
-  #mulu,
+  #directory,
   #backTop {
     width: 40px;
     height: 40px;
@@ -747,13 +852,17 @@
     vertical-align: top;
     outline: none;
     cursor: pointer;
-    top: 50%;
-    right: 4%;
+    top: 90%;
+    right: 20px;
   }
-  #mulu {
+  #directory{
+    top: 90%;
+    right: 80px;
+  }
+  #directory {
     background: url("../../assets/images/bg.png") -80px -240px;
   }
-  #mulu:hover {
+  #directory:hover {
     background: url("../../assets/images/bg.png") -160px -240px;
   }
   #backTop {
