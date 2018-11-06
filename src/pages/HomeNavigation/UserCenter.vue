@@ -51,7 +51,7 @@
 								</li>
 								<li>
 									<span class="main_li_title">会员级别：</span>
-									<span>{{ memberInfo.F_HYTypeName }}</span>
+									<span v-html="memberInfo.F_HYTypeName"></span>
 									<span class="main_personal_btn" v-show="memberInfo.F_HYType==0" @click="showDialog_upgrade = true">马上升级</span>
 									<span class="main_personal_btn" v-show="memberInfo.F_HYType==1 || memberInfo.F_HYType==2" @click="showDialog_upgrade = true">续费</span>
 								</li>
@@ -309,29 +309,29 @@
 				</el-dialog>
 
 				<!--升级为高级会员弹窗-->
-				<el-dialog :title="memberInfo.F_HYType==1 ? '升级为高级会员' : '立即续费'" :visible.sync="showDialog_upgrade" width="40%" left>
-					<p class="upgrade_tips" v-show="memberInfo.F_HYType==1">您将获得：<span class="blueFont">搜索、查看全部文档、下载与打印、设置两名副用户</span></p>
-					<p class="upgrade_tips">{{ memberInfo.F_HYType==1 ? '选择套餐' : '续费类型' }}：</p>
+				<el-dialog :title="memberInfo.F_HYType==0 ? '升级为高级会员' : '立即续费'" :visible.sync="showDialog_upgrade" width="40%" left>
+					<p class="upgrade_tips" v-show="memberInfo.F_HYType==0">您将获得：<span class="blueFont">搜索、查看全部文档、下载与打印、设置两名副用户</span></p>
+					<p class="upgrade_tips">{{ memberInfo.F_HYType==0 ? '选择套餐' : '续费类型' }}：</p>
 					<p class="choice">
 						<el-radio v-model="upgrade_type" label="1">季付 每月120元 共54次打印或下载机会</el-radio>
 					</p>
 					<p class="choice">
 						<el-radio v-model="upgrade_type" label="2">年付 每年450元 共220打印或下载机会</el-radio>
 					</p>
-					<p class="upgrade_tips mTop20" v-show="memberInfo.F_HYType==1">所在国家：
+					<p class="upgrade_tips mTop20" v-show="memberInfo.F_HYType==0">所在国家：
 						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="user_country" placeholder="您的国家"></el-input>
 					</p>
-					<p class="upgrade_tips mTop20" v-show="memberInfo.F_HYType==1">你的电话：
-						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="user_country" placeholder="您的电话"></el-input>
+					<p class="upgrade_tips mTop20" v-show="memberInfo.F_HYType==0">你的电话：
+						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="user_phone" placeholder="您的电话"></el-input>
 					</p>
 					<span slot="footer" class="dialog-footer">
 				    <el-button @click="showDialog_upgrade = false">取 消</el-button>
-				    <el-button type="primary" @click="">确 定</el-button>
+				    <el-button type="primary" @click="confirm_upgradeOrRepay()">确 定</el-button>
 				  </span>
 				</el-dialog>
 				
 				<!-- 添加或者修改副账户 -->
-				<el-dialog :title="point_account_id=='' ? '添加副账户' : '修改副账户'" :visible.sync="showDialog_addOrmidify_account" width="40%" left>
+				<el-dialog :title="point_account_email=='' ? '添加副账户' : '修改副账户'" :visible.sync="showDialog_addOrmidify_account" width="40%" left>
 					<p class="upgrade_tips mTop20">账户邮箱：
 						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="point_account_email" placeholder="账户邮箱"></el-input>
 					</p>
@@ -455,13 +455,14 @@
 				rows: 10,											// 默认每页显示10条
 				total: 100,										// 默认总数目
 				
-				point_account_id: "",					// 指定的 账户id (""=>添加 不是""=>修改)
+				point_account_id: "",					// 指定的 账户id (添加=>该值为主账户 	修改=>该值为分账户)
 				point_account_email: "",			// 指定的 账户email (""=>添加 不是""=>修改)
 				point_account_password: "",		// 指定的 账户password (""=>添加 不是""=>修改)
 				addOrModify_api_url:	"",			// 新增或者修改账户的接口地址
 				
 				upgrade_type: "", 						// 选择升级类型  1=>季付	2=>年付
 				user_country: "", 						// 所在国家
+				user_phone:	"",								// 您的电话
 				wantToUpgrade: false, 				// 默认为未提交(高级会员申请) => 判断个人信息栏提示付费显示隐藏
 				// 个人信息
 				memberInfo: {
@@ -476,7 +477,6 @@
 					F_SubscriptionLanguage: "", // 订阅语言
 					F_State: "", 								// 状态
 					F_IsDeputy: "", 						// 是否是副账户
-					F_SuperUId: "",
 					F_Country: "", 							// 所在国家
 					downAndPrintCount: "", 			// 总下载次数
 					downloadCount: "", 					// 已下载次数
@@ -551,7 +551,7 @@
 				let url = 'OtherService.asmx/GetMemberInfo';
 				//	        memberId:	this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId') 
 				let params = {
-					memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2"
+					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
 				}
 				let data = await this.api.post(url, params, { loading: true });
 				console.log(data);
@@ -559,17 +559,23 @@
 				if(this.memberInfo.F_HYType == 0){
 					this.memberInfo.F_HYTypeName = "普通会员";
 				}else if(this.memberInfo.F_HYType == 1){
-					this.memberInfo.F_HYTypeName = "高级会员 <span class='blueFont'>季付</span>";
+					this.memberInfo.F_HYTypeName = "高级会员<span class='blueFont marginLeft_2em'>( 季付 )</span>";
 				}else{
-					this.memberInfo.F_HYTypeName = "高级会员 <span class='blueFont'>季付</span>";
+					this.memberInfo.F_HYTypeName = "高级会员<span class='blueFont marginLeft_2em'>( 年付 )</span>";
 				}
+			},
+			
+			// 升级或续费
+			confirm_upgradeOrRepay (){
+				//
+				
 			},
 			
 			// 取消订阅 / 订阅 切换		OtherService.asmx/SetMemberIsSubscription
 			async setMemberIsSubscription(){
 				let url = 'OtherService.asmx/SetMemberIsSubscription';
 				let params = {
-					memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2",
+					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
 					isSubscription: this.memberInfo.F_IsSubscription
 				}
 				let data = await this.api.post(url, params, { loading: true });
@@ -595,7 +601,7 @@
 				let url = 'OtherService.asmx/GetDeputyMemberListByUserId';
 				//	        memberId:	this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId') 
 				let params = {
-					memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2"
+					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
 				}
 				let data = await this.api.post(url, params, { loading: true });
 				this.DeputyMemberList = data.memberList;
@@ -603,7 +609,8 @@
 			
 			// 添加副账户和修改副账户
 			addOrModify_sub_account(Id,Email,Password){
-				if(Id == ""){
+				console.log(this.point_account_email);
+				if( !Email && !Password ){
 					if(this.memberInfo.F_HYType == 0){
 						this.$message({
 	            showClose: true,
@@ -613,7 +620,8 @@
 	          });
 	          return;
 					}else{
-						this.point_account_id = this.memberInfo.F_SuperUId;		// 新增 id 为主账户id
+						this.point_account_id = this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId');		// 新增 id 为主账户id
+						console.log(this.point_account_id);
 						this.point_account_email = "";
 						this.point_account_password = "";
 						this.addOrModify_api_url = "OtherService.asmx/AddDeputyMember";
@@ -631,13 +639,13 @@
 		 	async	confirm_addOrModify_account (){
 				let url = this.addOrModify_api_url;
 				if(url == "OtherService.asmx/AddDeputyMember"){
-					let params = {
+					var params = {
 						email: this.point_account_email,
 			      userPassword: this.point_account_password,
 			      superUId: this.point_account_id
 					}
 				}else{
-					let params = {
+					var params = {
 						newEmail: this.point_account_email,
 			      newPassword: this.point_account_password,
 			      id: this.point_account_id
@@ -646,7 +654,7 @@
 				let data = await this.api.post(url, params);
 				console.log(data);
 				// 成功回调 => 刷新列表
-				if(data.result == true){
+				if(data[0] == 1){
 					this.$message({
             showClose: true,
             message: (url == "OtherService.asmx/AddDeputyMember") ? '成功添加副账户！' : '成功修改副账户！',
@@ -655,6 +663,13 @@
           })
 					this.showDialog_addOrmidify_account = false;
 					this.getDeputyMemberListByUserId();
+				}else{
+					this.$message({
+            showClose: true,
+            message: '返回错误' + data[0],
+            type: 'warning',
+            duration: 2000
+          })
 				}
 			},
 			
@@ -691,7 +706,7 @@
 				let params = {
 					page: this.page,
 					rows: this.rows,
-					memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2",
+					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
 					languageType: 1
 				}
 				let data = await this.api.post(url, params, { loading: true });
@@ -714,12 +729,12 @@
 			async delete_collect(id){
 				let url = "OtherService.asmx/DelMyCollect";
 				let params = {
-					memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2",
+					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
 					documentId: id
 				}
 				let data = await this.api.post(url, params);
 				console.log(data);
-				if(data.result == true){
+				if(data[0] == true){
 					this.$message({
             showClose: true,
             message: '成功取消关注！',
@@ -731,7 +746,7 @@
 				}else{
 					this.$message({
             showClose: true,
-            message: data.result,
+            message: data[0],
             type: 'success',
             duration: 2000
           });
@@ -744,7 +759,7 @@
 	    	let params = {
 	    		page: this.page,
 	    		rows: this.rows,
-	    		memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2",
+	    		memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
 					languageType: 1
 	    	}
 	    	let data = await this.api.post(url, params, { loading: true });
@@ -768,7 +783,7 @@
 	    	let params = {
 	    		page: this.page,
 	    		rows: this.rows,
-	    		memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2"
+	    		memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
 	    	}
 	    	let data = await this.api.post(url, params, { loading: true });
 				console.log(data);
@@ -859,7 +874,7 @@
             let params = {
             	userOldPassword: _this.ruleForm2.userOldPassword,
             	userNewPassword: _this.ruleForm2.userNewPassword,
-            	memberId: "18416e80-b937-497f-9c49-1b99bfcf93e2"
+            	memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
             }
             console.log(params);
             $.ajax({

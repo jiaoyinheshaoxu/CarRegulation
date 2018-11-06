@@ -69,6 +69,9 @@
           showClose: true,
           message: '退出登录成功！'
         });
+        this.$router.push({
+          path: '/Index'
+        })
       },
       goUserCenter() {
         this.$router.push({
