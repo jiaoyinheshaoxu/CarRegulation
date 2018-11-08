@@ -63,8 +63,10 @@
           <div class="label" v-if="detail.f_Label">
             <span v-for="row in detail.f_Label.split('；')" v-show="row">{{row}}</span>
           </div>
-          <span style="float: right;cursor: pointer;color: #0c7dcf" v-show="!isSave" @click="Save()">收藏</span>
-          <span style="float: right;cursor: pointer;color: #0c7dcf" v-show="isSave" @click="unSave()">已收藏</span>
+          <span style="float: right;cursor: pointer;color: red" v-show="!isSave" @click="Save()">收藏</span>
+          <span class="no-heart fav" style="float:right;" v-show="!isSave"></span>
+          <span style="float: right;cursor: pointer;color: red" v-show="isSave" @click="unSave()">已收藏</span>
+          <span class="heart fav" style="float:right;" v-show="isSave"></span>
         </div>
       </div>
       <article id="article">
@@ -74,10 +76,11 @@
         <div v-html="detail.f_ChineseContent"></div>
       </div>
       <button id="backTop"></button>
-      <div id="directory" @click="directoryClick()" v-show="showDirectoryButton">
-        <div class="directory" v-show="isShowDirectory" @click.stop="muluClick()">
+      <div id="directory" @click="directoryClick()" v-show="showMuluButton">
 
-        </div>
+      </div>
+      <div class="directory" v-show="isShowDirectory" @click.stop="muluClick()">
+
       </div>
     </div>
     <!--下载pdf-->
@@ -129,7 +132,6 @@
   export default {
     data() {
       return {
-        showDirectoryButton: false,
         documentId: '',
         languageType: 1,
         memberId: '',
@@ -159,7 +161,9 @@
         multipleSelection: [],
         isSave: false,
         residueDownloadNum: 0,
-        isShowDirectory: false
+        isShowDirectory: false,
+        scroll: '',
+        showMuluButton: false
       }
     },
     computed: {
@@ -168,15 +172,7 @@
       }
     },
     mounted() {
-      $(window).scroll(function (event) {
-        let w_height = $(window).height()
-        console.log(w_height)
-        if ($(window).scrollTop() > w_height) {
-          this.showDirectoryButton = true
-        } else {
-          this.showDirectoryButton = false
-        }
-      });
+      window.addEventListener('scroll', this.scrollMove)
       $("#fontSize button").click(function () {
         $("#fontSize button").removeClass("font-active");
         $(this).addClass("font-active")
@@ -262,11 +258,27 @@
       //this.GetWordContent()
     },
     methods: {
+      scrollMove() {
+        console.log(this.global.HYType)
+        this.scroll = document.documentElement.scrollTop || document.body.scrollTop
+        if(this.scroll > $(window).height()) {
+          if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
+            document.documentElement.scrollTop = $(window).height()
+            this.$message({
+              showClose: true,
+              message: '游客或者普通会员只能看一页，赶快去升级为高级会员！'
+            });
+          }
+          this.showMuluButton = true
+        } else {
+          this.showMuluButton = false
+        }
+      },
       languageClick(str) {
         if(str == 'shu') {
-          this.GetDocumentInfoById(1);
-        } else if (str == 'heng') {
           this.GetDocumentInfoById(4);
+        } else if (str == 'heng') {
+          this.GetDocumentInfoById(1);
         } else if (str == 'china') {
           this.GetDocumentInfoById(2);
         } else if (str == 'english') {
@@ -308,7 +320,7 @@
       },
       async GetDocumentInfoById(type) {
         if(!type) {
-          type = 1
+          type = 2
         }
         /*this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
         this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'*/
@@ -359,6 +371,12 @@
               message: '收藏成功！'
             });
             this.isSave = true
+          } else {
+            this.$message({
+              showClose: true,
+              message: '收藏失败！',
+              type: 'warning'
+            });
           }
         }
       },
@@ -386,6 +404,12 @@
               message: '取消收藏成功！'
             });
             this.isSave = false
+          } else {
+            this.$message({
+              showClose: true,
+              message: '取消收藏失败！',
+              type: 'warning'
+            });
           }
         }
       },
@@ -483,15 +507,15 @@
 
 <style scoped>
   .directory{
-    width: 400px;
-    height: 600px;
+    width: 20%;
+    height: 70%;
     border: 2px solid #cdcdcd;
     border-radius: 10px;
     padding: 20px;
     overflow: auto;
-    position: absolute;
-    right: -60px;
-    top: -660px;
+    position: fixed;
+    right: 20px;
+    top: 15%;
     background-color: #ffffff;
     z-index: 100;
   }
@@ -825,20 +849,6 @@
     line-height: 1.5;
     font-size: 14px;
     color: #000;
-  }
-  article p {
-    line-height: 1.5;
-    font-size: 14px;
-    color: #666666;
-    margin-bottom:20px;
-  }
-  article p.ask{
-    font-size:16px;
-    font-weight:bold;
-
-  }
-  article p:hover {
-    background: #E8E8E8;
   }
   #directory,
   #backTop {

@@ -203,4 +203,17 @@ a img {
   table-layout: fixed !important;
   width: 98% !important;
 }
+#article p:hover{
+  background: #E8E8E8;
+}
+#article p {
+  line-height: 1.5;
+  font-size: 14px;
+  color: #666666;
+  margin-bottom:20px;
+}
+#article p.ask{
+  font-size:16px;
+  font-weight:bold;
+}
 

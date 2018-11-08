@@ -59,6 +59,7 @@
       },
       loginOut() {
         this.global.memberId = ''
+        this.global.HYType = 0
         this.userPassword = ''
         this.userEmail = ''
         sessionStorage.removeItem('memberId', '')
@@ -69,9 +70,9 @@
           showClose: true,
           message: '退出登录成功！'
         });
-        this.$router.push({
+        /*this.$router.push({
           path: '/Index'
-        })
+        })*/
       },
       goUserCenter() {
         this.$router.push({

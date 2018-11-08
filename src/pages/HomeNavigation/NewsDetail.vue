@@ -74,10 +74,11 @@
         <div v-html="detail.f_ChineseContent"></div>
       </div>
       <button id="backTop"></button>
-      <div id="directory" @click="directoryClick()" v-show="showDirectoryButton">
-        <div class="directory" v-show="isShowDirectory" @click.stop="muluClick()">
+      <div id="directory" @click="directoryClick()" v-show="showMuluButton">
 
-        </div>
+      </div>
+      <div class="directory" v-show="isShowDirectory" @click.stop="muluClick()">
+
       </div>
     </div>
     <!--下载pdf-->
@@ -159,7 +160,9 @@
         multipleSelection: [],
         isSave: false,
         residueDownloadNum: 0,
-        isShowDirectory: false
+        isShowDirectory: false,
+        scroll: '',
+        showMuluButton: false
       }
     },
     computed: {
@@ -168,15 +171,7 @@
       }
     },
     mounted() {
-      $(window).scroll(function (event) {
-        let w_height = $(window).height()
-        console.log(w_height)
-        if ($(window).scrollTop() > w_height) {
-          this.showDirectoryButton = true
-        } else {
-          this.showDirectoryButton = false
-        }
-      });
+      window.addEventListener('scroll', this.scrollMove)
       $("#fontSize button").click(function () {
         $("#fontSize button").removeClass("font-active");
         $(this).addClass("font-active")
@@ -260,11 +255,27 @@
       //this.GetWordContent()
     },
     methods: {
+      scrollMove() {
+        console.log(this.global.HYType)
+        this.scroll = document.documentElement.scrollTop || document.body.scrollTop
+        if(this.scroll > $(window).height()) {
+          if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
+            document.documentElement.scrollTop = $(window).height()
+            this.$message({
+              showClose: true,
+              message: '游客或者普通会员只能看一页，赶快去升级为高级会员！'
+            });
+          }
+          this.showMuluButton = true
+        } else {
+          this.showMuluButton = false
+        }
+      },
       languageClick(str) {
         if(str == 'shu') {
-          this.getDetail(1);
-        } else if (str == 'heng') {
           this.getDetail(4);
+        } else if (str == 'heng') {
+          this.getDetail(1);
         } else if (str == 'china') {
           this.getDetail(2);
         } else if (str == 'english') {
@@ -348,7 +359,7 @@
       },
       async getDetail(type) {
         if(!type) {
-          type = 1
+          type = 2
         }
         let url = 'DocumentService.asmx/GetDocumentInformationInfoById'
         let params = {
@@ -356,7 +367,7 @@
           languageType: this.languageType,
           type: type
         }
-        let data = await this.api.post(url, params, {loading: true})
+        let data = await this.api.get(url, params, {loading: true})
         if (data) {
           this.detail = data
           console.log(data)
@@ -427,15 +438,15 @@
 
 <style scoped>
   .directory{
-    width: 400px;
-    height: 600px;
+    width: 20%;
+    height: 70%;
     border: 2px solid #cdcdcd;
     border-radius: 10px;
     padding: 20px;
     overflow: auto;
-    position: absolute;
-    right: -60px;
-    top: -660px;
+    position: fixed;
+    right: 20px;
+    top: 15%;
     background-color: #ffffff;
     z-index: 100;
   }
