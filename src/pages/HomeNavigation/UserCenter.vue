@@ -110,7 +110,7 @@
 									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">您 还 没 有 添 加 任 何 副 账 户 ！</a></span></td>
 								</tr>
 								<tr v-show="DeputyMemberList.length || DeputyMemberList.length > 0" v-for="(item,index) in DeputyMemberList" :key="index">
-									<td>{{ index}}</td>
+									<td>{{ index+1 }}</td>
 									<td class="email_password_td" :title="item.Email">{{ item.Email }}</td>
 									<td class="email_password_td" :title="item.Password">{{ item.Password }}</td>
 									<td class="last_sub_table">
@@ -147,7 +147,7 @@
 									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">您 还 没 有 添 加 任 何 收 藏 ！</a></span></td>
 								</tr>
 								<tr v-show="myCollectList.length || myCollectList.length > 0" v-for="(item,index) in myCollectList" :key="index">
-									<td>{{ index}}</td>
+									<td>{{ index+1 }}</td>
 									<td class="email_password_td" :title="item.Title">{{ item.Title }}</td>
 									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime }}</td>
 									<td class="last_sub_table">
@@ -374,7 +374,7 @@
 				<!-- 查看消息详情弹窗 -->
 				<el-dialog title="消息详情" :visible.sync="showDialog_checkMsg_detail" width="400px" left>
 					<p class="upgrade_tips">消息详情：<span class="blueFont">{{ singleMessage.title }}</span></p>
-					<p class="upgrade_tips">提醒时间：<span class="blueFont">{{ singleMessage.time }}</span></p>
+					<p class="upgrade_tips">提醒时间：<span class="blueFont">{{ singleMessage.time.slice(0,10)+"日 "+singleMessage.time.slice(11,19)}}</span></p>
 					<span slot="footer" class="dialog-footer">
 				    <el-button type="primary" @click="showDialog_checkMsg_detail = false">知 道 了</el-button>
 				  </span>
@@ -489,24 +489,10 @@
 				// 下载打印列表
 				downloadInfoList: [],
 				// 系统消息
-				sysMessageInfoEntityList: [
-					{
-						Id: 568,
-						Title: "sdarf",
-						CreatorTime:"2018-10-11"
-					},{
-						Id: 569,
-						Title: "适当方式",
-						CreatorTime:"2018-10-12"
-					},{
-						Id: 570,
-						Title: "sdfbaefd",
-						CreatorTime:"2018-10-13"
-					},
-				],
+				sysMessageInfoEntityList: [],
 				messageIds: "",							// 放置消息ids
 				singleMessage:{							// 单条消息
-					
+					time: '2018-11-06T21:50:18.5300000+08:00'
 				}
 			}
 		},
@@ -565,10 +551,32 @@
 				}
 			},
 			
-			// 升级或续费
-			confirm_upgradeOrRepay (){
-				//
-				
+			// 升级或续费 		OtherService.asmx/AddSysMessageInfo
+			async confirm_upgradeOrRepay (){
+				let url = 'OtherService.asmx/AddSysMessageInfo';
+				let params = {
+					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
+					title: "只是一条信息"
+				}
+				let data = await this.api.post(url, params, { loading: true });
+				console.log(data);
+				if(data[0] == true){
+					this.$message({
+            showClose: true,
+            message: "请查看消息管理...",
+            type: 'success',
+            duration: 2000
+          })
+					this.showDialog_upgrade = false;
+					this.wantToUpgrade = true;
+				}else{
+					this.$message({
+            showClose: true,
+            message: data.result,
+            type: 'success',
+            duration: 2000
+          });
+				}
 			},
 			
 			// 取消订阅 / 订阅 切换		OtherService.asmx/SetMemberIsSubscription
@@ -683,12 +691,11 @@
 			async confirm_delete_account(){
 				let url = "OtherService.asmx/DeleteDeputyMember";
 				let params = {
-					keyValue: this.point_account_id
+					id: this.point_account_id
 				}
 				let data = await this.api.post(url, params);
-				console.log(data);
 				// 成功回调 => 刷新列表
-				if(data.result == true){
+				if(data[0] == true){
 					this.$message({
             showClose: true,
             message: '成功删除副账户！',
@@ -786,10 +793,8 @@
 	    		memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
 	    	}
 	    	let data = await this.api.post(url, params, { loading: true });
-				console.log(data);
-				this.total = 300;
-				// this.total = data.total;
-				// this.sysMessageInfoEntityList = data.sysMessageInfoEntityList;
+				this.total = data.total;
+				this.sysMessageInfoEntityList = data.sysMessageInfoEntityList;
 	    },
 	    
 			// 批量删除系统消息 OtherService.asmx/DelSysMessageInfo
@@ -831,6 +836,9 @@
           })
 					this.showDialog_delete_message = false;
 					this.getSysMessageInfo();
+					let $subBox = $('input.checkNode');
+	      	$subBox.prop("checked", false);
+	      	$('#checkAllOrNot').prop("checked", false);
 				}else{
 					this.$message({
             showClose: true,
