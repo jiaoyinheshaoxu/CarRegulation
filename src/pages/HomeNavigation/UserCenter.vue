@@ -709,7 +709,9 @@
 			
 			// 获取收藏列表 OtherService.asmx/GetMyCollect
 	    async getMyCollect(){
-				let url = "OtherService.asmx/GetMyCollect";
+	    	let num = Math.random();
+				console.log(num);
+				let url = "OtherService.asmx/GetMyCollect?num=" + num;
 				let params = {
 					page: this.page,
 					rows: this.rows,
@@ -732,12 +734,12 @@
 				this.getMyCollect();
 			},
 			
-			// 取消关注 OtherService.asmx/DelMyCollect
+			// 取消关注 OtherService.asmx/DelMyCollectById
 			async delete_collect(id){
-				let url = "OtherService.asmx/DelMyCollect";
+				let url = "OtherService.asmx/DelMyCollectById";
 				let params = {
-					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
-					documentId: id
+//					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
+					id: id
 				}
 				let data = await this.api.post(url, params);
 				console.log(data);
