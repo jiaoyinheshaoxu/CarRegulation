@@ -1,30 +1,32 @@
 <template lang='html'>
-  <div id="activit">
-    <h3>最新翻译</h3>
-    <ul class="activit_content" id="activit_content">
-      <li v-for="row in standardLawList" @click="goDetail(row)">
-        <a>
-          <div class="activit_content_title">
-            <b class="lf">{{row.Title}}</b>
-            <b class="rt">{{new Date(row.CreatorTime).getTime() | formatTime('YMD')}}</b>
-          </div>
-          <div class="title_content">
-            <p>{{row.Centent}}</p>
-          </div>
-        </a>
-      </li>
-    </ul>
-    <el-pagination
-      v-show="standardLawList.length > 0"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[10, 20, 30, 40, 50]"
-      :page-size="pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-      class="pageStyle">
-    </el-pagination>
+  <div id="main">
+    <div id="activit">
+      <h3>最新翻译</h3>
+      <ul class="activit_content" id="activit_content">
+        <li v-for="row in standardLawList" @click="goDetail(row)">
+          <a>
+            <div class="activit_content_title">
+              <b class="lf">{{row.Title}}</b>
+              <b class="rt">{{new Date(row.CreatorTime).getTime() | formatTime('YMD')}}</b>
+            </div>
+            <div class="title_content">
+              <p>{{row.Centent}}</p>
+            </div>
+          </a>
+        </li>
+      </ul>
+      <el-pagination
+        v-show="standardLawList.length > 0"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[10, 20, 30, 40, 50]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        class="pageStyle">
+      </el-pagination>
+    </div>
   </div>
 </template>
 

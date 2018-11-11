@@ -1,5 +1,5 @@
 <template lang='html'>
-  <div>
+  <div id="main">
     <!-- 左侧查询条件 -->
     <div id="left_search">
       <div id="title">

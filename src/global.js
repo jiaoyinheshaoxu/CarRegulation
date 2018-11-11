@@ -1,19 +1,19 @@
 export default {
-//jiekou_url: 'http://47.92.160.129:8080',
-  jiekou_url: 'http://www.chineseautoregs.com:8080',
+  jiekou_url: 'http://47.92.160.129:8080',
+  //jiekou_url: 'http://www.chineseautoregs.com:8080',
   userEmail: "",															// 用户邮箱
   userPassword: "",														// 用户密码
   check_strEmpty: check_strEmpty,
   check_numberMixLetter: check_numberMixLetter,
   check_emailValid: check_emailValid,
-  memberId: "",																// 用户 id 
-  
+  memberId: "",																// 用户 id
+
 }
 
-// 公共方法 
+// 公共方法
 // 1: 判断是否是空 字符串
 function check_strEmpty(str){
-	if (str.length ==0 || str.replace(/(^s*)|(s*$)/g, "").length ==0){ 
+	if (str.length ==0 || str.replace(/(^s*)|(s*$)/g, "").length ==0){
 		return false;
 	}else{
 		return true;
@@ -40,4 +40,4 @@ function check_emailValid(str){
 　}
 }
 
-// 4: 
+// 4:

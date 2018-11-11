@@ -1,66 +1,68 @@
 <template lang='html'>
-  <div class="center">
-    <div class="nav-title">
-      <h1>导航中心</h1>
-    </div>
-    <div class="nav-content">
-      <div class="nav-left">
-        <ul>
-          <li :class="{'li_active': cur_showType == 'government'}">
-            <a @click="maoClick('government')" :class="{'a_active': cur_showType == 'government'}">政府网站</a>
-          </li>
-          <li :class="{'li_active': cur_showType == 'approve'}">
-            <a @click="maoClick('approve')" :class="{'a_active': cur_showType == 'approve'}">认证机构</a>
-          </li>
-          <li :class="{'li_active': cur_showType == 'detection'}">
-            <a @click="maoClick('detection')" :class="{'a_active': cur_showType == 'detection'}">检测机构</a>
-          </li>
-        </ul>
+  <div id="main">
+    <div class="center">
+      <div class="nav-title">
+        <h1>导航中心</h1>
       </div>
-      <div class="nav-right">
-        <div id="zhengfu" v-show="cur_showType == 'government'">
-          <div class="nav-header">
-            <h5>政府网站</h5>
-          </div>
-          <div class="nav-list">
-            <ul>
-              <li v-for="row in governmentWebList">
-                <a>
-                  <h5>{{row.c_name}}</h5>
-                  <p>{{row.e_name}}</p>
-                </a>
-              </li>
-            </ul>
-          </div>
+      <div class="nav-content">
+        <div class="nav-left">
+          <ul>
+            <li :class="{'li_active': cur_showType == 'government'}">
+              <a @click="maoClick('government')" :class="{'a_active': cur_showType == 'government'}">政府网站</a>
+            </li>
+            <li :class="{'li_active': cur_showType == 'approve'}">
+              <a @click="maoClick('approve')" :class="{'a_active': cur_showType == 'approve'}">认证机构</a>
+            </li>
+            <li :class="{'li_active': cur_showType == 'detection'}">
+              <a @click="maoClick('detection')" :class="{'a_active': cur_showType == 'detection'}">检测机构</a>
+            </li>
+          </ul>
         </div>
-        <div id="renzheng" v-show="cur_showType == 'approve'">
-          <div class="nav-header">
-            <h5>认证机构</h5>
+        <div class="nav-right">
+          <div id="zhengfu" v-show="cur_showType == 'government'">
+            <div class="nav-header">
+              <h5>政府网站</h5>
+            </div>
+            <div class="nav-list">
+              <ul>
+                <li v-for="row in governmentWebList">
+                  <a>
+                    <h5>{{row.c_name}}</h5>
+                    <p>{{row.e_name}}</p>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div class="nav-list">
-            <ul>
-              <li v-for="row in approveList">
-                <a>
-                  <h5>{{row.c_name}}</h5>
-                  <p>{{row.e_name}}</p>
-                </a>
-              </li>
-            </ul>
+          <div id="renzheng" v-show="cur_showType == 'approve'">
+            <div class="nav-header">
+              <h5>认证机构</h5>
+            </div>
+            <div class="nav-list">
+              <ul>
+                <li v-for="row in approveList">
+                  <a>
+                    <h5>{{row.c_name}}</h5>
+                    <p>{{row.e_name}}</p>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-        <div id="jiance" v-show="cur_showType == 'detection'">
-          <div class="nav-header">
-            <h5>检测机构</h5>
-          </div>
-          <div class="nav-list">
-            <ul>
-              <li v-for="row in detectionList">
-                <a>
-                  <h5>{{row.c_name}}</h5>
-                  <p>{{row.e_name}}</p>
-                </a>
-              </li>
-            </ul>
+          <div id="jiance" v-show="cur_showType == 'detection'">
+            <div class="nav-header">
+              <h5>检测机构</h5>
+            </div>
+            <div class="nav-list">
+              <ul>
+                <li v-for="row in detectionList">
+                  <a>
+                    <h5>{{row.c_name}}</h5>
+                    <p>{{row.e_name}}</p>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

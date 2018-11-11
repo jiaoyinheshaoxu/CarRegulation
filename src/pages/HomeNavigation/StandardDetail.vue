@@ -58,7 +58,7 @@
         <div class="line3" v-show="detail.f_ChineseTitle">
           <div class="effectiveDate">
             <span>发布日期（Date issued）</span>{{new Date(detail.f_ReleaseDate).getTime() | formatTime('YMD')}}<span></span>
-            <span>实施日期（Effective date）</span>{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}<span></span>
+            <span style="margin-left: 40px">实施日期（Effective date）</span>{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}<span></span>
           </div>
           <div class="label" v-if="detail.f_Label">
             <span v-for="row in detail.f_Label.split('；')" v-show="row">{{row}}</span>
@@ -72,9 +72,9 @@
       <article id="article">
 
       </article>
-      <div class="article">
+      <!--<div class="article">
         <div v-html="detail.f_ChineseContent"></div>
-      </div>
+      </div>-->
       <button id="backTop"></button>
       <div id="directory" @click="directoryClick()" v-show="showMuluButton">
 
@@ -163,7 +163,9 @@
         residueDownloadNum: 0,
         isShowDirectory: false,
         scroll: '',
-        showMuluButton: false
+        showMuluButton: false,
+        hasCatalogue: false,
+        downType: '',  //1 下载  2 打印
       }
     },
     computed: {
@@ -207,15 +209,27 @@
         $('#article-header').css({
           background: '#ffffff'
         })
+        $('.box').css({
+          background: '#f1f1f1'
+        })
+        $('.directory').css({
+          background: '#ffffff'
+        })
       });
       //moon skinnight
       $("#moon").click(function () {
         $(".white").attr("class", "black");
         $('#article').css({
-          background: 'gray'
+          background: '#191919'
         })
         $('#article-header').css({
-          background: 'gray'
+          background: '#191919'
+        })
+        $('.box').css({
+          background: '#282828'
+        })
+        $('.directory').css({
+          background: '#191919'
         })
       });
       $("#contents_list li").mouseover(function () {
@@ -252,7 +266,6 @@
       console.log(this.global)
       this.memberId = this.global.memberId
       this.documentId = this.$route.params.id
-      this.memberId = this.global.memberId
       this.GetDocumentInfoById()
       //this.getDetail()
       //this.GetWordContent()
@@ -269,9 +282,12 @@
               message: '游客或者普通会员只能看一页，赶快去升级为高级会员！'
             });
           }
-          this.showMuluButton = true
+          if(this.hasCatalogue) {
+            this.showMuluButton = true
+          }
         } else {
           this.showMuluButton = false
+          this.isShowDirectory = false
         }
       },
       languageClick(str) {
@@ -301,6 +317,7 @@
         this.multipleSelection = val;
       },
       showDownPdf() {
+        this.downType = 1
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
@@ -327,7 +344,7 @@
         let url = 'DocumentService.asmx/GetDocumentInfoById'
         let params = {
           documentId: this.documentId,
-          memberId: '',
+          memberId: this.global.memberId,
           languageType: this.languageType,
           type: type
         }
@@ -336,6 +353,11 @@
           console.log(data)
           this.isSave = data.isCollect
           this.detail = data.documentEntity
+          if(!data.catalogue) {
+            this.hasCatalogue = false
+          } else {
+            this.hasCatalogue = true
+          }
           $('#article').html(data.strChinese)
           $('.directory').html(data.catalogue)
         }
@@ -350,7 +372,7 @@
         }
         /*this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
         this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'*/
-        if(!this.memberId) {
+        if(!this.global.memberId) {
           this.$message({
             showClose: true,
             message: '请登录以后才可以收藏！'
@@ -360,23 +382,31 @@
         let url = 'OtherService.asmx/AddMyCollect'
         let params = {
           documentId: this.documentId,
-          memberId: this.memberId,
+          memberId: this.global.memberId,
         }
         let data = await this.api.post(url, params)
         if (data) {
           console.log(data)
-          if (data[0] == true) {
+          if (data[0] == 1) {
             this.$message({
               showClose: true,
               message: '收藏成功！'
             });
             this.isSave = true
-          } else {
+          } else if(data[0] == 2) {
+            this.$message({
+              showClose: true,
+              message: '已经收藏！',
+              type: 'warning'
+            });
+            this.isSave = true
+          }else {
             this.$message({
               showClose: true,
               message: '收藏失败！',
               type: 'warning'
             });
+            this.isSave = false
           }
         }
       },
@@ -393,7 +423,7 @@
         let url = 'OtherService.asmx/DelMyCollect'
         let params = {
           documentId: this.documentId,
-          memberId: this.memberId,
+          memberId: this.global.memberId,
         }
         let data = await this.api.post(url, params)
         if (data) {
@@ -410,6 +440,7 @@
               message: '取消收藏失败！',
               type: 'warning'
             });
+            this.isSave = true
           }
         }
       },
@@ -440,17 +471,28 @@
           $("#article").html(data[0]);
         }
       },
-      async DownloadFile() {
+      DownloadFile() {
+        window.open(`${this.global.jiekou_url}/DocumentService.asmx/DownloadPDFFile?documentId=${this.documentId}&memberId=${this.global.memberId}&languageType=${this.languageType}`)
         /*this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
         this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'*/
-        let url = 'DocumentService/DownloadFile'
+        /*let url = 'DocumentService.asmx/DownloadPDFFile'
         let params = {
           documentId: this.documentId,
-          memberId: this.memberId,
+          memberId: this.global.memberId,
           languageType: this.languageType
         }
-        let data = await this.api.post(url ,params)
+        let data = await this.api.get(url ,params)
         if (data) {
+          console.log(data)
+        }*/
+      },
+      async GetDownloadInfoStat() {
+        let url = '/OtherService.asmx/GetDownloadInfoStat'
+        let params = {
+          memberId: this.global.memberId
+        }
+        let data = await this.api.post(url, params, {loading: true})
+        if(data){
           console.log(data)
         }
       },
@@ -458,9 +500,9 @@
         /*this.memberId = 'b60b54ee-d4fb-4085-a873-e8dc95af1039'*/
         let url = 'OtherService.asmx/GetMemberInfo'
         let params = {
-          memberId: this.memberId
+          memberId: this.global.memberId
         }
-        let data = await this.api.post(url, params)
+        let data = await this.api.post(url, params, {loading: true})
         if (data) {
           console.log(data)
           this.residueDownloadNum = data.residueDownloadNum
@@ -469,9 +511,13 @@
               showClose: true,
               message: '你的下载剩余下载次数不够了，请充值会员后再下载！'
             });
+            return
+          } else if(this.downType == 1) {
+            this.GetDownloadInfoStat()
             this.DownloadFile()
-          } else {
-            this.DownloadFile()
+          } else if(this.downType == 2) {
+            this.GetDownloadInfoStat()
+            this.startPrint()
           }
         }
       },
@@ -482,6 +528,7 @@
         console.log('aaa')
       },
       print() {
+        this.downType = 2
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
@@ -496,6 +543,13 @@
           });
           return
         }
+        this.GetMemberInfo()
+        /*let printHtml = document.getElementById("article").innerHTML;//这个元素的样式需要用内联方式，不然在新开打印对话框中没有样式
+        let wind = window.open("", 'newwindow', 'height=300, width=700, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+        wind.document.body.innerHTML = printHtml;
+        wind.print();*/
+      },
+      startPrint(){
         let printHtml = document.getElementById("article").innerHTML;//这个元素的样式需要用内联方式，不然在新开打印对话框中没有样式
         let wind = window.open("", 'newwindow', 'height=300, width=700, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
         wind.document.body.innerHTML = printHtml;
@@ -506,6 +560,10 @@
 </script>
 
 <style scoped>
+  .box{
+    width: 100%;
+    min-height: 600px;
+  }
   .directory{
     width: 20%;
     height: 70%;
@@ -523,7 +581,7 @@
     word-wrap:break-word
   }
   .center {
-    width: 90%;
+    width: 70%;
     margin: 0px auto 50px;
   }
   .white #menu {

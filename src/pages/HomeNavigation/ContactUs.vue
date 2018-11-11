@@ -1,32 +1,34 @@
 <template lang='html'>
-  <div class="center">
-    <div class="nav-title">
-      <h1>联系我们</h1>
-    </div>
-    <div class="nav-content">
-      <div class="box">
-        <p>给我们留言</p>
-        <el-form ref="form" :model="form" label-width="120px">
-          <el-form-item label="您的邮箱：">
-            <el-input v-model="form.email" placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="浏览分类：">
-            <el-select v-model="form.checkType" placeholder="请选择类别">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="标题：">
-            <el-input v-model="form.title" placeholder="请输入标题"></el-input>
-          </el-form-item>
-          <el-form-item label="内容录入：">
-            <el-input type="textarea" v-model="form.desc" placeholder="请输入内容"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit" style="margin-left: 160px">发送</el-button>
-            <el-button>取消</el-button>
-          </el-form-item>
-        </el-form>
+  <div id="main">
+    <div class="center">
+      <div class="nav-title">
+        <h1>联系我们</h1>
+      </div>
+      <div class="nav-content">
+        <div class="box">
+          <p>给我们留言</p>
+          <el-form ref="form" :model="form" label-width="120px">
+            <el-form-item label="您的邮箱：">
+              <el-input v-model="form.email" placeholder="请输入"></el-input>
+            </el-form-item>
+            <el-form-item label="浏览分类：">
+              <el-select v-model="form.checkType" placeholder="请选择类别">
+                <el-option label="区域一" value="shanghai"></el-option>
+                <el-option label="区域二" value="beijing"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="标题：">
+              <el-input v-model="form.title" placeholder="请输入标题"></el-input>
+            </el-form-item>
+            <el-form-item label="内容录入：">
+              <el-input type="textarea" v-model="form.desc" placeholder="请输入内容"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit" style="margin-left: 160px">发送</el-button>
+              <el-button>取消</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
     </div>
   </div>

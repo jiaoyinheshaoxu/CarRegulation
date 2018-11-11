@@ -1,5 +1,5 @@
 <template lang='html'>
-  <div>
+  <div id="main">
     <!-- 搜索栏 -->
     <div id="search">
       <div id="search_content">

@@ -58,7 +58,7 @@
         <div class="line3">
           <div class="effectiveDate" v-show="detail.f_ChineseTitle">
             <span>发布日期（Date issued）</span>{{new Date(detail.f_ReleaseDate).getTime() | formatTime('YMD')}}<span></span>
-            <span>实施日期（Effective date）</span>{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}<span></span>
+            <span style="margin-left: 40px">实施日期（Effective date）</span>{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}<span></span>
           </div>
           <div class="label" v-if="detail.f_Label">
             <span v-for="row in detail.f_Label.split('；')" v-show="row">{{row}}</span>
@@ -162,7 +162,8 @@
         residueDownloadNum: 0,
         isShowDirectory: false,
         scroll: '',
-        showMuluButton: false
+        showMuluButton: false,
+        hasCatalogue: false
       }
     },
     computed: {
@@ -206,15 +207,27 @@
         $('#article-header').css({
           background: '#ffffff'
         })
+        $('.box').css({
+          background: '#f1f1f1'
+        })
+        $('.directory').css({
+          background: '#ffffff'
+        })
       });
       //moon skinnight
       $("#moon").click(function () {
         $(".white").attr("class", "black");
         $('#article').css({
-          background: 'gray'
+          background: '#191919'
         })
         $('#article-header').css({
-          background: 'gray'
+          background: '#191919'
+        })
+        $('.box').css({
+          background: '#282828'
+        })
+        $('.directory').css({
+          background: '#191919'
         })
       });
       $("#contents_list li").mouseover(function () {
@@ -265,10 +278,13 @@
               showClose: true,
               message: '游客或者普通会员只能看一页，赶快去升级为高级会员！'
             });
+            if(this.hasCatalogue) {
+              this.showMuluButton = true
+            }
           }
-          this.showMuluButton = true
         } else {
           this.showMuluButton = false
+          this.isShowDirectory = false
         }
       },
       languageClick(str) {
@@ -307,7 +323,7 @@
         let url = 'DocumentService.asmx/GetDocumentInfoById'
         let params = {
           documentId: this.documentId,
-          memberId: this.memberId,
+          memberId: this.global.memberId,
           languageType: this.languageType
         }
         let data = await this.api.post(url, params)
@@ -323,7 +339,7 @@
         let url = 'OtherService.asmx/AddMyCollect'
         let params = {
           documentId: this.documentId,
-          memberId: this.memberId,
+          memberId: this.global.memberId,
         }
         let data = await this.api.post(url, params)
         if (data) {
@@ -343,7 +359,7 @@
         let url = 'OtherService.asmx/DelMyCollect'
         let params = {
           documentId: this.documentId,
-          memberId: this.memberId,
+          memberId: this.global.memberId,
         }
         let data = await this.api.post(url, params)
         if (data) {
@@ -372,6 +388,11 @@
           this.detail = data
           console.log(data)
           this.detail = data.documentEntity
+          if(!data.catalogue) {
+            this.hasCatalogue = false
+          }else {
+            this.hasCatalogue = true
+          }
           $('#article').html(data.strChinese)
           $('.directory').html(data.catalogue)
         }
@@ -397,7 +418,7 @@
         let url = 'DocumentService/DownloadFile'
         let params = {
           documentId: this.documentId,
-          memberId: this.memberId,
+          memberId: this.global.memberId,
           languageType: this.languageType
         }
         let data = await this.api.post(url ,params)
@@ -409,7 +430,7 @@
         /*this.memberId = 'b60b54ee-d4fb-4085-a873-e8dc95af1039'*/
         let url = 'OtherService.asmx/GetMemberInfo'
         let params = {
-          memberId: this.memberId
+          memberId: this.global.memberId
         }
         let data = await this.api.post(url, params)
         if (data) {
@@ -437,6 +458,10 @@
 </script>
 
 <style scoped>
+  .box{
+    width: 100%;
+    min-height: 600px;
+  }
   .directory{
     width: 20%;
     height: 70%;
@@ -454,7 +479,7 @@
     word-wrap:break-word
   }
   .center {
-    width: 90%;
+    width: 70%;
     margin: 0px auto 50px;
   }
   .white #menu {

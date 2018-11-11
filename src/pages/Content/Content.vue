@@ -97,8 +97,7 @@
     overflow: hidden;
   }
   #content {
-    width: 85%;
+    width: 100%;
     min-height: 680px;
-    margin: 0 auto;
   }
 </style>

@@ -1,37 +1,39 @@
 <template lang='html'>
-  <div class="center">
-    <div class="nav-title">
-      <h1>帮助中心</h1>
-    </div>
-    <div class="nav-content">
-      <div class="nav-left">
-        <ul>
-          <li :class="{'li_active': cur_showType == 'government'}">
-            <a @click="maoClick('government')" :class="{'a_active': cur_showType == 'government'}">会员注册</a>
-          </li>
-          <li :class="{'li_active': cur_showType == 'approve'}">
-            <a @click="maoClick('approve')" :class="{'a_active': cur_showType == 'approve'}">如何下载</a>
-          </li>
-          <li :class="{'li_active': cur_showType == 'detection'}">
-            <a @click="maoClick('detection')" :class="{'a_active': cur_showType == 'detection'}">付费渠道</a>
-          </li>
-        </ul>
+  <div id="main">
+    <div class="center">
+      <div class="nav-title">
+        <h1>帮助中心</h1>
       </div>
-      <div class="nav-right">
-        <div id="zhengfu" v-show="cur_showType == 'government'">
-          <p>会员常见的问题可以通过这里了进一步内容。</p>
-          <h2>普通会员可以下载吗？</h2>
-          <p>尊敬的客户，普通用户暂时无法下载。请升级到高级会员，可以进行下载与打印。</p>
-          <h2>请问除了英文版本法规，是否有法语版本和阿拉伯版本的？</h2>
-          <p>目前只有中文版与英文版。暂不提供其他版本的翻译工作。</p>
-          <h2>能否单份购买文档？</h2>
-          <p>我们支持单份购买，需通过邮件系统联系管理员，购买单份文档。</p>
+      <div class="nav-content">
+        <div class="nav-left">
+          <ul>
+            <li :class="{'li_active': cur_showType == 'government'}">
+              <a @click="maoClick('government')" :class="{'a_active': cur_showType == 'government'}">会员注册</a>
+            </li>
+            <li :class="{'li_active': cur_showType == 'approve'}">
+              <a @click="maoClick('approve')" :class="{'a_active': cur_showType == 'approve'}">如何下载</a>
+            </li>
+            <li :class="{'li_active': cur_showType == 'detection'}">
+              <a @click="maoClick('detection')" :class="{'a_active': cur_showType == 'detection'}">付费渠道</a>
+            </li>
+          </ul>
         </div>
-        <div id="renzheng" v-show="cur_showType == 'approve'">
-          <p>如何下载...</p>
-        </div>
-        <div id="jiance" v-show="cur_showType == 'detection'">
-          <p>付费渠道...</p>
+        <div class="nav-right">
+          <div id="zhengfu" v-show="cur_showType == 'government'">
+            <p>会员常见的问题可以通过这里了进一步内容。</p>
+            <h2>普通会员可以下载吗？</h2>
+            <p>尊敬的客户，普通用户暂时无法下载。请升级到高级会员，可以进行下载与打印。</p>
+            <h2>请问除了英文版本法规，是否有法语版本和阿拉伯版本的？</h2>
+            <p>目前只有中文版与英文版。暂不提供其他版本的翻译工作。</p>
+            <h2>能否单份购买文档？</h2>
+            <p>我们支持单份购买，需通过邮件系统联系管理员，购买单份文档。</p>
+          </div>
+          <div id="renzheng" v-show="cur_showType == 'approve'">
+            <p>如何下载...</p>
+          </div>
+          <div id="jiance" v-show="cur_showType == 'detection'">
+            <p>付费渠道...</p>
+          </div>
         </div>
       </div>
     </div>

@@ -1,39 +1,41 @@
 <template lang='html'>
-  <div class="center">
-    <div class="nav-title">
-      <h1>关于我们</h1>
-    </div>
-    <div class="nav-content">
-      <div class="nav-left">
-        <ul>
-          <li :class="{'li_active': cur_showType == 'government'}">
-            <a @click="maoClick('government')" :class="{'a_active': cur_showType == 'government'}">了解我们</a>
-          </li>
-          <li :class="{'li_active': cur_showType == 'approve'}">
-            <a @click="maoClick('approve')" :class="{'a_active': cur_showType == 'approve'}">关于迅孚</a>
-          </li>
-        </ul>
+  <div id="main">
+    <div class="center">
+      <div class="nav-title">
+        <h1>关于我们</h1>
       </div>
-      <div class="nav-right">
-        <div id="zhengfu" v-show="cur_showType == 'government'">
-          <p>
-            At Dynaso we have carefully chosen the following three core values as the basis of our corporate culture, which have guided us to the success over the past decade, and these values also define how we conduct our business, and help us to create value for our clients, our people and our organization.
-          </p>
-          <h2>Client Value Creation</h2>
-          <p>
-            Helping our clients achieve their goals is our foremost objective and business value. We each have a huge responsibility no matter our role, as we understand that our service affects deeply whether clients’ product can be timely launched, whether their business plans can be moving forward as scheduled, and whether their insight on market would be actual and objective.
-          </p>
-          <h2>Great Place for Employees’ development</h2>
-          <p>
-            We are committed to hiring and retaining the right and talent people in every position, and we make developing others and ourselves as priority for leadership team. We strive to create an open, diverse and inclusive environment where everyone can make the best use of their potentials, succeed professionally and achieve a higher personal value.
-          </p>
-          <h2>Keeping Entrepreneurial Spirit</h2>
-          <p>
-            Our clients reasonably expect us to be more informed, knowledgeable and responsive to meet their request; while we also expect ourselves to be aggressive and innovative, and consistently looking for new ideas to achieve our goals, which implies we shall be business focused, keep alert while adaptable to changes, learning fast and continuously deepening our knowledge of our business, moving quickly and decisively to meet the challenges.
-          </p>
+      <div class="nav-content">
+        <div class="nav-left">
+          <ul>
+            <li :class="{'li_active': cur_showType == 'government'}">
+              <a @click="maoClick('government')" :class="{'a_active': cur_showType == 'government'}">了解我们</a>
+            </li>
+            <li :class="{'li_active': cur_showType == 'approve'}">
+              <a @click="maoClick('approve')" :class="{'a_active': cur_showType == 'approve'}">关于迅孚</a>
+            </li>
+          </ul>
         </div>
-        <div id="renzheng" v-show="cur_showType == 'approve'">
-           <p>关于....</p>
+        <div class="nav-right">
+          <div id="zhengfu" v-show="cur_showType == 'government'">
+            <p>
+              At Dynaso we have carefully chosen the following three core values as the basis of our corporate culture, which have guided us to the success over the past decade, and these values also define how we conduct our business, and help us to create value for our clients, our people and our organization.
+            </p>
+            <h2>Client Value Creation</h2>
+            <p>
+              Helping our clients achieve their goals is our foremost objective and business value. We each have a huge responsibility no matter our role, as we understand that our service affects deeply whether clients’ product can be timely launched, whether their business plans can be moving forward as scheduled, and whether their insight on market would be actual and objective.
+            </p>
+            <h2>Great Place for Employees’ development</h2>
+            <p>
+              We are committed to hiring and retaining the right and talent people in every position, and we make developing others and ourselves as priority for leadership team. We strive to create an open, diverse and inclusive environment where everyone can make the best use of their potentials, succeed professionally and achieve a higher personal value.
+            </p>
+            <h2>Keeping Entrepreneurial Spirit</h2>
+            <p>
+              Our clients reasonably expect us to be more informed, knowledgeable and responsive to meet their request; while we also expect ourselves to be aggressive and innovative, and consistently looking for new ideas to achieve our goals, which implies we shall be business focused, keep alert while adaptable to changes, learning fast and continuously deepening our knowledge of our business, moving quickly and decisively to meet the challenges.
+            </p>
+          </div>
+          <div id="renzheng" v-show="cur_showType == 'approve'">
+            <p>关于....</p>
+          </div>
         </div>
       </div>
     </div>
