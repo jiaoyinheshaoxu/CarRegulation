@@ -15,6 +15,7 @@
           </a>
         </li>
       </ul>
+      <p v-show="standardLawList.length == 0" class="noDateTip">暂无数据</p>
       <el-pagination
         v-show="standardLawList.length > 0"
         @size-change="handleSizeChange"
@@ -94,6 +95,11 @@
 </script>
 
 <style scoped>
+  .noDateTip{
+    height: 36px;
+    line-height: 36px;
+    text-indent: 30px;
+  }
   .lf{float: left}
   .rt{float: right}
   #activit{

@@ -44,7 +44,9 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
 //  assetsPublicPath: 'http://47.92.160.129/q/',
-    assetsPublicPath: '/',
+//  assetsPublicPath: '/',
+    assetsPublicPath: 'http://192.168.0.109:8081/q/',
+//  assetsPublicPath: 'http://www.chineseautoregs.com/q/',
 
     /**
      * Source Maps

@@ -12,16 +12,16 @@
               <el-input v-model="form.email" placeholder="请输入"></el-input>
             </el-form-item>
             <el-form-item label="浏览分类：">
-              <el-select v-model="form.checkType" placeholder="请选择类别">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-              </el-select>
+              <el-radio-group v-model="form.checkType">
+                <el-radio :label="1">意见与建议</el-radio>
+                <el-radio :label="2">单份购买</el-radio>
+              </el-radio-group>
             </el-form-item>
             <el-form-item label="标题：">
               <el-input v-model="form.title" placeholder="请输入标题"></el-input>
             </el-form-item>
             <el-form-item label="内容录入：">
-              <el-input type="textarea" v-model="form.desc" placeholder="请输入内容"></el-input>
+              <el-input type="textarea" v-model="form.desc" placeholder="请输入内容" :rows="10"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit" style="margin-left: 160px">发送</el-button>
@@ -58,6 +58,13 @@
             type: 'warning'
           });
           return
+        } else if (!this.global.check_emailValid(this.form.email)) {
+          this.$message({
+            showClose: true,
+            message: '邮箱格式不正确！',
+            type: 'warning'
+          });
+          return
         }
         if (!this.form.checkType){
           this.$message({
@@ -88,13 +95,19 @@
         console.log(this.form)
       },
       async subInfo() {
+        let lookType
+        if(this.form.checkType == 1){
+          lookType = '意见与建议'
+        } else if (this.form.checkType == 2) {
+          lookType = '单份购买'
+        }
         let url = 'OtherService.asmx/AddMessage'
         let params = {
           title: this.form.title,
           email: this.form.email,
-          type: this.form.checkType,
+          type: lookType,
           memo: this.form.desc,
-          memberId: ''
+          memberId: this.global.memberId
         }
         let data = await this.api.post(url ,params)
         if (data) {

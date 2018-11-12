@@ -90,6 +90,7 @@
           <span>标准法规动态</span>
           <a @click="goStandardRow()">更多 ></a>
         </div>
+        <p v-show="LawList.length == 0" class="noDateTip">暂无数据</p>
         <!-- 内容 -->
         <ul id="act_content" class="activit_content">
           <li v-for="row in LawList">
@@ -107,6 +108,7 @@
           <span>最新翻译</span>
           <a @click="goLatestTrans()">更多 ></a>
         </div>
+        <p v-show="LatestList.length == 0" class="noDateTip">暂无数据</p>
         <!-- 内容 -->
         <ul class="activit_content">
           <li v-for="row in LatestList">
@@ -338,6 +340,11 @@
 </script>
 
 <style scoped>
+  .noDateTip{
+    height: 36px;
+    line-height: 36px;
+    text-indent: 30px;
+  }
   #declare p{
     min-height: 36px;
     line-height: 36px;
@@ -498,13 +505,10 @@
   /* 内容 */
   /*动态标题*/
   #standard_activit{
-    width:48%;
-    float: left;
+    width: 100%;
   }
   #new_translate{
-    width: 48%;
-    float: right;
-    margin-left: 4%;
+    width: 100%;
   }
   .activit{
     width:100%;
@@ -527,7 +531,7 @@
   }
   /*动态内容*/
   .activit_content{
-    height:355px;
+    min-height:355px;
     width:100%;
     padding:25px 0;
     box-sizing:border-box;

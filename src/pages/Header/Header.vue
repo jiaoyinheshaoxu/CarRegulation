@@ -20,7 +20,7 @@
           </li>
           <li id="english">
             <b></b>
-            <a href="#">英文</a>
+            <a href="#">En</a>
           </li>
         </ul>
         <ul id="reg" v-show="!get_username">

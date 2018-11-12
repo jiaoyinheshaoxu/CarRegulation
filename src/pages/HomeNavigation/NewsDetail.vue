@@ -265,9 +265,22 @@
       this.memberId = this.global.memberId
       //this.GetDocumentInfoById()
       this.getDetail()
+      this.AddDocumentVisitInfo()
       //this.GetWordContent()
     },
     methods: {
+      async AddDocumentVisitInfo() {
+        let url = '/OtherService.asmx/AddDocumentVisitInfo'
+        let params = {
+          memberId: this.global.memberId,
+          documentId: this.documentId,
+          type: this.languageType
+        }
+        let data = await this.api.post(url, params)
+        if(data){
+          console.log(data)
+        }
+      },
       scrollMove() {
         console.log(this.global.HYType)
         this.scroll = document.documentElement.scrollTop || document.body.scrollTop

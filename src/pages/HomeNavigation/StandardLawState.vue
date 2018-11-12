@@ -15,7 +15,7 @@
           </a>
         </li>
       </ul>
-      <p v-show="standardLawList.length == 0" style="height: 36px;line-height: 36px">暂无数据</p>
+      <p v-show="standardLawList.length == 0" class="noDateTip">暂无数据</p>
       <el-pagination
         v-show="standardLawList.length > 0"
         @size-change="handleSizeChange"
@@ -39,11 +39,7 @@
         currentPage: 1,
         total: 0,
         languageType: 1,
-        standardLawList: [
-          {'Id': 1, 'Title': '国家标准委关于成立全国综合交通运输标准化技术委员会等4个技术委员会', 'Centent': '国家标准化管理委员会但是房间里看书记得看了更加快乐就是卡里的感觉 三菱东京高考啦阿萨德老公家阿斯兰教工路上的感觉楼上的几个联赛等级输卵管积水的垃圾股', 'CreatorTime': '2018-08-08'},
-          {'Id': 1, 'Title': '国家标准委关于成立全国综合交通运输标准化技术委员会等4个技术委员会', 'Centent': '国家标准化管理委员会但是房间里看书记得看了更加快乐就是卡里的感觉 三菱东京高考啦阿萨德老公家阿斯兰教工路上的感觉楼上的几个联赛等级输卵管积水的垃圾股', 'CreatorTime': '2018-08-08'},
-          {'Id': 1, 'Title': '国家标准委关于成立全国综合交通运输标准化技术委员会等4个技术委员会', 'Centent': '国家标准化管理委员会但是房间里看书记得看了更加快乐就是卡里的感觉 三菱东京高考啦阿萨德老公家阿斯兰教工路上的感觉楼上的几个联赛等级输卵管积水的垃圾股国家标准委关于成立全国综合交通运输标准化技术委员会等4个技术委员会\', \'Centent\': \'国家标准化管理委员会但是房间里看书记得看了更加快乐就是卡里的感觉 三菱东京高考啦阿萨德老公家阿斯兰教工路上的感觉楼上的几个联赛等级输卵管积水的垃圾股', 'CreatorTime': '2018-08-08'}
-        ]
+        standardLawList: []
       }
     },
     mounted() {
@@ -101,6 +97,11 @@
 </script>
 
 <style scoped>
+  .noDateTip{
+    height: 36px;
+    line-height: 36px;
+    text-indent: 30px;
+  }
   .lf{float: left}
   .rt{float: right}
   #activit{
