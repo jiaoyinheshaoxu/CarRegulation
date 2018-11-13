@@ -45,8 +45,8 @@ module.exports = {
     assetsSubDirectory: 'static',
 //  assetsPublicPath: 'http://47.92.160.129/q/',
 //  assetsPublicPath: '/',
-    assetsPublicPath: 'http://192.168.0.109:8081/q/',
-//  assetsPublicPath: 'http://www.chineseautoregs.com/q/',
+//  assetsPublicPath: 'http://192.168.0.109:8081/q/',
+    assetsPublicPath: 'http://www.chineseautoregs.com/q/',
 
     /**
      * Source Maps

@@ -578,17 +578,21 @@
     min-height: 600px;
   }
   .directory{
-    width: 20%;
+    width: 228px;
     height: 70%;
     border: 2px solid #cdcdcd;
     border-radius: 10px;
-    padding: 20px;
+    padding: 0 10px 0;
     overflow: auto;
     position: fixed;
     right: 20px;
     top: 15%;
     background-color: #ffffff;
     z-index: 100;
+  }
+  .directory p{
+    line-height: 42px;
+    height: 42px;
   }
   td{
     word-wrap:break-word
@@ -1013,6 +1017,23 @@
     /* font-weight:normal;*/
     font-size:16px;
   }
-
+  ::-webkit-scrollbar
+  {
+    width: 16px;
+    height: 16px;
+    background-color: #F5F5F5;
+  }
+  ::-webkit-scrollbar-track
+  {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+  ::-webkit-scrollbar-thumb
+  {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+  }
 
 </style>
