@@ -163,7 +163,9 @@
         isShowDirectory: false,
         scroll: '',
         showMuluButton: false,
-        hasCatalogue: false
+        hasCatalogue: false,
+        idList: [],
+        aList: []
       }
     },
     computed: {
@@ -200,6 +202,9 @@
       }
       //sun  article.css
       $("#sun").click(function () {
+        $('#article p').css({
+          background: '#ffffff'
+        })
         $(".black").attr("class", "white");
         $('#article').css({
           background: '#ffffff'
@@ -213,9 +218,24 @@
         $('.directory').css({
           background: '#ffffff'
         })
+        $('#article *').css({
+          color: '#666666'
+        })
+        $('#article p').hover(function () {
+          $(this).css({
+            background: '#E8E8E8'
+          })
+        },function () {
+          $(this).css({
+            background: '#ffffff'
+          })
+        })
       });
       //moon skinnight
       $("#moon").click(function () {
+        $('#article p').css({
+          background: '#191919'
+        })
         $(".white").attr("class", "black");
         $('#article').css({
           background: '#191919'
@@ -228,6 +248,18 @@
         })
         $('.directory').css({
           background: '#191919'
+        })
+        $('#article *').css({
+          color: '#808080'
+        })
+        $('#article p').hover(function () {
+          $(this).css({
+            background: '#080808'
+          })
+        },function () {
+          $(this).css({
+            background: '#191919'
+          })
         })
       });
       $("#contents_list li").mouseover(function () {
@@ -262,6 +294,7 @@
         $("html,body").animate({ scrollTop: 0 }, 500);
       });
       this.documentId = this.$route.params.id
+      console.log(this.documentId)
       this.memberId = this.global.memberId
       //this.GetDocumentInfoById()
       this.getDetail()
@@ -283,21 +316,50 @@
       },
       scrollMove() {
         console.log(this.global.HYType)
-        this.scroll = document.documentElement.scrollTop || document.body.scrollTop
-        if(this.scroll > $(window).height()) {
-          if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
-            document.documentElement.scrollTop = $(window).height()
-            this.$message({
-              showClose: true,
-              message: '游客或者普通会员只能看一页，赶快去升级为高级会员！'
-            });
+        console.log(this.route_name)
+        if(this.route_name.includes('NewsDetail')) {
+          let arr = []
+          if(this.idList.length > 0) {
+            for(let j = 0, len2 = this.idList.length; j < len2; j++) {
+              if($('#' + this.idList[j].id).offset().top >= $(window).scrollTop()) {
+                arr.push(this.idList[j])
+              }
+            }
+            arr.sort(function (a, b) {
+              return ($('#' + a.id).offset().top - $(window).scrollTop()) - ($('#' + b.id).offset().top - $(window).scrollTop())
+            })
+            $('.directory p *').css({
+              color: '#777777'
+            })
+            console.log(arr)
+            if(arr.length > 0) {
+              console.log($('a[href=' + arr[0].href + ']'))
+              $('a[href=' + arr[0].href + ']').children().css({
+                //color: 'rgb(5, 99, 193)'
+                color: 'blue'
+              })
+              /*$('a[href=' + arr[0].href + ']').parent().css({
+                background: 'gray'
+              })*/
+              //console.log($(window).scrollTop())
+            }
+          }
+          this.scroll = document.documentElement.scrollTop || document.body.scrollTop
+          if(this.scroll > $(window).height()) {
+            if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
+              document.documentElement.scrollTop = $(window).height()
+              this.$message({
+                showClose: true,
+                message: '游客或者普通会员只能看一页，赶快去升级为高级会员！'
+              });
+            }
             if(this.hasCatalogue) {
               this.showMuluButton = true
             }
+          } else {
+            this.showMuluButton = false
+            this.isShowDirectory = false
           }
-        } else {
-          this.showMuluButton = false
-          this.isShowDirectory = false
         }
       },
       languageClick(str) {
@@ -408,6 +470,20 @@
           }
           $('#article').html(data.strChinese)
           $('.directory').html(data.catalogue)
+          $(".directory *").css('font-size', '10px')
+          $('.directory p').css({
+            'margin-top': 0,
+            'margin-bottom': 0
+          })
+          this.aList = $('.directory p a')
+          console.log(this.aList)
+          for (let i = 0, len = this.aList.length; i < len; i++) {
+            this.idList.push({
+              href: '#' + this.aList[i].href.split('#')[1],
+              id: this.aList[i].href.split('#')[1]
+            })
+          }
+          console.log(this.idList)
         }
       },
       async GetWordContent(type) {

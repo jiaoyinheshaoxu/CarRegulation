@@ -84,9 +84,10 @@
         console.log(`当前页: ${val}`);
       },
       goDetail (row) {
-        console.log(row)
+        //console.log(row)
+        //return
         this.$router.push({
-          path: '/StandardLawState/NewsDetail',
+          name: '/StandardLawState/NewsDetail',
           params: {
             id: row.Id
           }
