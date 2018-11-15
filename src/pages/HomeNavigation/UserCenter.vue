@@ -47,7 +47,7 @@
 								</li>
 								<li>
 									<span class="main_li_title">注册日期：</span>
-									<span>{{ memberInfo.F_CreatorTime.slice(0,10) }}日</span>
+									<span>{{ memberInfo.F_CreatorTime.length > 0 ? memberInfo.F_CreatorTime.slice(0,10) : "日期返回错误" }}日</span>
 								</li>
 								<li>
 									<span class="main_li_title">会员级别：</span>
@@ -102,7 +102,7 @@
 									<th width="50">序号</th>
 									<th>邮箱</th>
 									<th>密码</th>
-									<th>管理</th>
+									<th width="100">管理</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -138,8 +138,8 @@
 								<tr>
 									<th width="50">序号</th>
 									<th>标准名称</th>
-									<th>日期</th>
-									<th>管理</th>
+									<th width="200">日期</th>
+									<th width="100">管理</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -149,7 +149,7 @@
 								<tr v-show="myCollectList.length || myCollectList.length > 0" v-for="(item,index) in myCollectList" :key="index">
 									<td>{{ index+1 }}</td>
 									<td class="email_password_td" :title="item.Title">{{ item.Title }}</td>
-									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime }}</td>
+									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime.length>0 ? item.CreatorTime.slice(0,10)+"日 "+item.CreatorTime.slice(11,19) : "日期返回错误" }}</td>
 									<td class="last_sub_table">
 										<span><a href="javascript: void(0);" @click="delete_collect(item.Id)">取消关注</a></span>
 									</td>
@@ -184,10 +184,10 @@
 						<table>
 							<thead>
 								<tr>
-									<th>类别</th>
+									<th width="50">类别</th>
 									<th>标准名称</th>
-									<th>消耗</th>
-									<th>日期</th>
+									<th width="50">消耗</th>
+									<th width="200">日期</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -198,7 +198,7 @@
 									<td class="email_password_td" :title="item.Type">{{ item.Type == 1 ? "下载" : "打印" }}</td>
 									<td class="email_password_td" :title="item.Title">{{ item.Title }}</td>
 									<td>{{ item.Num }}</td>
-									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime }}</td>
+									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime.length>0 ? item.CreatorTime.slice(0,10)+"日 "+item.CreatorTime.slice(11,19) : "日期返回错误" }}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -233,8 +233,8 @@
 								<tr>
 									<th width="50"><input type="checkbox" name="checkAllOrNot" id="checkAllOrNot" value="" /></th>
 									<th>标题</th>
-									<th>留言日期</th>
-									<th>操作</th>
+									<th width="200">留言日期</th>
+									<th width="150">操作</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -244,7 +244,7 @@
 								<tr v-show="sysMessageInfoEntityList.length || sysMessageInfoEntityList.length > 0" v-for="(item,index) in sysMessageInfoEntityList" :key="index">
 									<td><input type="checkbox" name="checkNode" class="checkNode" value="" :nodeId="item.Id" @change="sel_single()" /></td>
 									<td class="email_password_td" :title="item.Title">{{ item.Title }}</td>
-									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime }}</td>
+									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime.length>0 ? item.CreatorTime.slice(0,10)+"日 "+item.CreatorTime.slice(11,19) : "日期返回错误" }}</td>
 									<td class="last_sub_table">
 										<span><a href="javascript: void(0);" @click="delete_system_message(item.Id)">删除</a></span>
 										<span><a href="javascript: void(0);" @click="check_systemMsg_detail(item.Id,item.Title,item.CreatorTime)">查看详情</a></span>
@@ -374,7 +374,7 @@
 				<!-- 查看消息详情弹窗 -->
 				<el-dialog title="消息详情" :visible.sync="showDialog_checkMsg_detail" width="400px" left>
 					<p class="upgrade_tips">消息详情：<span class="blueFont">{{ singleMessage.title }}</span></p>
-					<p class="upgrade_tips">提醒时间：<span class="blueFont">{{ singleMessage.time.slice(0,10)+"日 "+singleMessage.time.slice(11,19)}}</span></p>
+					<p class="upgrade_tips">提醒时间：<span class="blueFont">{{ singleMessage.time.length>0 ? singleMessage.time.slice(0,10)+"日 "+singleMessage.time.slice(11,19) : "日期返回错误" }}</span></p>
 					<span slot="footer" class="dialog-footer">
 				    <el-button type="primary" @click="showDialog_checkMsg_detail = false">知 道 了</el-button>
 				  </span>
@@ -889,7 +889,7 @@
             console.log(params);
             $.ajax({
 							type: "POST",
-							url: "http://47.92.160.129:8080/" + url,
+							url: "http://www.chineseautoregs.com:8080/" + url,
 							data: JSON.stringify(params),
 							dataType: "json",
 							contentType: "application/json;charset=utf-8",
@@ -1138,7 +1138,6 @@
 	.sub_create_enable {
 		display: inline-block;
 		text-align: center;
-		width: 50px;
 		height: 25px;
 		line-height: 25px;
 		background: #1890FF;
