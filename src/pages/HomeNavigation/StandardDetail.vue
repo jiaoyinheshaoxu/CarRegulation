@@ -300,8 +300,8 @@
       console.log(this.global)
       this.memberId = this.global.memberId
       this.documentId = this.$route.params.id
+      //this.AddDocumentVisitInfo()
       this.GetDocumentInfoById()
-      this.AddDocumentVisitInfo()
       //this.getDetail()
       //this.GetWordContent()
     },
@@ -352,6 +352,7 @@
           if(this.scroll > $(window).height()) {
             if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
               document.documentElement.scrollTop = $(window).height()
+              document.body.scrollTop = $(window).height()
               this.$message({
                 showClose: true,
                 message: '游客或者普通会员只能看一页，赶快去升级为高级会员！'
@@ -424,8 +425,9 @@
           languageType: this.languageType,
           type: type
         }
-        let data = await this.api.get(url, params, {loading: true})
+        let data = await this.api.post(url, params, {loading: true})
         if (data) {
+          this.AddDocumentVisitInfo()
           console.log(data)
           this.isSave = data.isCollect
           this.detail = data.documentEntity
@@ -1112,5 +1114,5 @@
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #555;
   }
-
+  ::-webkit-scrollbar{width: 6px;}
 </style>

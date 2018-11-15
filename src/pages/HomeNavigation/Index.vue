@@ -45,7 +45,8 @@
           prop="Title"
           label="标准或法规名称"
           sortable
-          align="center">
+          header-align="center"
+          align="left">
         </el-table-column>
         <el-table-column
           prop="FileState"

@@ -298,7 +298,6 @@
       this.memberId = this.global.memberId
       //this.GetDocumentInfoById()
       this.getDetail()
-      this.AddDocumentVisitInfo()
       //this.GetWordContent()
     },
     methods: {
@@ -347,7 +346,8 @@
           this.scroll = document.documentElement.scrollTop || document.body.scrollTop
           if(this.scroll > $(window).height()) {
             if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
-              document.documentElement.scrollTop = $(window).height()
+              document.documentElement.scrollTop = $(window).height() //谷歌
+              document.body.scrollTop = $(window).height() //ie
               this.$message({
                 showClose: true,
                 message: '游客或者普通会员只能看一页，赶快去升级为高级会员！'
@@ -460,6 +460,7 @@
         }
         let data = await this.api.get(url, params, {loading: true})
         if (data) {
+          this.AddDocumentVisitInfo()
           this.detail = data
           console.log(data)
           this.detail = data.documentEntity
@@ -1023,6 +1024,6 @@
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #555;
   }
-
+  ::-webkit-scrollbar{width: 6px;}
 </style>
 
