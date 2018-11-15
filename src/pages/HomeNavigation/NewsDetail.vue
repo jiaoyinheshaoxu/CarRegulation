@@ -320,8 +320,10 @@
           let arr = []
           if(this.idList.length > 0) {
             for(let j = 0, len2 = this.idList.length; j < len2; j++) {
-              if($('#' + this.idList[j].id).offset().top >= $(window).scrollTop()) {
-                arr.push(this.idList[j])
+              if($('#' + this.idList[j].id).offset()) {
+                if($('#' + this.idList[j].id).offset().top >= $(window).scrollTop()) {
+                  arr.push(this.idList[j])
+                }
               }
             }
             arr.sort(function (a, b) {
@@ -812,9 +814,6 @@
   #bread-nav a,
   #bread-nav span {
     color: #9d9d9d;
-  }
-  #bread-nav a:last-child {
-    color: #666666;
   }
   .collection {
     float: right;

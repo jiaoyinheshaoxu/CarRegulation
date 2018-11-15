@@ -1,7 +1,7 @@
 <template lang='html'>
-  <div id="main">
+  <div id="box">
+    <h3>标准法规动态</h3>
     <div id="activit">
-      <h3>标准法规动态</h3>
       <ul class="activit_content" id="activit_content">
         <li v-for="row in standardLawList" @click="goDetail(row)">
           <a>
@@ -98,6 +98,9 @@
 </script>
 
 <style scoped>
+  #box{
+    margin-top: -40px;
+  }
   .noDateTip{
     height: 36px;
     line-height: 36px;
@@ -111,9 +114,10 @@
     margin:0 auto;
     margin-bottom:20px;
   }
-  #activit h3{
-    margin-top: -10px;
-    margin-bottom:20px;
+  #box > h3{
+    padding-left: 10%;
+    height: 60px;
+    line-height: 60px;
     color:dodgerblue;
     font-size: 1.17em;
     font-weight: bolder;

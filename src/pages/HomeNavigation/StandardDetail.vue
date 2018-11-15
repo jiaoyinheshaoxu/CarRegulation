@@ -56,16 +56,16 @@
           </div>
         </div>
         <div class="line3" v-show="detail.f_ChineseTitle">
-          <div class="effectiveDate">
-            <span>发布日期（Date issued）</span>{{new Date(detail.f_ReleaseDate).getTime() | formatTime('YMD')}}<span></span>
-            <span style="margin-left: 40px">实施日期（Effective date）</span>{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}<span></span>
+          <div class="effectiveDate" v-show="showDate">
+            <span>发布日期（Date issued）{{new Date(detail.f_ReleaseDate).getTime() | formatTime('YMD')}}</span>
+            <span style="margin-left: 40px">实施日期（Effective date）{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}</span>
           </div>
           <div class="label" v-if="detail.f_Label">
             <span v-for="row in detail.f_Label.split('；')" v-show="row">{{row}}</span>
           </div>
-          <span style="float: right;cursor: pointer;color: red" v-show="!isSave" @click="Save()">收藏</span>
+          <span class="doSave" style="float: right;cursor: pointer;color: red" v-show="!isSave" @click="Save()">收藏</span>
           <span class="no-heart fav" style="float:right;" v-show="!isSave"></span>
-          <span style="float: right;cursor: pointer;color: red" v-show="isSave" @click="unSave()">已收藏</span>
+          <span class="doSave" style="float: right;cursor: pointer;color: red" v-show="isSave" @click="unSave()">已收藏</span>
           <span class="heart fav" style="float:right;" v-show="isSave"></span>
         </div>
       </div>
@@ -168,7 +168,8 @@
         downType: '',  //1 下载  2 打印
         idList: [],
         aList: [],
-        //route_name_cur: ''
+        pre_scrollTop: 0,
+        showDate: true
       }
     },
     computed: {
@@ -178,6 +179,24 @@
       }
     },
     mounted() {
+      $('.effectiveDate span').hover(function () {
+        $(this).css({
+          background: '#E8E8E8'
+        })
+      },function () {
+        $(this).css({
+          background: '#ffffff'
+        })
+      })
+      $('.art-title h3').hover(function () {
+        $(this).css({
+          background: '#E8E8E8'
+        })
+      },function () {
+        $(this).css({
+          background: '#ffffff'
+        })
+      })
       window.addEventListener('scroll', this.scrollMove)
       $("#fontSize button").click(function () {
         $("#fontSize button").removeClass("font-active");
@@ -207,7 +226,42 @@
       //sun  article.css
       $("#sun").click(function () {
         $('#article p').css({
-          background: '#ffffff'
+          background: '#ffffff',
+          color: '#666666'
+        })
+        $('.label span').css({
+          background: '#f5f5f5',
+          border: '1px solid #d9d9d9',
+          color: '#2c3e50'
+        })
+        $('.art-title h3').css({
+          background: '#ffffff',
+          color: '#2c3e50'
+        })
+        $('.effectiveDate span').css({
+          background: '#ffffff',
+          color: '#2c3e50'
+        })
+        $(".doSave").css({
+          color: 'red'
+        })
+        $('.effectiveDate span').hover(function () {
+          $(this).css({
+            background: '#E8E8E8'
+          })
+        },function () {
+          $(this).css({
+            background: '#ffffff'
+          })
+        })
+        $('.art-title h3').hover(function () {
+          $(this).css({
+            background: '#E8E8E8'
+          })
+        },function () {
+          $(this).css({
+            background: '#ffffff'
+          })
         })
         $(".black").attr("class", "white");
         $('#article').css({
@@ -247,6 +301,12 @@
         $('#article-header').css({
           background: '#191919'
         })
+        $('.art-title h3').css({
+          background: '#191919'
+        })
+        $('.effectiveDate span').css({
+          background: '#191919'
+        })
         $('.box').css({
           background: '#282828'
         })
@@ -264,6 +324,31 @@
           $(this).css({
             background: '#191919'
           })
+        })
+        $('.art-title h3').hover(function () {
+          $(this).css({
+            background: '#080808'
+          })
+        },function () {
+          $(this).css({
+            background: '#191919'
+          })
+        })
+        $('.effectiveDate span').hover(function () {
+          $(this).css({
+            background: '#080808'
+          })
+        },function () {
+          $(this).css({
+            background: '#191919'
+          })
+        })
+        $("#article-header *").css({
+          color: '#808080'
+        })
+        $('.label span').css({
+          background: '#191919',
+          border: '1px solid #d9d9d9'
         })
       });
       $("#contents_list li").mouseover(function () {
@@ -325,8 +410,10 @@
           let arr = []
           if(this.idList.length > 0) {
             for(let j = 0, len2 = this.idList.length; j < len2; j++) {
-              if($('#' + this.idList[j].id).offset().top >= $(window).scrollTop()) {
-                arr.push(this.idList[j])
+              if($('#' + this.idList[j].id).offset()) {
+                if($('#' + this.idList[j].id).offset().top >= $(window).scrollTop()) {
+                  arr.push(this.idList[j])
+                }
               }
             }
             arr.sort(function (a, b) {
@@ -349,6 +436,12 @@
             }
           }
           this.scroll = document.documentElement.scrollTop || document.body.scrollTop
+          if(this.scroll > this.pre_scrollTop){
+            this.showDate = false
+          } else {
+            this.showDate = true
+          }
+          this.pre_scrollTop = this.scroll
           if(this.scroll > $(window).height()) {
             if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
               document.documentElement.scrollTop = $(window).height()
@@ -917,9 +1010,6 @@
   #bread-nav span {
     color: #9d9d9d;
   }
-  #bread-nav a:last-child {
-    color: #666666;
-  }
   .collection {
     float: right;
   }
@@ -941,6 +1031,7 @@
   }
   .art-title,
   .en-art-title {
+    width: 100%;
     display: inline-block;
     margin-bottom: 10px;
     font-size: 22px;

@@ -7,8 +7,8 @@
             <li>
               <h3>产品</h3>
             </li>
-            <li><a href="#">高级搜索</a></li>
-            <li><a href="#">分类搜索</a></li>
+            <li><a href="#">标准检索</a></li>
+            <li><a href="#">法规检索</a></li>
           </ul>
         </li>
         <li>
@@ -16,8 +16,8 @@
             <li>
               <h3>服务</h3>
             </li>
-            <li><a href="#">最近更新</a></li>
-            <li><a href="#">汽车政策</a></li>
+            <li><a href="#">最新翻译</a></li>
+            <li><a href="#">标准法规动态</a></li>
             <li><a href="#">成为会员</a></li>
             <li><a href="#">常见问题</a></li>
           </ul>

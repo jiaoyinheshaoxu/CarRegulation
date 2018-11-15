@@ -1,5 +1,5 @@
 <template lang='html'>
-  <div id="main">
+  <div id="box">
     <div id="activit">
       <h3>最新翻译</h3>
       <ul class="activit_content" id="activit_content">
@@ -95,6 +95,9 @@
 </script>
 
 <style scoped>
+  #box{
+    margin-top: -40px;
+  }
   .noDateTip{
     height: 36px;
     line-height: 36px;
@@ -109,8 +112,8 @@
     margin-bottom:20px;
   }
   #activit h3{
-    margin-top: -10px;
-    margin-bottom:20px;
+    height: 60px;
+    line-height: 60px;
     color:dodgerblue;
     font-size: 1.17em;
     font-weight: bolder;
