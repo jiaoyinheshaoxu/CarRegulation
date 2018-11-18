@@ -14,7 +14,7 @@
             <el-form-item label="浏览分类：">
               <el-radio-group v-model="form.checkType">
                 <el-radio :label="1">意见与建议</el-radio>
-                <el-radio :label="2">单份购买</el-radio>
+                <el-radio :label="2">购买</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="标题：">
@@ -91,8 +91,6 @@
           return
         }
         this.subInfo()
-        console.log('submit!');
-        console.log(this.form)
       },
       async subInfo() {
         let lookType
@@ -111,13 +109,17 @@
         }
         let data = await this.api.post(url ,params)
         if (data) {
-          console.log(data)
           this.$message({
             showClose: true,
             message: '提交成功！',
             type: 'success'
           });
         }
+        setTimeout(() => {
+          this.$router.push({
+            name: 'Index'
+          })
+        }, 500)
       }
     }
   }

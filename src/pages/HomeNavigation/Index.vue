@@ -7,7 +7,7 @@
           <ul id="i_main_box">
             <li class="i_select_box">
               <span id="i_fisrt">标题 </span>
-              <b class="down"></b>
+              <b class="down" style="cursor: pointer"></b>
               <ul class="i_son_ul">
                 <li><span>标题</span></li>
                 <li><span>内容</span></li>
@@ -162,7 +162,6 @@
         }
         let data = await this.api.post(url, params)
         if (data) {
-          console.log(data)
         }
       },
       async SearchForIndexByLabelOrTitle() {
@@ -177,7 +176,6 @@
           }
           let data = await this.api.post(url, params, {loading: true})
           if (data) {
-            console.log(data)
             this.searchList = data.documentList
             this.total = data.total
             if (this.searchList.length == 0) {
@@ -197,7 +195,6 @@
           }
           let data = await this.api.post(url, params)
           if (data) {
-            console.log(data)
             this.searchList = data.documentList
             this.total = data.total
             if (this.searchList.length == 0) {
@@ -244,7 +241,6 @@
         }
         this.pageSize = val
         this.SearchForIndexByLabelOrTitle()
-        console.log(`每页 ${val} 条`);
       },
       handleCurrentChange (val) {
         if(!this.global.memberId) {
@@ -256,10 +252,8 @@
         }
         this.currentPage = val
         this.SearchForIndexByLabelOrTitle()
-        console.log(`当前页: ${val}`);
       },
       goDetail (row) {
-        console.log(row)
         this.$router.push({
           name: '/Index/StandardDetail',
           params: {
@@ -300,7 +294,6 @@
           topNum: 10
         }
         let data = await this.api.post(url, params)
-        console.log(data)
         this.LawList = data.informationList
         this.LatestList = data.newestList
       },
@@ -309,7 +302,6 @@
         let params = {}
         let data = await this.api.post(url, params)
         if (data) {
-          console.log(data)
           this.hotList = data
         }
       }
@@ -320,14 +312,24 @@
       this.getHotKeys()
       $('.i_son_ul').hide();
       $("#search_content").css("border-radius","5px")
-      $('.i_select_box span').click(function () {
-        $('ul.i_son_ul li').css("background","");
-        //改变箭头方向，
-        $('.i_select_box b').addClass("up");
-        $(this).parent().find('ul.i_son_ul').slideDown();
-        $("#search_content").css("border-radius","5px 5px 5px 0")
+      $('.i_select_box').click(function () {
+        if($('.i_select_box b').attr('class').includes('down') && !$('.i_select_box b').attr('class').includes('up')){
+          $('ul.i_son_ul li').css("background","");
+          //改变箭头方向，
+          $('.i_select_box b').addClass("up");
+          $(this).parent().find('ul.i_son_ul').slideDown();
+          $("#search_content").css("border-radius","5px 5px 5px 0")
+        }else if($('.i_select_box b').attr('class').includes('up')){
+          $('.i_son_ul').slideUp();
+          //移动已添加上的背景，在添加新的样式
+          $('.i_select_box b').removeClass("up");
+          $('.i_select_box b').addClass("down");
+          $("#search_content").css("border-radius","5px")
+        }
       });
-      $('ul.i_son_ul li').click(function () {
+      $('ul.i_son_ul li').click(function (e) {
+        e.stopPropagation()
+        e.cancelBubble = true
         $(this).parents('li').find('#i_fisrt').html($(this).html());
         $(this).parents('li').find('ul').slideUp();
         $(this).css("background","#e6f7ff");

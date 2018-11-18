@@ -225,4 +225,29 @@ a img {
   line-height: 26px;
   min-height: 26px;
 }
+/*小圆点*/
+.red{
+  display: inline-block;
+  width:8px;
+  height:8px;
+  border-radius: 50%;
+  margin-right:5px;
+  background: red;
+}
+.orange{
+  display: inline-block;
+  width:8px;
+  height:8px;
+  border-radius: 50%;
+  margin-right:5px;
+  background: orange;
+}
+.green{
+  display: inline-block;
+  width:8px;
+  height:8px;
+  border-radius: 50%;
+  margin-right:5px;
+  background: #73D13D;
+}
 

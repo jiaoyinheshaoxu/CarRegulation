@@ -168,7 +168,6 @@
         }
         let data = await this.api.post(url, params)
         if (data) {
-          console.log(data)
           this.fieldList = data.documentDomainList
           this.statusList = data.documentStateList
           this.adoptList = data.caiBiaoList
@@ -202,7 +201,6 @@
         return row.fileState
       },
       goDetail (row) {
-        console.log(row)
         this.$router.push({
           name: '/StandardSearch/StandardDetail',
           params: {
@@ -220,7 +218,6 @@
         }
         this.pageSize = val
         this.getStandardSearch()
-        console.log(`每页 ${val} 条`);
       },
       handleCurrentChange (val) {
         if(!this.global.memberId) {
@@ -232,7 +229,6 @@
         }
         this.currentPage = val
         this.getStandardSearch()
-        console.log(`当前页: ${val}`);
       },
     }
   }

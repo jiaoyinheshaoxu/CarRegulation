@@ -67,7 +67,6 @@
         }
         this.pageSize = val
         this.getStandardLawList()
-        console.log(`每页 ${val} 条`);
       },
       handleCurrentChange (val) {
         if(!this.global.memberId) {
@@ -79,10 +78,8 @@
         }
         this.currentPage = val
         this.getStandardLawList()
-        console.log(`当前页: ${val}`);
       },
       goDetail (row) {
-        console.log(row)
         this.$router.push({
           name: '/LatestTranslation/StandardDetail',
           params: {
@@ -106,7 +103,7 @@
   .lf{float: left}
   .rt{float: right}
   #activit{
-    width: 80%;
+    width: 85%;
     min-height:420px ;
     margin:0 auto;
     margin-bottom:20px;

@@ -55,7 +55,6 @@
           languageType: this.languageType
         }
         let data = await this.api.post(url, params)
-        console.log(data)
         this.total = data.total
         this.standardLawList = data.documentList
       },
@@ -69,7 +68,6 @@
         }
         this.pageSize = val
         this.getStandardSearch()
-        console.log(`每页 ${val} 条`);
       },
       handleCurrentChange (val) {
         if(!this.global.memberId) {
@@ -81,7 +79,6 @@
         }
         this.currentPage = val
         this.getStandardSearch()
-        console.log(`当前页: ${val}`);
       },
       goDetail (row) {
         //console.log(row)
@@ -109,13 +106,13 @@
   .lf{float: left}
   .rt{float: right}
   #activit{
-    width: 80%;
+    width: 85%;
     min-height:420px ;
     margin:0 auto;
     margin-bottom:20px;
   }
   #box > h3{
-    padding-left: 10%;
+    padding-left: 7.5%;
     height: 60px;
     line-height: 60px;
     color:dodgerblue;

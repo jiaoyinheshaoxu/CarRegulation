@@ -294,7 +294,6 @@
         $("html,body").animate({ scrollTop: 0 }, 500);
       });
       this.documentId = this.$route.params.id
-      console.log(this.documentId)
       this.memberId = this.global.memberId
       //this.GetDocumentInfoById()
       this.getDetail()
@@ -310,12 +309,9 @@
         }
         let data = await this.api.post(url, params)
         if(data){
-          console.log(data)
         }
       },
       scrollMove() {
-        console.log(this.global.HYType)
-        console.log(this.route_name)
         if(this.route_name.includes('NewsDetail')) {
           let arr = []
           if(this.idList.length > 0) {
@@ -332,9 +328,7 @@
             $('.directory p *').css({
               color: '#777777'
             })
-            console.log(arr)
             if(arr.length > 0) {
-              console.log($('a[href=' + arr[0].href + ']'))
               $('a[href=' + arr[0].href + ']').children().css({
                 //color: 'rgb(5, 99, 193)'
                 color: 'blue'
@@ -405,7 +399,6 @@
         }
         let data = await this.api.post(url, params)
         if (data) {
-          console.log(data)
           this.isSave = data.isCollect
           this.detail = data.documentContentModel
         }
@@ -420,7 +413,6 @@
         }
         let data = await this.api.post(url, params)
         if (data) {
-          console.log(data)
           if (data[0] == true) {
             this.$message({
               showClose: true,
@@ -440,7 +432,6 @@
         }
         let data = await this.api.post(url, params)
         if (data) {
-          console.log(data)
           if (data[0] == true) {
             this.$message({
               showClose: true,
@@ -464,7 +455,6 @@
         if (data) {
           this.AddDocumentVisitInfo()
           this.detail = data
-          console.log(data)
           this.detail = data.documentEntity
           if(!data.catalogue) {
             this.hasCatalogue = false
@@ -479,14 +469,12 @@
             'margin-bottom': 0
           })
           this.aList = $('.directory p a')
-          console.log(this.aList)
           for (let i = 0, len = this.aList.length; i < len; i++) {
             this.idList.push({
               href: '#' + this.aList[i].href.split('#')[1],
               id: this.aList[i].href.split('#')[1]
             })
           }
-          console.log(this.idList)
         }
       },
       async GetWordContent(type) {
@@ -500,7 +488,6 @@
         }
         let data = await this.api.post(url, params)
         if(data) {
-          console.log(data)
           $("#article").html(data[0]);
         }
       },
@@ -515,7 +502,6 @@
         }
         let data = await this.api.post(url ,params)
         if (data) {
-          console.log(data)
         }
       },
       async GetMemberInfo() {
@@ -526,7 +512,6 @@
         }
         let data = await this.api.post(url, params)
         if (data) {
-          console.log(data)
           this.residueDownloadNum = data.residueDownloadNum
           if(this.residueDownloadNum < 1) {
             this.$message({
@@ -543,7 +528,6 @@
         this.isShowDirectory = !this.isShowDirectory
       },
       muluClick() {
-        console.log('aaa')
       }
     }
   }
@@ -575,7 +559,7 @@
     word-wrap:break-word
   }
   .center {
-    width: 70%;
+    width: 85%;
     margin: 0px auto 50px;
   }
   .white #menu {

@@ -5,21 +5,13 @@
         <li>
           <ul class="service_list_colomu">
             <li>
-              <h3>产品</h3>
+              <h3>产品与服务</h3>
             </li>
             <li><a href="#">标准检索</a></li>
             <li><a href="#">法规检索</a></li>
-          </ul>
-        </li>
-        <li>
-          <ul class="service_list_colomu">
-            <li>
-              <h3>服务</h3>
-            </li>
-            <li><a href="#">最新翻译</a></li>
             <li><a href="#">标准法规动态</a></li>
-            <li><a href="#">成为会员</a></li>
-            <li><a href="#">常见问题</a></li>
+            <li><a href="#">最新翻译</a></li>
+            <li><a href="#">链接</a></li>
           </ul>
         </li>
         <li>
@@ -27,9 +19,11 @@
             <li>
               <h3>关于</h3>
             </li>
+            <li><a href="#">关于网站</a></li>
+            <li><a href="#">联系我们</a></li>
+            <li><a href="#">帮助</a></li>
+            <li><a href="#">隐私声明</a></li>
             <li><a href="#">使用条款</a></li>
-            <li><a href="#">隐私协议</a></li>
-            <li><a href="#">关于我们</a></li>
           </ul>
         </li>
       </ul>
@@ -64,7 +58,7 @@
   #service{
     background: #ddd;
     width:100%;
-    height:240px;
+    height:280px;
     padding:50px 240px;
     box-sizing:border-box;
   }

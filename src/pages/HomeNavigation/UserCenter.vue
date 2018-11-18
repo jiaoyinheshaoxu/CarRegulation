@@ -90,7 +90,7 @@
 					<div class="main_content_title">
 						<span class="mess_title_cont">副账户管理</span>
 						<p class="sub_create_btn">
-							<span>{{ memberInfo.F_Phone }}</span> 
+							<span>{{ memberInfo.F_Phone }}</span>
 							<!--系统允许您创建三个副账户-->
 							<b class="sub_create_enable" @click="addOrModify_sub_account('')">创建</b>
 						</p>
@@ -122,7 +122,7 @@
 						</table>
 					</div>
 				</div>
-				
+
 				<!--我的收藏-->
 				<div id="main_add" v-show="subTabBar == 'main_add'">
 					<div class="main_content_title">
@@ -131,7 +131,7 @@
 							<span></span>
 						</p>
 					</div>
-					
+
 					<div id="main_sub_table">
 						<table>
 							<thead>
@@ -157,7 +157,7 @@
 							</tbody>
 						</table>
 					</div>
-					
+
 					<div class="block text-center" v-show="total != 0">
 				    <el-pagination
 				      @size-change="handleSizeChange_collect"
@@ -170,7 +170,7 @@
 				    </el-pagination>
 				  </div>
 				</div>
-				
+
 				<!-- 下载与打印记录 -->
 				<div id="main_down_print" v-show="subTabBar == 'main_down_print'">
 					<div class="main_content_title">
@@ -203,7 +203,7 @@
 							</tbody>
 						</table>
 					</div>
-					
+
 					<div class="block text-center" v-show="total != 0">
 				    <el-pagination
 				      @size-change="handleSizeChange_downLoad"
@@ -216,17 +216,17 @@
 				    </el-pagination>
 				  </div>
 				</div>
-				
+
 				<!--信息管理-->
 				<div id="main_mess" v-show="subTabBar == 'main_mess'">
 					<div class="main_content_title">
 						<span class="mess_title_cont">消息管理</span>
 						<p class="sub_create_btn">
-							<span></span> 
+							<span></span>
 							<b class="sub_create_enable" @click="group_delete_message()">批量删除</b>
 						</p>
 					</div>
-					
+
 					<div id="main_sub_table">
 						<table>
 							<thead>
@@ -253,7 +253,7 @@
 							</tbody>
 						</table>
 					</div>
-					
+
 					<div class="block text-center" v-show="total != 0">
 				    <el-pagination
 				      @size-change="handleSizeChange_message"
@@ -266,16 +266,16 @@
 				    </el-pagination>
 				  </div>
 				</div>
-				
+
 				<!-- 修改密码 -->
 				<div id="main_merge_pwd" v-show="subTabBar == 'main_merge_pwd'">
 					<div class="main_content_title">
 						<span class="mess_title_cont">修改密码</span>
 						<p class="sub_create_btn">
-							<span></span> 
+							<span></span>
 						</p>
 					</div>
-					
+
 					<el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
 					  <el-form-item label="旧密码" prop="userOldPassword">
 					    <el-input type="password" v-model="ruleForm2.userOldPassword" autoComplete="off"></el-input>
@@ -291,7 +291,7 @@
 					    <el-button @click="resetForm('ruleForm2')">重置</el-button>
 					  </el-form-item>
 					</el-form>
-					
+
 				</div>
 
 				<!--查看详情弹窗-->
@@ -329,7 +329,7 @@
 				    <el-button type="primary" @click="confirm_upgradeOrRepay()">确 定</el-button>
 				  </span>
 				</el-dialog>
-				
+
 				<!-- 添加或者修改副账户 -->
 				<el-dialog :title="point_account_email=='' ? '添加副账户' : '修改副账户'" :visible.sync="showDialog_addOrmidify_account" width="40%" left>
 					<p class="upgrade_tips mTop20">账户邮箱：
@@ -343,7 +343,7 @@
 				    <el-button type="primary" @click="confirm_addOrModify_account()">确 定</el-button>
 				  </span>
 				</el-dialog>
-				
+
 				<!-- 退出登陆 => 跳转到登陆页面前提示 -->
 				<el-dialog title="退出登陆" :visible.sync="showDialog_quit_account" width="400px" left>
 					<p class="upgrade_tips dangerFont text-center">您 确 定 要 退 出 登 录 ？</p>
@@ -352,7 +352,7 @@
 				    <el-button type="primary" @click="confirm_quit()">残忍退出</el-button>
 				  </span>
 				</el-dialog>
-				
+
 				<!-- 删除副账户弹窗 => 刷新列表 -->
 				<el-dialog title="删除副账户" :visible.sync="showDialog_delete_account" width="400px" left>
 					<p class="upgrade_tips dangerFont text-center">您 确 定 要 删 除 副 账 户 ？</p>
@@ -361,7 +361,7 @@
 				    <el-button type="primary" @click="confirm_delete_account()">残忍删除</el-button>
 				  </span>
 				</el-dialog>
-				
+
 				<!-- 删除系统消息弹窗 => 刷新列表 -->
 				<el-dialog title="删除系统消息" :visible.sync="showDialog_delete_message" width="400px" left>
 					<p class="upgrade_tips dangerFont text-center">{{ (messageIds && messageIds.indexOf(',') > -1) ? "您 确 定 要 批 量 删 除 这 些 系 统 消 息 ？" : "您 确 定 要 删 除 该 条 系 统 消 息 ？"}}</p>
@@ -370,7 +370,7 @@
 				    <el-button type="primary" @click="confirm_delete_message()">残忍删除</el-button>
 				  </span>
 				</el-dialog>
-				
+
 				<!-- 查看消息详情弹窗 -->
 				<el-dialog title="消息详情" :visible.sync="showDialog_checkMsg_detail" width="400px" left>
 					<p class="upgrade_tips">消息详情：<span class="blueFont">{{ singleMessage.title }}</span></p>
@@ -422,7 +422,7 @@
           callback();
         }
       };
-			
+
 			return {
 				ruleForm2: {
 					userOldPassword: "",
@@ -440,7 +440,7 @@
             { validator: validatePass3, trigger: 'blur' }
           ]
         },
-				
+
 				memberId: "",
 				subTabBar: "main_personal",
 				showDialog_upgrade: false,
@@ -450,16 +450,16 @@
 				showDialog_delete_account: false,
 				showDialog_delete_message: false,
 				showDialog_checkMsg_detail: false,
-				
+
 				page: 1,											// 默认第一页
 				rows: 10,											// 默认每页显示10条
 				total: 100,										// 默认总数目
-				
+
 				point_account_id: "",					// 指定的 账户id (添加=>该值为主账户 	修改=>该值为分账户)
 				point_account_email: "",			// 指定的 账户email (""=>添加 不是""=>修改)
 				point_account_password: "",		// 指定的 账户password (""=>添加 不是""=>修改)
 				addOrModify_api_url:	"",			// 新增或者修改账户的接口地址
-				
+
 				upgrade_type: "", 						// 选择升级类型  1=>季付	2=>年付
 				user_country: "", 						// 所在国家
 				user_phone:	"",								// 您的电话
@@ -497,7 +497,7 @@
 			}
 		},
 		mounted() {
-			// 获取用户信息 => 判断用户权限 => 
+			// 获取用户信息 => 判断用户权限 =>
 			this.getMemberInfo();
 			var _this = this;
 			// 全选非全选
@@ -518,7 +518,7 @@
 	      	_this.messageIds = ids;
 	      }
 	    });
-	    
+
 		},
 		methods: {
 			 // 单个选择方法
@@ -531,16 +531,15 @@
 	      ids = ids.slice(0,ids.length-1);
 	      this.messageIds = ids;
 	    },
-			
-			// 获取用户信息 OtherService.asmx/GetMemberInfo => 判断用户权限 
+
+			// 获取用户信息 OtherService.asmx/GetMemberInfo => 判断用户权限
 			async getMemberInfo() {
 				let url = 'OtherService.asmx/GetMemberInfo';
-				//	        memberId:	this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId') 
+				//	        memberId:	this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
 				let params = {
 					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
 				}
 				let data = await this.api.post(url, params, { loading: true });
-				console.log(data);
 				this.memberInfo = data;
 				if(this.memberInfo.F_HYType == 0){
 					this.memberInfo.F_HYTypeName = "普通会员";
@@ -550,7 +549,7 @@
 					this.memberInfo.F_HYTypeName = "高级会员<span class='blueFont marginLeft_2em'>( 年付 )</span>";
 				}
 			},
-			
+
 			// 升级或续费 		OtherService.asmx/AddSysMessageInfo
 			async confirm_upgradeOrRepay (){
 				let url = 'OtherService.asmx/AddSysMessageInfo';
@@ -559,7 +558,6 @@
 					title: "只是一条信息"
 				}
 				let data = await this.api.post(url, params, { loading: true });
-				console.log(data);
 				if(data[0] == true){
 					this.$message({
             showClose: true,
@@ -578,7 +576,7 @@
           });
 				}
 			},
-			
+
 			// 取消订阅 / 订阅 切换		OtherService.asmx/SetMemberIsSubscription
 			async setMemberIsSubscription(){
 				let url = 'OtherService.asmx/SetMemberIsSubscription';
@@ -603,21 +601,20 @@
           });
 				}
 			},
-			
-			// 获取用户副账户列表 OtherService.asmx/GetDeputyMemberListByUserId 
+
+			// 获取用户副账户列表 OtherService.asmx/GetDeputyMemberListByUserId
 			async getDeputyMemberListByUserId() {
 				let url = 'OtherService.asmx/GetDeputyMemberListByUserId';
-				//	        memberId:	this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId') 
+				//	        memberId:	this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
 				let params = {
 					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
 				}
 				let data = await this.api.post(url, params, { loading: true });
 				this.DeputyMemberList = data.memberList;
 			},
-			
+
 			// 添加副账户和修改副账户
 			addOrModify_sub_account(Id,Email,Password){
-				console.log(this.point_account_email);
 				if( !Email && !Password ){
 					if(this.memberInfo.F_HYType == 0){
 						this.$message({
@@ -629,7 +626,6 @@
 	          return;
 					}else{
 						this.point_account_id = this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId');		// 新增 id 为主账户id
-						console.log(this.point_account_id);
 						this.point_account_email = "";
 						this.point_account_password = "";
 						this.addOrModify_api_url = "OtherService.asmx/AddDeputyMember";
@@ -642,7 +638,7 @@
 				}
 				this.showDialog_addOrmidify_account = true;
 			},
-			
+
 			// 确认提交 添加副账户和修改副账户
 		 	async	confirm_addOrModify_account (){
 				let url = this.addOrModify_api_url;
@@ -660,7 +656,6 @@
 					}
 				}
 				let data = await this.api.post(url, params);
-				console.log(data);
 				// 成功回调 => 刷新列表
 				if(data[0] == 1){
 					this.$message({
@@ -680,13 +675,13 @@
           })
 				}
 			},
-			
+
 			// 删除副账户 => 打开弹窗
 			delete_sub_account (id){
 				this.showDialog_delete_account = true;
 				this.point_account_id = id;
 			},
-			
+
 			// 删除副账户 OtherService.asmx/DeleteDeputyMember keyValue
 			async confirm_delete_account(){
 				let url = "OtherService.asmx/DeleteDeputyMember";
@@ -706,11 +701,10 @@
 					this.getDeputyMemberListByUserId();
 				}
 			},
-			
+
 			// 获取收藏列表 OtherService.asmx/GetMyCollect
 	    async getMyCollect(){
 	    	let num = Math.random();
-				console.log(num);
 				let url = "OtherService.asmx/GetMyCollect?num=" + num;
 				let params = {
 					page: this.page,
@@ -719,11 +713,10 @@
 					languageType: 1
 				}
 				let data = await this.api.post(url, params, { loading: true });
-				console.log(data);
 				this.total = data.total;
 				this.myCollectList = data.myCollectList;
 			},
-			
+
 			// 收藏分页
 			handleCurrentChange_collect(page){
 				this.page = page;
@@ -733,7 +726,7 @@
 				this.rows = rows;
 				this.getMyCollect();
 			},
-			
+
 			// 取消关注 OtherService.asmx/DelMyCollectById
 			async delete_collect(id){
 				let url = "OtherService.asmx/DelMyCollectById";
@@ -742,7 +735,6 @@
 					id: id
 				}
 				let data = await this.api.post(url, params);
-				console.log(data);
 				if(data[0] == true){
 					this.$message({
             showClose: true,
@@ -761,8 +753,8 @@
           });
 				}
 			},
-			
-			// 获取下载和打印记录 OtherService.asmx/GetDownloadInfoList 
+
+			// 获取下载和打印记录 OtherService.asmx/GetDownloadInfoList
 	    async getDownloadInfoList(){
 	    	let url = "OtherService.asmx/GetDownloadInfoList";
 	    	let params = {
@@ -772,7 +764,6 @@
 					languageType: 1
 	    	}
 	    	let data = await this.api.post(url, params, { loading: true });
-				console.log(data);
 				this.total = data.total;
 				this.downloadInfoList = data.downloadInfoList;
 	    },
@@ -785,7 +776,7 @@
 				this.rows = rows;
 				this.getDownloadInfoList();
 			},
-			
+
 			// 系统消息列表： OtherService.asmx/GetSysMessageInfo
     	async getSysMessageInfo(){
 	    	let url = "OtherService.asmx/GetSysMessageInfo";
@@ -798,7 +789,7 @@
 				this.total = data.total;
 				this.sysMessageInfoEntityList = data.sysMessageInfoEntityList;
 	    },
-	    
+
 			// 批量删除系统消息 OtherService.asmx/DelSysMessageInfo
     	// 参数：string ids 消息id集合，用 ','分割的id集合字符串
     	// 返回值：true 成功
@@ -828,7 +819,6 @@
 					ids: this.messageIds
 				}
 				let data = await this.api.post(url, params);
-				console.log(data);
 				if(data[0] == true){
 					this.$message({
             showClose: true,
@@ -857,7 +847,7 @@
 				this.singleMessage.time = time;
 				this.showDialog_checkMsg_detail = true;
 			},
-			
+
 			// 系统消息分页
 			handleCurrentChange_message(page){
 				this.page = page;
@@ -867,16 +857,13 @@
 				this.rows = rows;
 				this.getSysMessageInfo();
 			},
-			
+
 			async getData(url,params){
 				return await this.api.post(url, params);
 			},
-			
+
 			// 修改密码
 			submitForm(formName) {
-				console.log(this.ruleForm2.userOldPassword);
-				console.log(this.ruleForm2.userNewPassword);
-				console.log(this.ruleForm2.newPasswordConfirm);
 				var _this = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -886,7 +873,6 @@
             	userNewPassword: _this.ruleForm2.userNewPassword,
             	memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
             }
-            console.log(params);
             $.ajax({
 							type: "POST",
 							url: "http://www.chineseautoregs.com:8080/" + url,
@@ -938,18 +924,18 @@
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
+
+
+
+
 			// 用户退出 => 跳转到登陆页面
 			confirm_quit() {
 				this.$router.push({
@@ -1097,8 +1083,8 @@
 		margin-left: 20px;
 		cursor: pointer;
 	}
-	
-	
+
+
 	/*副账户管理*/
 	.sub_title_cont {
 		display: inline-block;
@@ -1196,7 +1182,7 @@
 		margin-top: 20px;
 		margin-right: 20px;
 	}
-	
+
 	/*信息管理*/
 	#main_mess_title,
 	.main_content_title {
@@ -1204,14 +1190,14 @@
 		height: 50px;
 		line-height: 50px;
 	}
-	
+
 	.mess_title_cont {
 		display: block;
 		font-size: 18px;
 		color: #545454;
 		font-weight: bold;
 	}
-	
+
 	.mess_remove_btn {
 		float: right;
 		width: 75px;
@@ -1224,13 +1210,13 @@
 		font-size: 14px;
 		margin-top: 10px;
 	}
-	
+
 	#main_table {
 		width: 100%;
 		color: #6F6F6F;
 		margin-bottom: 50px;
 	}
-	
+
 	#main_table table {
 		width: 100%;
 		border-spacing: 0;
@@ -1238,29 +1224,29 @@
 		border-radius: 10px;
 		font-size: 14px;
 	}
-	
+
 	#main_table thead {
 		background: #FCFCFC;
 	}
-	
+
 	#main_add_table tbody tr:hover {
 		background: #f6fcff;
 	}
-	
+
 	#main_add_table tbody tr:nth-child(even) {
 		background: #FCFCFC;
 	}
-	
+
 	#main_table th,
 	#main_table td {
 		height: 50px;
 		border-bottom: 1px solid #EAEAEA;
 	}
-	
+
 	#main_table th {
 		border-top: 1px solid #EAEAEA;
 	}
-	
+
 	.first_table,
 	.first_total {
 		width: 50px;
@@ -1268,27 +1254,27 @@
 		background-image: url('../../assets/images/total.png');
 		background-position: -109px -329px;
 	}
-	
+
 	.last_first_table {
 		width: 50px;
 		border-left: 1px solid #EAEAEA;
 	}
-	
+
 	.last_table {
 		width: 120px;
 		border-right: 1px solid #EAEAEA;
 	}
-	
+
 	.last_table a {
 		color: #1992FF;
 	}
-	
+
 	/* 修改密码 */
 	.modify_password_box p{
 		height: 50px;
 		line-height: 50px;
 	}
-	
+
 	/* 升级会员 弹窗内提示语 */
 	.upgrade_tips {
 		color: #6F6F6F;
@@ -1298,7 +1284,7 @@
 		height: 40px;
 		line-height: 40px;
 	}
-	
+
 	.choice {
 		margin-left: 6.5em;
 		height: 25px;

@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <div class="center">
+    <div class="center" style="position: relative">
       <div id="day" class="white">
         <div id="menu" class="clearfix" style="margin-top: -40px">
           <div>
@@ -51,14 +51,26 @@
         </div>
         <div class="line2 clearfix" v-show="detail.f_ChineseTitle">
           <div class="art-title">
-            <h3>{{detail.f_ChineseTitle}}<span>（{{detail.f_FileState}}）</span></h3>
-            <h3>{{detail.f_EnglishTitle}}</h3>
+            <h3>
+              {{detail.f_ChineseTitle}}
+              <span style="margin-left: 40px"><b class="green"></b>
+              <b class="red" v-show="false"></b>
+              <b class="orange" v-show="false"></b></span>
+              <span>{{detail.f_FileState}}</span>
+            </h3>
+            <h3>
+              {{detail.f_EnglishTitle}}
+              <span style="margin-left: 40px"><b class="green"></b>
+              <b class="red" v-show="false"></b>
+              <b class="orange" v-show="false"></b></span>
+              <span>{{detail.f_FileState}}</span>
+            </h3>
           </div>
         </div>
         <div class="line3" v-show="detail.f_ChineseTitle">
           <div class="effectiveDate" v-show="showDate">
-            <span>发布日期（Date issued）{{new Date(detail.f_ReleaseDate).getTime() | formatTime('YMD')}}</span>
-            <span style="margin-left: 40px">实施日期（Effective date）{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}</span>
+            <span v-show="detail.f_ReleaseDate">发布日期（Date issued）{{new Date(detail.f_ReleaseDate).getTime() | formatTime('YMD')}}</span>
+            <span style="margin-left: 40px" v-show="detail.f_ImplementDate">实施日期（Effective date）{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}</span>
           </div>
           <div class="label" v-if="detail.f_Label">
             <span v-for="row in detail.f_Label.split('；')" v-show="row">{{row}}</span>
@@ -69,9 +81,26 @@
           <span class="heart fav" style="float:right;" v-show="isSave"></span>
         </div>
       </div>
-      <article id="article">
+      <div :class="{'see_onePage' : !user_name}">
+        <article id="article">
 
-      </article>
+        </article>
+      </div>
+      <div class="noMemeber" v-show="!user_name">
+        <h3>以下内容仅对<span>普通会员</span>开放</h3>
+        <p>
+          您好：您现在要进入的是中国汽车标准法规网会员专区。
+        </p>
+        <p>
+          如您是我们的会员可直接<a @click="goLogin()">登录</a>，进入会员专区查询您所需要的信息；如您还不是我们的会员；您可通过线下支付进行单篇购买，支付成功后即可通过邮件获取本内容；如果标识为”以下内容仅对高级会员开放”，您可登录后，选择升级为高级会员，升级方法可查看：如何<a @click="goUserCenter()">升级为高级会员？</a>
+        </p>
+        <div class="noMemeber_button">
+          <el-button @click="goRegister()">注册普通会员</el-button>
+          <el-button type="primary" style="margin-left: 20px" @click="goUserCenter()">成为高级会员</el-button>
+        </div>
+        <p class="p_center">
+          已经是会员，马上<a @click="goLogin()">登录</a></p>
+      </div>
       <!--<div class="article">
         <div v-html="detail.f_ChineseContent"></div>
       </div>-->
@@ -176,6 +205,9 @@
       route_name() {
         //this.route_name_cur = this.$store.state.route_name
         return this.$store.state.route_name
+      },
+      user_name() {
+        return this.$store.state.username
       }
     },
     mounted() {
@@ -382,7 +414,6 @@
       $("#backTop").click(function () {
         $("html,body").animate({ scrollTop: 0 }, 500);
       });
-      console.log(this.global)
       this.memberId = this.global.memberId
       this.documentId = this.$route.params.id
       //this.AddDocumentVisitInfo()
@@ -400,12 +431,9 @@
         }
         let data = await this.api.get(url, params)
         if(data){
-          console.log(data)
         }
       },
       scrollMove() {
-        console.log(this.global.HYType)
-        console.log(this.route_name)
         if(this.route_name.includes('StandardDetail')) {
           let arr = []
           if(this.idList.length > 0) {
@@ -422,9 +450,7 @@
             $('.directory p *').css({
               color: '#777777'
             })
-            console.log(arr)
             if(arr.length > 0) {
-              console.log($('a[href=' + arr[0].href + ']'))
               $('a[href=' + arr[0].href + ']').children().css({
                 //color: 'rgb(5, 99, 193)'
                 color: 'blue'
@@ -436,6 +462,32 @@
             }
           }
           this.scroll = document.documentElement.scrollTop || document.body.scrollTop
+          if(this.scroll >= 100){
+            $("#commNav").css({
+              position: 'fixed',
+              top: 0,
+              zIndex: 100
+            })
+            $('#day').css({
+              width: '85%',
+              position: 'fixed',
+              top: '100px',
+              zIndex: 100
+            })
+          }else{
+            $("#commNav").css({
+              position: 'relative'
+            })
+            $('#day').css({
+              width: '100%',
+              position: ''
+            })
+          }
+          if(this.scroll >= 160){
+
+          }else{
+
+          }
           if(this.scroll > this.pre_scrollTop){
             this.showDate = false
           } else {
@@ -443,15 +495,15 @@
           }
           this.pre_scrollTop = this.scroll
           if(this.scroll > $(window).height()) {
-            if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
+            /*if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
               document.documentElement.scrollTop = $(window).height()
               document.body.scrollTop = $(window).height()
               this.$message({
                 showClose: true,
                 message: '游客或者普通会员只能看一页，赶快去升级为高级会员！'
               });
-            }
-            if(this.hasCatalogue) {
+            }*/
+            if(this.hasCatalogue && this.user_name) {
               this.showMuluButton = true
             }
           } else {
@@ -521,7 +573,6 @@
         let data = await this.api.post(url, params, {loading: true})
         if (data) {
           this.AddDocumentVisitInfo()
-          console.log(data)
           this.isSave = data.isCollect
           this.detail = data.documentEntity
           if(!data.catalogue) {
@@ -537,14 +588,12 @@
             'margin-bottom': 0
           })
           this.aList = $('.directory p a')
-          console.log(this.aList)
           for (let i = 0, len = this.aList.length; i < len; i++) {
             this.idList.push({
               href: '#' + this.aList[i].href.split('#')[1],
               id: this.aList[i].href.split('#')[1]
             })
           }
-          console.log(this.idList)
         }
       },
       async Save() {
@@ -571,7 +620,6 @@
         }
         let data = await this.api.post(url, params)
         if (data) {
-          console.log(data)
           if (data[0] == 1) {
             this.$message({
               showClose: true,
@@ -612,7 +660,6 @@
         }
         let data = await this.api.post(url, params)
         if (data) {
-          console.log(data)
           if (data[0] == true) {
             this.$message({
               showClose: true,
@@ -638,7 +685,6 @@
         let data = await this.api.get(url, params, {loading: true})
         if (data) {
           this.detail = data
-          console.log(data)
         }
       },
       async GetWordContent(type) {
@@ -652,7 +698,6 @@
         }
         let data = await this.api.post(url, params)
         if(data) {
-          console.log(data)
           $("#article").html(data[0]);
         }
       },
@@ -678,7 +723,6 @@
         }
         let data = await this.api.post(url, params, {loading: true})
         if(data){
-          console.log(data)
         }
       },
       async GetMemberInfo() {
@@ -689,7 +733,6 @@
         }
         let data = await this.api.post(url, params, {loading: true})
         if (data) {
-          console.log(data)
           this.residueDownloadNum = data.residueDownloadNum
           if(this.residueDownloadNum < 1) {
             this.$message({
@@ -710,7 +753,6 @@
         this.isShowDirectory = !this.isShowDirectory
       },
       muluClick() {
-        console.log('aaa')
       },
       print() {
         this.downType = 2
@@ -739,12 +781,71 @@
         let wind = window.open("", 'newwindow', 'height=300, width=700, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
         wind.document.body.innerHTML = printHtml;
         wind.print();
+      },
+      goLogin(){
+        this.$router.push({
+          name: 'SignIn'
+        })
+      },
+      goUserCenter(){
+        if(!this.global.memberId){
+          this.$message({
+            showClose: true,
+            message: '请先登陆或者注册账号！'
+          });
+          return
+        }
+        this.$router.push({
+          name: 'UserCenter'
+        })
+      },
+      goRegister(){
+        this.$router.push({
+          name: 'SignUp'
+        })
       }
     }
   }
 </script>
 
 <style scoped>
+  .see_onePage{
+    height: 830px;
+    overflow: hidden;
+  }
+  .noMemeber{
+    min-height: 400px;
+    background-color: #ffffff;
+    border-top: 2px solid #1c92fe;
+  }
+  .noMemeber h3{
+    text-align: center;
+    font-size: 26px;
+    height: 80px;
+    line-height: 80px;
+  }
+  .noMemeber h3 span{
+    color: #1c92fe;
+  }
+  .noMemeber p{
+    padding: 0 40px;
+    font-size: 16px;
+    min-height: 40px;
+    line-height: 40px;
+  }
+  .noMemeber p a{
+    color: #1c92fe;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .noMemeber .p_center{
+    text-align: center;
+  }
+  .noMemeber_button{
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+  }
   .box{
     width: 100%;
     min-height: 600px;
@@ -770,7 +871,7 @@
     word-wrap:break-word
   }
   .center {
-    width: 70%;
+    width: 85%;
     margin: 0px auto 50px;
   }
   .white #menu {

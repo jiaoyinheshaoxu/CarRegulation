@@ -144,7 +144,6 @@
         return row.fileState
       },
       goDetail (row) {
-        console.log(row.Id)
         this.$router.push({
           name: '/LawSearch/StandardDetail',
           params: {
@@ -165,7 +164,6 @@
         }
         let data = await this.api.get(url, params)
         if (data) {
-          console.log(data)
           this.publishList = data.publisherList
           this.statusList = data.documentStateList
           this.directionList = data.directionList
@@ -183,7 +181,6 @@
         }
         this.pageSize = val
         this.getStandardSearch()
-        console.log(`每页 ${val} 条`);
       },
       handleCurrentChange (val) {
         if(!this.global.memberId) {
@@ -195,7 +192,6 @@
         }
         this.currentPage = val
         this.getStandardSearch()
-        console.log(`当前页: ${val}`);
       },
       statusClick (row) {
         if (this.cur_statusId == row.id) {
