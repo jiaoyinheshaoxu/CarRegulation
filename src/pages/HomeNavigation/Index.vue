@@ -142,7 +142,7 @@
         total: 0,
         languageType: 1, //1汉语 2英语
         searchList: [],
-        hotList: ['电动汽车', '智能驾驶', '尾气标准', '二手车', '叉车传动', '充电桩租赁'],
+        hotList: [],
         cur_hot: '',
         List: [],
         LatestList: [],
