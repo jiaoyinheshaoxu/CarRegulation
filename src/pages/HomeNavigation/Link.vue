@@ -26,7 +26,7 @@
             <div class="nav-list">
               <ul>
                 <li v-for="row in governmentWebList">
-                  <a>
+                  <a :href="row.href" target="_blank">
                     <h5>{{row.c_name}}</h5>
                     <p>{{row.e_name}}</p>
                   </a>
@@ -41,7 +41,7 @@
             <div class="nav-list">
               <ul>
                 <li v-for="row in approveList">
-                  <a>
+                  <a :href="row.href" target="_blank">
                     <h5>{{row.c_name}}</h5>
                     <p>{{row.e_name}}</p>
                   </a>
@@ -56,7 +56,7 @@
             <div class="nav-list">
               <ul>
                 <li v-for="row in detectionList">
-                  <a>
+                  <a :href="row.href" target="_blank">
                     <h5>{{row.c_name}}</h5>
                     <p>{{row.e_name}}</p>
                   </a>
@@ -76,29 +76,30 @@
       return {
         cur_showType: 'government',
         governmentWebList: [
-          {c_name: '工业和信息化部',e_name: 'Ministry of Industry and information Technology'},
-          {c_name: '国家发展和改革委员会',e_name: 'National Development and Reform Commission'},
-          {c_name: '公安部',e_name: 'Ministry of Public Security'},
-          {c_name: '财政部',e_name: 'Ministry ct Finance'},
-          {c_name: '生态环境部',e_name: 'Ministry of Ecology and Environment'},
-          {c_name: '交通运输部',e_name: 'Ministry of Transport'},
-          {c_name: '商务部',e_name: 'Ministry of Commerce'},
-          {c_name: '国家税务局',e_name: 'Sate Administration or of Taxation'},
-          {c_name: '海关总署',e_name: 'General Administration at Customers'},
-          {c_name: '国家认证认可监督管理委员会',e_name: 'Certification and Accreditation Administration'},
-          {c_name: '国家标准化管理委员会',e_name: 'Standardization Administration of ThePeople\'s Republic. of China'},
-          {c_name: '北京市环境保护局',e_name: 'Beijing Municipal Environment Production Bureau'},
-          {c_name: '生态环境部机动车排污中心',e_name: 'Vehicle Emission Control Center'},
-          {c_name: '工业和信息化部装备工业发展中心',e_name: 'MIT Equipment Industry DevelopmentCenter'}
+          {c_name: '工业和信息化部',e_name: 'Ministry of Industry and information Technology', href: 'http://www.miit.gov.cn/'},
+          {c_name: '国家发展和改革委员会',e_name: 'National Development and Reform Commission', href: 'http://www.ndrc.gov.cn/'},
+          {c_name: '公安部',e_name: 'Ministry of Public Security', href: 'http://www.mps.gov.cn/'},
+          {c_name: '财政部',e_name: 'Ministry ct Finance', href: 'http://www.mof.gov.cn/'},
+          {c_name: '生态环境部',e_name: 'Ministry of Ecology and Environment', href: 'http://www.zhb.gov.cn/'},
+          {c_name: '交通运输部',e_name: 'Ministry of Transport', href: 'http://www.mot.gov.cn/'},
+          {c_name: '国家市场监督管理总局',e_name: 'State Administration for Market Regulation', href: 'http://samr.saic.gov.cn/'},
+          {c_name: '商务部',e_name: 'Ministry of Commerce', href: 'http://samr.saic.gov.cn/'},
+          {c_name: '国家税务局',e_name: 'Sate Administration or of Taxation', href: 'http://www.mofcom.gov.cn/'},
+          {c_name: '海关总署',e_name: 'General Administration at Customers', href: 'http://www.chinatax.gov.cn/'},
+          {c_name: '国家认证认可监督管理委员会',e_name: 'Certification and Accreditation Administration', href: 'http://www.cnca.gov.cn/'},
+          {c_name: '国家标准化管理委员会',e_name: 'Standardization Administration of ThePeople\'s Republic. of China', href: 'http://www.sac.gov.cn/'},
+          {c_name: '北京市环境保护局',e_name: 'Beijing Municipal Environment Production Bureau', href: 'http://www.bjepb.gov.cn/'},
+          {c_name: '生态环境部机动车排污中心',e_name: 'Vehicle Emission Control Center', href: 'http://www.vecc-mep.org.cn/'},
+          {c_name: '工业和信息化部装备工业发展中心',e_name: 'MIT Equipment Industry DevelopmentCenter', href: 'http://www.miit-eidc.org.cn/'}
         ],
         approveList: [
-          {c_name: '中国质量中心',e_name: 'Chine Quality Certification Center'},
-          {c_name: '中汽认证中心',e_name: 'China Certification Censer for Automotive Products'}
+          {c_name: '中国质量认证中心',e_name: 'Chine Quality Certification Center', href: 'http://www.cqc.com.cn/'},
+          {c_name: '中汽认证中心',e_name: 'China Certification Censer for Automotive Products', href: ''}
         ],
         detectionList: [
-          {c_name: '中汽研汽车检验中心(天津)有限公司',e_name: 'CATARC Automotve Test Center(Tarjinl Calid'},
-          {c_name: '上海机动车险测认证技术研究中心有限公司',e_name: 'Shanghal Mctor Vehicle inspsctonCertication & Techrology novotian'},
-          {c_name: '国家汽车质量监督检验中心(襄阳)',e_name: 'Natcnal Autor otlle Qua ity Supervisicnand" Test Center (Xlangrnp)'}
+          {c_name: '中汽研汽车检验中心(天津)有限公司',e_name: 'CATARC Automotive Test Center （Tianjin）Co., Ltd.', href: 'http://www.tatc.com.cn/'},
+          {c_name: '上海机动车险测认证技术研究中心有限公司',e_name: 'Shanghal Mctor Vehicle inspsctonCertication & Techrology novotian', href: 'http://www.smvic.com.cn/'},
+          {c_name: '国家汽车质量监督检验中心(襄阳)',e_name: 'Natcnal Autor otlle Qua ity Supervisicnand" Test Center (Xlangrnp)', href: 'http://www.nast.com.cn/'}
         ]
       }
     },

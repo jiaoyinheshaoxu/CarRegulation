@@ -37,15 +37,15 @@
       <div id="article-header">
         <div class="line1 clearfix">
           <div id="bread-nav">
-            <a v-show="route_name.includes('Index')">首页</a>
-            <a v-show="route_name.includes('StandardSearch')">标准检索</a>
-            <a v-show="route_name.includes('LawSearch')">法规检索</a>
-            <a v-show="route_name.includes('StandardLawState')">标准法规动态</a>
-            <a v-show="route_name.includes('LatestTranslation')">最新翻译</a>
+            <a v-show="route_name.includes('Index')" @click="$router.push({name: 'Index'})">首页</a>
+            <a v-show="route_name.includes('StandardSearch')" @click="$router.push({name: 'StandardSearch'})">标准检索</a>
+            <a v-show="route_name.includes('LawSearch')" @click="$router.push({name: 'LawSearch'})">法规检索</a>
+            <a v-show="route_name.includes('StandardLawState')" @click="$router.push({name: 'StandardLawState'})">标准法规动态</a>
+            <a v-show="route_name.includes('LatestTranslation')" @click="$router.push({name: 'LatestTranslation'})">最新翻译</a>
             <span>/</span>
             <!--<a href="">标准搜索</a>
             <span>/</span>-->
-            <a>动态详情</a>
+            <a @click="goSelf()">动态详情</a>
           </div>
 
         </div>
@@ -483,11 +483,6 @@
               position: ''
             })
           }
-          if(this.scroll >= 160){
-
-          }else{
-
-          }
           if(this.scroll > this.pre_scrollTop){
             this.showDate = false
           } else {
@@ -582,11 +577,27 @@
           }
           $('#article').html(data.strChinese)
           $('.directory').html(data.catalogue)
+          if(type == 4){
+            $('#article table tr td').css({
+              padding: '0 10px'
+            })
+          }
           $(".directory *").css('font-size', '10px')
           $('.directory p').css({
             'margin-top': 0,
             'margin-bottom': 0
           })
+          for(let i = 0, len = $('.directory p').length; i < len; i++){
+            if($('.directory p:eq(' + i + ')').css('margin-left') == '32px'){
+              $('.directory p:eq(' + i + ')').css('margin-left', '16px')
+            }
+            if($('.directory p:eq(' + i + ')').css('margin-left') == '64px'){
+              $('.directory p:eq(' + i + ')').css('margin-left', '32px')
+            }
+            if($('.directory p:eq(' + i + ')').css('margin-left') == '96px'){
+              $('.directory p:eq(' + i + ')').css('margin-left', '48px')
+            }
+          }
           this.aList = $('.directory p a')
           for (let i = 0, len = this.aList.length; i < len; i++) {
             this.idList.push({
@@ -791,7 +802,7 @@
         if(!this.global.memberId){
           this.$message({
             showClose: true,
-            message: '请先登陆或者注册账号！'
+            message: '请先登录或者注册账号！'
           });
           return
         }
@@ -803,6 +814,9 @@
         this.$router.push({
           name: 'SignUp'
         })
+      },
+      goSelf(){
+        location.reload()
       }
     }
   }
@@ -1307,4 +1321,7 @@
     background-color: #555;
   }
   ::-webkit-scrollbar{width: 6px;}
+  #article > table > tr > td{
+    padding: 0 10PX !important;
+  }
 </style>

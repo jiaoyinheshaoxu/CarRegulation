@@ -62,7 +62,7 @@
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
-            message: '该操作只有登陆后才可以有效，请先登陆！'
+            message: '该操作只有登录后才可以有效，请先登录！'
           });
           return
         }
@@ -73,7 +73,7 @@
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
-            message: '该操作只有登陆后才可以有效，请先登陆！'
+            message: '该操作只有登录后才可以有效，请先登录！'
           });
           return
         }

@@ -344,8 +344,8 @@
 				  </span>
 				</el-dialog>
 
-				<!-- 退出登陆 => 跳转到登陆页面前提示 -->
-				<el-dialog title="退出登陆" :visible.sync="showDialog_quit_account" width="400px" left>
+				<!-- 退出登录 => 跳转到登录页面前提示 -->
+				<el-dialog title="退出登录" :visible.sync="showDialog_quit_account" width="400px" left>
 					<p class="upgrade_tips dangerFont text-center">您 确 定 要 退 出 登 录 ？</p>
 					<span slot="footer" class="dialog-footer">
 				    <el-button @click="showDialog_quit_account = false">手 抖 了</el-button>
@@ -936,7 +936,7 @@
 
 
 
-			// 用户退出 => 跳转到登陆页面
+			// 用户退出 => 跳转到登录页面
 			confirm_quit() {
 				this.$router.push({
 			    name: 'SignIn'

@@ -37,15 +37,15 @@
       <div id="article-header">
         <div class="line1 clearfix">
           <div id="bread-nav">
-            <a v-show="route_name.includes('Index')">首页</a>
-            <a v-show="route_name.includes('StandardSearch')">标准检索</a>
-            <a v-show="route_name.includes('LawSearch')">法规检索</a>
-            <a v-show="route_name.includes('StandardLawState')">标准法规动态</a>
-            <a v-show="route_name.includes('LatestTranslation')">最新翻译</a>
+            <a v-show="route_name.includes('Index')" @click="$router.push({name: 'Index'})">首页</a>
+            <a v-show="route_name.includes('StandardSearch')" @click="$router.push({name: 'StandardSearch'})">标准检索</a>
+            <a v-show="route_name.includes('LawSearch')" @click="$router.push({name: 'LawSearch'})">法规检索</a>
+            <a v-show="route_name.includes('StandardLawState')" @click="$router.push({name: 'StandardLawState'})">标准法规动态</a>
+            <a v-show="route_name.includes('LatestTranslation')" @click="$router.push({name: 'LatestTranslation'})">最新翻译</a>
             <span>/</span>
             <!--<a href="">标准搜索</a>
             <span>/</span>-->
-            <a>动态详情</a>
+            <a @click="goSelf()">动态详情</a>
           </div>
 
         </div>
@@ -57,8 +57,8 @@
         </div>
         <div class="line3">
           <div class="effectiveDate" v-show="detail.f_ChineseTitle">
-            <span>发布日期（Date issued）</span>{{new Date(detail.f_ReleaseDate).getTime() | formatTime('YMD')}}<span></span>
-            <span style="margin-left: 40px">实施日期（Effective date）</span>{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}<span></span>
+            <span v-show="detail.f_CreatorTime && showDate">创建日期{{new Date(detail.f_CreatorTime).getTime() | formatTime('YMD')}}</span>
+            <span style="margin-left: 40px" v-show="detail.f_LastModifyTime && showDate">修改日期{{new Date(detail.f_LastModifyTime).getTime() | formatTime('YMD')}}</span>
           </div>
           <div class="label" v-if="detail.f_Label">
             <span v-for="row in detail.f_Label.split('；')" v-show="row">{{row}}</span>
@@ -67,9 +67,26 @@
           <span style="float: right;cursor: pointer;color: #0c7dcf" v-show="isSave" @click="unSave()">已收藏</span>-->
         </div>
       </div>
-      <article id="article">
+      <div :class="{'see_onePage' : !user_name}">
+        <article id="article">
 
-      </article>
+        </article>
+      </div>
+      <div class="noMemeber" v-show="!user_name">
+        <h3>以下内容仅对<span>普通会员</span>开放</h3>
+        <p>
+          您好：您现在要进入的是中国汽车标准法规网会员专区。
+        </p>
+        <p>
+          如您是我们的会员可直接<a @click="goLogin()">登录</a>，进入会员专区查询您所需要的信息；如您还不是我们的会员；您可通过线下支付进行单篇购买，支付成功后即可通过邮件获取本内容；如果标识为”以下内容仅对高级会员开放”，您可登录后，选择升级为高级会员，升级方法可查看：如何<a @click="goUserCenter()">升级为高级会员？</a>
+        </p>
+        <div class="noMemeber_button">
+          <el-button @click="goRegister()">注册普通会员</el-button>
+          <el-button type="primary" style="margin-left: 20px" @click="goUserCenter()">成为高级会员</el-button>
+        </div>
+        <p class="p_center">
+          已经是会员，马上<a @click="goLogin()">登录</a></p>
+      </div>
       <div class="article">
         <div v-html="detail.f_ChineseContent"></div>
       </div>
@@ -165,12 +182,16 @@
         showMuluButton: false,
         hasCatalogue: false,
         idList: [],
-        aList: []
+        aList: [],
+        showDate: true
       }
     },
     computed: {
       route_name() {
         return this.$store.state.route_name
+      },
+      user_name() {
+        return this.$store.state.username
       }
     },
     mounted() {
@@ -203,7 +224,42 @@
       //sun  article.css
       $("#sun").click(function () {
         $('#article p').css({
-          background: '#ffffff'
+          background: '#ffffff',
+          color: '#666666'
+        })
+        $('.label span').css({
+          background: '#f5f5f5',
+          border: '1px solid #d9d9d9',
+          color: '#2c3e50'
+        })
+        $('.art-title h3').css({
+          background: '#ffffff',
+          color: '#2c3e50'
+        })
+        $('.effectiveDate span').css({
+          background: '#ffffff',
+          color: '#2c3e50'
+        })
+        $(".doSave").css({
+          color: 'red'
+        })
+        $('.effectiveDate span').hover(function () {
+          $(this).css({
+            background: '#E8E8E8'
+          })
+        },function () {
+          $(this).css({
+            background: '#ffffff'
+          })
+        })
+        $('.art-title h3').hover(function () {
+          $(this).css({
+            background: '#E8E8E8'
+          })
+        },function () {
+          $(this).css({
+            background: '#ffffff'
+          })
         })
         $(".black").attr("class", "white");
         $('#article').css({
@@ -243,6 +299,12 @@
         $('#article-header').css({
           background: '#191919'
         })
+        $('.art-title h3').css({
+          background: '#191919'
+        })
+        $('.effectiveDate span').css({
+          background: '#191919'
+        })
         $('.box').css({
           background: '#282828'
         })
@@ -260,6 +322,31 @@
           $(this).css({
             background: '#191919'
           })
+        })
+        $('.art-title h3').hover(function () {
+          $(this).css({
+            background: '#080808'
+          })
+        },function () {
+          $(this).css({
+            background: '#191919'
+          })
+        })
+        $('.effectiveDate span').hover(function () {
+          $(this).css({
+            background: '#080808'
+          })
+        },function () {
+          $(this).css({
+            background: '#191919'
+          })
+        })
+        $("#article-header *").css({
+          color: '#808080'
+        })
+        $('.label span').css({
+          background: '#191919',
+          border: '1px solid #d9d9d9'
         })
       });
       $("#contents_list li").mouseover(function () {
@@ -340,15 +427,41 @@
             }
           }
           this.scroll = document.documentElement.scrollTop || document.body.scrollTop
+          if(this.scroll >= 100){
+            $("#commNav").css({
+              position: 'fixed',
+              top: 0,
+              zIndex: 100
+            })
+            $('#day').css({
+              width: '85%',
+              position: 'fixed',
+              top: '100px',
+              zIndex: 100
+            })
+          }else{
+            $("#commNav").css({
+              position: 'relative'
+            })
+            $('#day').css({
+              width: '100%',
+              position: ''
+            })
+          }
+          if(this.scroll > this.pre_scrollTop){
+            this.showDate = false
+          } else {
+            this.showDate = true
+          }
           if(this.scroll > $(window).height()) {
-            if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
+            /*if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
               document.documentElement.scrollTop = $(window).height() //谷歌
               document.body.scrollTop = $(window).height() //ie
               this.$message({
                 showClose: true,
                 message: '游客或者普通会员只能看一页，赶快去升级为高级会员！'
               });
-            }
+            }*/
             if(this.hasCatalogue) {
               this.showMuluButton = true
             }
@@ -468,6 +581,17 @@
             'margin-top': 0,
             'margin-bottom': 0
           })
+          for(let i = 0, len = $('.directory p').length; i < len; i++){
+            if($('.directory p:eq(' + i + ')').css('margin-left') == '32px'){
+              $('.directory p:eq(' + i + ')').css('margin-left', '16px')
+            }
+            if($('.directory p:eq(' + i + ')').css('margin-left') == '64px'){
+              $('.directory p:eq(' + i + ')').css('margin-left', '32px')
+            }
+            if($('.directory p:eq(' + i + ')').css('margin-left') == '96px'){
+              $('.directory p:eq(' + i + ')').css('margin-left', '48px')
+            }
+          }
           this.aList = $('.directory p a')
           for (let i = 0, len = this.aList.length; i < len; i++) {
             this.idList.push({
@@ -528,12 +652,74 @@
         this.isShowDirectory = !this.isShowDirectory
       },
       muluClick() {
+      },
+      goLogin(){
+        this.$router.push({
+          name: 'SignIn'
+        })
+      },
+      goUserCenter(){
+        if(!this.global.memberId){
+          this.$message({
+            showClose: true,
+            message: '请先登录或者注册账号！'
+          });
+          return
+        }
+        this.$router.push({
+          name: 'UserCenter'
+        })
+      },
+      goRegister(){
+        this.$router.push({
+          name: 'SignUp'
+        })
+      },
+      goSelf(){
+        location.reload()
       }
     }
   }
 </script>
 
 <style scoped>
+  .see_onePage{
+    height: 830px;
+    overflow: hidden;
+  }
+  .noMemeber{
+    min-height: 400px;
+    background-color: #ffffff;
+    border-top: 2px solid #1c92fe;
+  }
+  .noMemeber h3{
+    text-align: center;
+    font-size: 26px;
+    height: 80px;
+    line-height: 80px;
+  }
+  .noMemeber h3 span{
+    color: #1c92fe;
+  }
+  .noMemeber p{
+    padding: 0 40px;
+    font-size: 16px;
+    min-height: 40px;
+    line-height: 40px;
+  }
+  .noMemeber p a{
+    color: #1c92fe;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .noMemeber .p_center{
+    text-align: center;
+  }
+  .noMemeber_button{
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+  }
   .box{
     width: 100%;
     min-height: 600px;

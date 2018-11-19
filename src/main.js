@@ -51,6 +51,9 @@ if(sessionStorage.getItem('userEmail') && sessionStorage.getItem('userPassword')
 }
 router.beforeEach((to, from, next) => {
   console.log(to)
+  $("#commNav").css({
+    position: 'relative'
+  })
   store.commit('change_route', {route_name: to.path})
   next()
 })

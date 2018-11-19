@@ -60,7 +60,7 @@
       		this.password = "";
       		return;
       	}else{
-      		// 登陆接口
+      		// 登录接口
       		// 返回值：  int  LoginStatus, 1 登录成功，2密码不对，3邮箱不存在
 	  			//         int  HYType1季付 2年付,
 	  			//         int  UseState访问状态  1：正常   2：超期    3：即将逾期  4：逾期
