@@ -7,11 +7,11 @@
             <li>
               <h3>产品与服务</h3>
             </li>
-            <li><a href="#">标准检索</a></li>
-            <li><a href="#">法规检索</a></li>
-            <li><a href="#">标准法规动态</a></li>
-            <li><a href="#">最新翻译</a></li>
-            <li><a href="#">链接</a></li>
+            <li><a href="/StandardSearch" target="_blank">标准检索</a></li>
+            <li><a href="/LawSearch" target="_blank">法规检索</a></li>
+            <li><a href="/StandardLawState" target="_blank">标准法规动态</a></li>
+            <li><a href="/LatestTranslation" target="_blank">最新翻译</a></li>
+            <li><a href="/Link" target="_blank">链接</a></li>
           </ul>
         </li>
         <li>
@@ -19,9 +19,9 @@
             <li>
               <h3>关于</h3>
             </li>
-            <li><a href="#">关于网站</a></li>
-            <li><a href="#">联系我们</a></li>
-            <li><a href="#">帮助</a></li>
+            <li><a href="/AboutUs" target="_blank">关于网站</a></li>
+            <li><a href="/ContactUs" target="_blank">联系我们</a></li>
+            <li><a href="/Help" target="_blank">帮助</a></li>
             <li><a href="#">隐私声明</a></li>
             <li><a href="#">使用条款</a></li>
           </ul>
