@@ -211,6 +211,16 @@
       }
     },
     mounted() {
+      window.onhashchange = function () {
+        let cur_hash = location.hash
+        if(cur_hash){
+          setTimeout(function () {
+            let cur_top = $(cur_hash).offset().top
+            document.documentElement.scrollTop = cur_top - 116
+            document.body.scrollTop = cur_top - 116
+          }, 100)
+        }
+      }
       $('.effectiveDate span').hover(function () {
         $(this).css({
           background: '#E8E8E8'
@@ -445,7 +455,7 @@
               }
             }
             arr.sort(function (a, b) {
-              return ($('#' + a.id).offset().top - $(window).scrollTop()) - ($('#' + b.id).offset().top - $(window).scrollTop())
+              return ($('#' + a.id).offset().top - $(window).scrollTop() - 116) - ($('#' + b.id).offset().top - $(window).scrollTop() - 116)
             })
             $('.directory p *').css({
               color: '#777777'
