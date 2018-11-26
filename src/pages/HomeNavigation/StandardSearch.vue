@@ -255,6 +255,7 @@
     border-bottom: 2px solid #1890FF;
     font-size:16px;
     color: #1890FF;
+    text-align: center;
   }
   /*每一个分类设置属性*/
   #a_content{
@@ -320,7 +321,7 @@
     width:100%;
     padding:10px 0 10px 20px;
     box-sizing:border-box;
-    height: 125px;
+    min-height: 125px;
   }
   #right_list{
     float: right;

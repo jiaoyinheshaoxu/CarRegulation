@@ -254,6 +254,7 @@
     border-bottom: 2px solid #1890FF;
     font-size:16px;
     color: #1890FF;
+    text-align: center;
   }
   /*每一个分类设置属性*/
   #a_content{

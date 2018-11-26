@@ -29,60 +29,117 @@
         </ul>
       </div>
     </div>
-    <div class="tableBox" v-show="searchList.length > 0">
-      <el-table
-        :data="searchList"
-        style="width: 100%"
-        @row-click="goDetail"
-        :default-sort = "{prop: 'date', order: 'descending'}"
-      >
-        <el-table-column
-          type="index"
-          align="center"
-          width="100">
-        </el-table-column>
-        <el-table-column
-          prop="Title"
-          label="标准或法规名称"
-          sortable
-          header-align="center"
-          align="left">
-        </el-table-column>
-        <el-table-column
-          prop="FileState"
-          label="状态"
-          align="center"
-          width="100"
-          :formatter="dealFileState">
-        </el-table-column>
-        <el-table-column
-          prop="ReleaseDate"
-          label="发布日期"
-          sortable
-          align="center"
-          :formatter="dealReleaseDate"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="ImplementDate"
-          label="实施日期"
-          sortable
-          align="center"
-          :formatter="dealImplementDate"
-          width="180">
-        </el-table-column>
-      </el-table>
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[10, 20, 30, 40, 50]"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-        class="pageStyle">
-      </el-pagination>
+    <div style="overflow: hidden" v-show="searchList.length > 0">
+      <div id="left_search">
+        <div id="title">
+          <a  href="#" :class="{'title_a_active':cur_active == 'standard' }" @click="standardClick()">标准</a>
+          <a  href="#" :class="{'title_a_active':cur_active == 'regulation' }" @click="regulationClick()">法规</a>
+        </div>
+        <div id="area" v-show="cur_active == 'standard'">
+          <p id="type_area" class="area_link"><span></span>按领域</p>
+          <ul id="a_content" class="area_content">
+            <li v-for="row in fieldList">
+              <a @click="fieldClick(row)" :class="{'selected': cur_fieldId == row.id}">{{row.itemName}}</a>
+            </li>
+          </ul>
+        </div v->
+        <div id ="state" v-show="cur_active == 'standard'">
+          <p  id="type_state"class="area_link"><span></span>按状态</p>
+          <ul id="s_content" class="area_content">
+            <li v-for="row in statusList">
+              <a @click="statusClick(row)" :class="{'selected': cur_statusId == row.id}">{{row.itemName}}</a>
+            </li>
+          </ul>
+        </div>
+        <div id ="notic" v-show="cur_active == 'standard'">
+          <p id="type_notic" class="area_link"><span></span>按采标</p>
+          <ul id="n_content" class="area_content">
+            <li v-for="row in adoptList">
+              <a @click="adoptClick(row)" :class="{'selected': cur_adoptId == row.id}">{{row.itemName}}</a>
+            </li>
+          </ul>
+        </div>
+        <div id="area" v-show="cur_active == 'regulation'">
+          <p id="type_area" class="area_link"><span></span>按发布方</p>
+          <ul id="a_content" class="area_content">
+            <li v-for="row in publishList">
+              <a @click="publishClick(row)" :class="{'selected': cur_publishId == row.id}">{{row.itemName}}</a>
+            </li>
+          </ul>
+        </div>
+        <div id ="state" v-show="cur_active == 'regulation'">
+          <p  id="type_state"class="area_link"><span></span>按状态</p>
+          <ul id="s_content" class="area_content">
+            <li v-for="row in restatusList">
+              <a @click="restatusClick(row)" :class="{'selected': cur_restatusId == row.id}">{{row.itemName}}</a>
+            </li>
+          </ul>
+        </div>
+        <div id ="notic" v-show="cur_active == 'regulation'">
+          <p id="type_notic" class="area_link"><span></span>按方向</p>
+          <ul id="n_content" class="area_content">
+            <li v-for="row in directionList">
+              <a @click="directionClick(row)" :class="{'selected': cur_directionId == row.id}">{{row.itemName}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="tableBox" id="right_list">
+        <el-table
+          :data="searchList"
+          style="width: 100%"
+          @row-click="goDetail"
+          :default-sort = "{prop: 'date', order: 'descending'}"
+        >
+          <el-table-column
+            type="index"
+            align="center"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="Title"
+            label="标准或法规名称"
+            sortable
+            header-align="center"
+            align="left">
+          </el-table-column>
+          <el-table-column
+            prop="FileState"
+            label="状态"
+            align="center"
+            width="100"
+            :formatter="dealFileState">
+          </el-table-column>
+          <el-table-column
+            prop="ReleaseDate"
+            label="发布日期"
+            sortable
+            align="center"
+            :formatter="dealReleaseDate"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="ImplementDate"
+            label="实施日期"
+            sortable
+            align="center"
+            :formatter="dealImplementDate"
+            width="180">
+          </el-table-column>
+        </el-table>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[10, 20, 30, 40, 50]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          class="pageStyle">
+        </el-pagination>
+      </div>
     </div>
+
     <div style="overflow: hidden; background-color: #ffffff" v-show="searchList.length == 0">
       <!-- 标准动态 -->
       <div id="standard_activit">
@@ -146,10 +203,212 @@
         cur_hot: '',
         List: [],
         LatestList: [],
-        LawList: []
+        LawList: [],
+        /*标准检索*/
+        fieldList: [],
+        cur_fieldId: '',
+        cur_fieldName: '',
+        statusList: [],
+        cur_statusId: '',
+        cur_statusName: '',
+        adoptList: [],
+        cur_adoptId: '',
+        cur_adoptName: '',
+        cur_fieldCode: '',
+        cur_statusCode: '',
+        cur_adoptCode: '',
+        /*法规检索*/
+        publishList: [],
+        cur_publishId: '',
+        cur_publishName: '',
+        restatusList: [],
+        cur_restatusId: '',
+        cur_restatusName: '',
+        directionList: [],
+        cur_directionId: '',
+        cur_directionName: '',
+        cur_publishCode: '',
+        cur_restatusCode: '',
+        cur_directionCode: '',
+        /**/
+        cur_active: 'standard',
+        searchType: 1
       }
     },
     methods: {
+      async getRegulationSearch () {
+        let url = '/DocumentService.asmx/SearchRegulationByType'
+        let params = {
+          fileState: this.cur_restatusCode,
+          publisher: this.cur_publishCode,
+          direction: this.cur_directionCode,
+          languageType: this.languageType,
+          type: 2,
+          page: this.currentPage,
+          rows: this.pageSize
+        }
+        let data = await this.api.get(url, params)
+        if (data) {
+          this.total = data.total
+          this.searchList = data.documentList
+          if (this.searchList.length == 0) {
+            this.$message({
+              showClose: true,
+              message: '暂无搜索结果！'
+            });
+          }
+        }
+      },
+      restatusClick (row) {
+        if (this.cur_restatusId == row.id) {
+          this.cur_restatusId = ''
+          this.cur_restatusName = ''
+          this.cur_restatusCode = ''
+        } else {
+          this.cur_restatusId = row.id
+          this.cur_restatusName = row.itemName
+          this.cur_restatusCode = row.itemCode
+        }
+        this.searchType = 3
+        this.getRegulationSearch()
+      },
+      publishClick (row) {
+        if (this.cur_publishId == row.id) {
+          this.cur_publishId = ''
+          this.cur_publishName= ''
+          this.cur_publishCode = ''
+        } else {
+          this.cur_publishId = row.id
+          this.cur_publishName = row.itemName
+          this.cur_publishCode = row.itemCode
+        }
+        this.searchType = 3
+        this.getRegulationSearch()
+      },
+      directionClick (row) {
+        if (this.cur_directionId == row.id) {
+          this.cur_directionId = ''
+          this.cur_directionName = ''
+          this.cur_directionCode = ''
+        } else {
+          this.cur_directionId = row.id
+          this.cur_directionName = row.itemName
+          this.cur_directionCode = row.itemCode
+        }
+        this.searchType = 3
+        this.getRegulationSearch()
+      },
+      async getRegulationLeft () {
+        let url = '/DocumentService.asmx/RegulationType'
+        let params = {
+          languageType: this.languageType
+        }
+        let data = await this.api.get(url, params)
+        if (data) {
+          this.publishList = data.publisherList
+          this.restatusList = data.documentStateList
+          this.directionList = data.directionList
+          this.cur_publishId = ''
+          this.cur_publishName = ''
+          this.cur_restatusId = ''
+          this.cur_restatusName = ''
+          this.cur_directionId = ''
+          this.cur_directionName = ''
+          this.cur_publishCode = ''
+          this.cur_restatusCode = ''
+          this.cur_directionCode = ''
+        }
+      },
+      standardClick() {
+        this.cur_active = 'standard'
+      },
+      regulationClick() {
+        this.cur_active = 'regulation'
+      },
+      fieldClick (row) {
+        if (this.cur_fieldId == row.id) {
+          this.cur_fieldId = ''
+          this.cur_fieldName = ''
+          this.cur_fieldCode = ''
+        } else {
+          this.cur_fieldId = row.id
+          this.cur_fieldName = row.itemName
+          this.cur_fieldCode = row.itemCode
+        }
+        this.searchType = 2
+        this.getStandardSearch()
+      },
+      statusClick (row) {
+        if (this.cur_statusId == row.id) {
+          this.cur_statusId = ''
+          this.cur_statusName= ''
+          this.cur_statusCode = ''
+        } else {
+          this.cur_statusId = row.id
+          this.cur_statusName = row.itemName
+          this.cur_statusCode = row.itemCode
+        }
+        this.searchType = 2
+        this.getStandardSearch()
+      },
+      adoptClick (row) {
+        if (this.cur_adoptId == row.id) {
+          this.cur_adoptId = ''
+          this.cur_adoptName = ''
+          this.cur_adoptCode = ''
+        } else {
+          this.cur_adoptId = row.id
+          this.cur_adoptName = row.itemName
+          this.cur_adoptCode = row.itemCode
+        }
+        this.searchType = 2
+        this.getStandardSearch()
+      },
+      async getStandardSearch () {
+        let url = '/DocumentService.asmx/SearchCriterionByType'
+        let params = {
+          fileState: this.cur_fieldCode,
+          domain: this.cur_statusCode,
+          acquisitionStandard: this.cur_adoptCode,
+          languageType: this.languageType,
+          type: 1,
+          page: this.currentPage,
+          rows: this.pageSize,
+          keys: this.searchStr
+        }
+        let data = await this.api.post(url, params)
+        if (data) {
+          this.total = data.total
+          this.searchList = data.documentList
+          if (this.searchList.length == 0) {
+            this.$message({
+              showClose: true,
+              message: '暂无搜索结果！'
+            });
+          }
+        }
+      },
+      async getStandardSearchLeft () {
+        let url = '/DocumentService.asmx/CriterionType'
+        let params = {
+          languageType: this.languageType
+        }
+        let data = await this.api.post(url, params)
+        if (data) {
+          this.fieldList = data.documentDomainList
+          this.statusList = data.documentStateList
+          this.adoptList = data.caiBiaoList
+          this.cur_fieldId = ''
+          this.cur_fieldName = ''
+          this.cur_statusId = ''
+          this.cur_statusName = ''
+          this.cur_adoptId = ''
+          this.cur_adoptName = ''
+          this.cur_fieldCode = ''
+          this.cur_statusCode = ''
+          this.cur_adoptCode = ''
+        }
+      },
       hotClick(row) {
         this.searchStr = row.keys
         this.cur_hot = row.keys
@@ -184,6 +443,8 @@
                 message: '暂无搜索结果！'
               });
             }
+            this.getStandardSearchLeft()
+            this.getRegulationLeft()
           }
         } else if ($('#i_fisrt').html().includes('内容')) {
           let url = 'DocumentService.asmx/SearchForIndexByContent'
@@ -195,6 +456,8 @@
           }
           let data = await this.api.post(url, params)
           if (data) {
+            this.getStandardSearchLeft()
+            this.getRegulationLeft()
             this.searchList = data.documentList
             this.total = data.total
             if (this.searchList.length == 0) {
@@ -240,7 +503,13 @@
           return
         }
         this.pageSize = val
-        this.SearchForIndexByLabelOrTitle()
+        if(this.searchType == 1){
+          this.SearchForIndexByLabelOrTitle()
+        } else if (this.searchType == 2) {
+          this.getStandardSearch()
+        } else if (this.searchType == 3) {
+          this.getRegulationSearch()
+        }
       },
       handleCurrentChange (val) {
         if(!this.global.memberId) {
@@ -251,7 +520,13 @@
           return
         }
         this.currentPage = val
-        this.SearchForIndexByLabelOrTitle()
+        if(this.searchType == 1){
+          this.SearchForIndexByLabelOrTitle()
+        } else if (this.searchType == 2) {
+          this.getStandardSearch()
+        } else if (this.searchType == 3) {
+          this.getRegulationSearch()
+        }
       },
       goDetail (row) {
         this.$router.push({
@@ -343,6 +618,103 @@
 </script>
 
 <style scoped>
+  #left_search{
+    float: left;
+    width:18%;
+    min-height: 590px;
+    background: #fff;
+  }
+  #title{
+    height:45px;
+    width:100%;
+    border-bottom: 2px solid #F5F5F5;
+  }
+  #title a{
+    display: inline-block;
+    float: left;
+    width:50%;
+    height: 100%;
+    box-sizing:border-box;
+    padding:15px 30px;
+    font-size:16px;
+    color: #666666;
+    text-align: center;
+  }
+  .title_a_active{
+    border-bottom: 2px solid #1890FF;
+    color: #1890FF !important;
+  }
+  /*每一个分类设置属性*/
+  #a_content{
+    min-height:190px;
+    padding-bottom: 10px;
+    overflow: hidden;
+  }
+  #s_content{
+    min-height: 140px;
+    overflow: hidden;
+    padding-bottom: 10px;
+  }
+  #n_content{
+    min-height:80px;
+    overflow: hidden;
+    padding-bottom: 10px;
+  }
+  #area{
+    width:100%;
+    padding:10px 0 10px 20px;
+    box-sizing:border-box;
+    border-bottom: 2px solid #EDEDED
+  }
+  .area_link {
+    margin-bottom: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .area_link span{
+    padding-left:15px;
+    background: url('../../assets/images/bg.png') -240px -96px;
+  }
+  .area_content{
+    list-style: none;
+  }
+  .area_content li{
+    list-style: none;
+    float: left;
+    width:100%;
+    min-height: 26px;
+    line-height: 26px;
+    padding-right: 8px;
+  }
+  .area_content  a{
+    color: #A7A7A7;
+    padding-left:14px;
+    font-size: 15px;
+  }
+  .area_content .selected{
+    padding: 4px 15px;
+    border-radius: 5px;
+    background: #1890FF;
+    color: #E0F0FF;
+    font-size: 15px;
+  }
+  #state{
+    width:100%;
+    padding:10px 0 10px 20px;
+    box-sizing:border-box;
+    border-bottom: 2px solid #EDEDED
+  }
+  #notic{
+    width:100%;
+    padding:10px 0 10px 20px;
+    box-sizing:border-box;
+    min-height: 125px;
+  }
+  #right_list{
+    float: right;
+    width: 79%;
+    height:620px;
+  }
   .noDateTip{
     height: 36px;
     line-height: 36px;
