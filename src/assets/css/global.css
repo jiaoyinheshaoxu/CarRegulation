@@ -204,7 +204,7 @@ a img {
 }
 #article > table table{
   table-layout: fixed !important;
-  width: 98% !important;
+  /*width: 98% !important;*/
 }
 #article p:hover{
   background: #E8E8E8;
