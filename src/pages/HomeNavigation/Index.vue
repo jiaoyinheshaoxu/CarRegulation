@@ -181,10 +181,7 @@
     <!-- 声明 -->
     <div id="declare" style="margin-top: 20px">
       <h2>免责声明</h2>
-      <p>本网站中提供的所有英文译本均为中文原文的非正式译文，仅供参考。如果翻译与原始中文文本之间存在任何分歧或差异，则应始终以中文文本为准。</p>
-      <p>所有文件或材料，无论整体或部分，均不得用于任何商业目的使用、复制或分发。</p>
-      <p>我们对于英语翻译的准确性、完整性或可靠性不作任何陈述或保证，并且对翻译中的任何错误、不完整或不准确不承担任何责任。</p>
-      <p>所有中文原始文件的版权归中国政府所有。</p>
+      <p>本网站中提供的所有英文译本均为中文原文的非正式译文，仅供参考。如果翻译与原始中文文本之间存在任何分歧或差异，则应始终以中文文本为准。所有文件或材料，无论整体或部分，均不得用于任何商业目的使用、复制或分发。我们对于英语翻译的准确性、完整性或可靠性不作任何陈述或保证，并且对翻译中的任何错误、不完整或不准确不承担任何责任。所有中文原始文件的版权归中国政府所有。</p>
     </div>
   </div>
 </template>
@@ -245,7 +242,8 @@
           languageType: this.languageType,
           type: 2,
           page: this.currentPage,
-          rows: this.pageSize
+          rows: this.pageSize,
+          keys: this.searchStr
         }
         let data = await this.api.get(url, params)
         if (data) {
@@ -723,6 +721,7 @@
   #declare p{
     min-height: 36px;
     line-height: 36px;
+    text-indent: 32px;
   }
   .blue{
     color: #1C92FE !important;
@@ -940,7 +939,7 @@
   }
   /*声明*/
   #declare{
-    height:280px;
+    height:240px;
     width:100%;
     border: 1px dashed #F5A623;
     border-radius: 5px;
