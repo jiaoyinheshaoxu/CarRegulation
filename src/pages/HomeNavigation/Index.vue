@@ -29,13 +29,13 @@
         </ul>
       </div>
     </div>
-    
+
     <!-- 测试代码 -->
-      <div style="margin: 20px; font-size: 30px; color: red;">
+      <!--<div style="margin: 20px; font-size: 30px; color: red;">
 	      <h1>{{$t("message.title")}}</h1>
 	      <input style="width: 300px;" class="form-control" :placeholder="$t('placeholder.enter')">
-	    </div>
-    
+	    </div>-->
+
     <div style="overflow: hidden" v-show="searchList.length > 0">
       <div id="left_search">
         <div id="title">
@@ -236,7 +236,7 @@
         cur_directionCode: '',
         /**/
         cur_active: 'standard',
-        searchType: 1
+        searchType: 3
       }
     },
     methods: {
@@ -274,8 +274,8 @@
           this.cur_restatusName = row.itemName
           this.cur_restatusCode = row.itemCode
         }
-        this.searchType = 3
-        this.getRegulationSearch()
+        this.searchType = 2
+        this.getStandardAndRegulationSearch()
       },
       publishClick (row) {
         if (this.cur_publishId == row.id) {
@@ -287,8 +287,8 @@
           this.cur_publishName = row.itemName
           this.cur_publishCode = row.itemCode
         }
-        this.searchType = 3
-        this.getRegulationSearch()
+        this.searchType = 2
+        this.getStandardAndRegulationSearch()
       },
       directionClick (row) {
         if (this.cur_directionId == row.id) {
@@ -300,8 +300,8 @@
           this.cur_directionName = row.itemName
           this.cur_directionCode = row.itemCode
         }
-        this.searchType = 3
-        this.getRegulationSearch()
+        this.searchType = 2
+        this.getStandardAndRegulationSearch()
       },
       async getRegulationLeft () {
         let url = '/DocumentService.asmx/RegulationType'
@@ -340,8 +340,8 @@
           this.cur_fieldName = row.itemName
           this.cur_fieldCode = row.itemCode
         }
-        this.searchType = 2
-        this.getStandardSearch()
+        this.searchType = 1
+        this.getStandardAndRegulationSearch()
       },
       statusClick (row) {
         if (this.cur_statusId == row.id) {
@@ -353,8 +353,8 @@
           this.cur_statusName = row.itemName
           this.cur_statusCode = row.itemCode
         }
-        this.searchType = 2
-        this.getStandardSearch()
+        this.searchType = 1
+        this.getStandardAndRegulationSearch()
       },
       adoptClick (row) {
         if (this.cur_adoptId == row.id) {
@@ -366,20 +366,42 @@
           this.cur_adoptName = row.itemName
           this.cur_adoptCode = row.itemCode
         }
-        this.searchType = 2
-        this.getStandardSearch()
+        this.searchType = 1
+        this.getStandardAndRegulationSearch()
       },
-      async getStandardSearch () {
-        let url = '/DocumentService.asmx/SearchCriterionByType'
-        let params = {
-          domain: this.cur_fieldCode,
-          fileState: this.cur_statusCode,
-          acquisitionStandard: this.cur_adoptCode,
-          languageType: this.languageType,
-          type: 1,
-          page: this.currentPage,
-          rows: this.pageSize,
-          keys: this.searchStr
+      async getStandardAndRegulationSearch () {
+        let url, params
+        if ($('#i_fisrt').html().includes("标题")) {
+          url = 'DocumentService.asmx/SearchForIndexByLabelOrTitleSecond'
+        } else if ($('#i_fisrt').html().includes('内容')) {
+          url = 'DocumentService.asmx/SearchForIndexByContentSecond'
+        }
+        if(this.searchType == 1){
+          params = {
+            type: this.searchType,
+            domain: this.cur_fieldCode,
+            fileState: this.cur_statusCode,
+            acquisitionStandard: this.cur_adoptCode,
+            languageType: this.languageType,
+            page: this.currentPage,
+            rows: this.pageSize,
+            keyword: this.searchStr,
+            publisher: '',
+            direction: ''
+          }
+        } else if (this.searchType == 2){
+          params = {
+            type: this.searchType,
+            domain: '',
+            fileState: this.cur_restatusCode,
+            acquisitionStandard: '',
+            languageType: this.languageType,
+            page: this.currentPage,
+            rows: this.pageSize,
+            keyword: this.searchStr,
+            publisher: this.cur_publishCode,
+            direction: this.cur_directionCode
+          }
         }
         let data = await this.api.post(url, params)
         if (data) {
@@ -429,6 +451,7 @@
         }
       },
       async SearchForIndexByLabelOrTitle() {
+        this.searchType = 3
         this.AddDocumentSearchKeys()
         if ($('#i_fisrt').html().includes("标题")) {
           let url = 'DocumentService.asmx/SearchForIndexByLabelOrTitle'
@@ -482,8 +505,13 @@
             return val
           }
         }
-        let time = new Date(row.ImplementDate)
-        return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
+        if(row.ImplementDate){
+          let time = new Date(row.ImplementDate)
+          return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
+        }else{
+          return ''
+        }
+
       },
       dealReleaseDate(row) {
         function addZero(val) {
@@ -493,8 +521,12 @@
             return val
           }
         }
-        let time = new Date(row.ReleaseDate)
-        return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
+        if(row.ReleaseDate){
+          let time = new Date(row.ReleaseDate)
+          return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
+        }else{
+          return ''
+        }
       },
       dealFileState(row) {
         return row.FileState
@@ -508,12 +540,10 @@
           return
         }
         this.pageSize = val
-        if(this.searchType == 1){
-          this.SearchForIndexByLabelOrTitle()
-        } else if (this.searchType == 2) {
-          this.getStandardSearch()
+        if(this.searchType == 1 || this.searchType == 2){
+          this.getStandardAndRegulationSearch()
         } else if (this.searchType == 3) {
-          this.getRegulationSearch()
+          this.SearchForIndexByLabelOrTitle()
         }
       },
       handleCurrentChange (val) {
@@ -525,12 +555,10 @@
           return
         }
         this.currentPage = val
-        if(this.searchType == 1){
-          this.SearchForIndexByLabelOrTitle()
-        } else if (this.searchType == 2) {
-          this.getStandardSearch()
+        if(this.searchType == 1 || this.searchType == 2){
+          this.getStandardAndRegulationSearch()
         } else if (this.searchType == 3) {
-          this.getRegulationSearch()
+          this.SearchForIndexByLabelOrTitle()
         }
       },
       goDetail (row) {
