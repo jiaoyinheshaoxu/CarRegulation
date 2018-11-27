@@ -158,8 +158,8 @@
       async getStandardSearch () {
         let url = '/DocumentService.asmx/SearchCriterionByType'
         let params = {
-          fileState: this.cur_fieldCode,
-          domain: this.cur_statusCode,
+          domain: this.cur_fieldCode,
+          fileState: this.cur_statusCode,
           acquisitionStandard: this.cur_adoptCode,
           languageType: this.languageType,
           type: 1,

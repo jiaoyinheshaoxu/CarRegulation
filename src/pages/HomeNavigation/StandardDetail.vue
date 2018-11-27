@@ -591,6 +591,10 @@
             $('#article table tr td').css({
               padding: '0 10px'
             })
+            $('#article img').css({
+              width: '90%',
+              height: '90%'
+            })
           }
           $(".directory *").css('font-size', '10px')
           $('.directory p').css({
