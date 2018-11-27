@@ -42,7 +42,7 @@
               <a @click="fieldClick(row)" :class="{'selected': cur_fieldId == row.id}">{{row.itemName}}</a>
             </li>
           </ul>
-        </div v->
+        </div>
         <div id ="state" v-show="cur_active == 'standard'">
           <p  id="type_state"class="area_link"><span></span>按状态</p>
           <ul id="s_content" class="area_content">
@@ -365,8 +365,8 @@
       async getStandardSearch () {
         let url = '/DocumentService.asmx/SearchCriterionByType'
         let params = {
-          fileState: this.cur_fieldCode,
-          domain: this.cur_statusCode,
+          domain: this.cur_fieldCode,
+          fileState: this.cur_statusCode,
           acquisitionStandard: this.cur_adoptCode,
           languageType: this.languageType,
           type: 1,
