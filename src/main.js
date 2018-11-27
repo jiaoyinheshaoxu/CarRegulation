@@ -20,6 +20,10 @@ Vue.prototype.api = api
 import router from './router'
 import './filter'
 
+//引入VueI18n
+import i18n from './i18n/i18n' 
+
+
 /*全局样式*/
 import './assets/css/global.css'
 import './assets/css/question.css'
@@ -64,6 +68,7 @@ new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   components: {App},
   template: '<App/>',
 })

@@ -14,11 +14,11 @@
           <li><a @click="skipTo('Help')" :class="{'routeActive': route_name.includes('Help')}">帮助</a></li>
         </ul>
         <ul id="enchina">
-          <li id="china">
+          <li id="china" @click="toggleLang('zh')">
             <b></b>
             <a href="#">中文</a>
           </li>
-          <li id="english">
+          <li id="english" @click="toggleLang('en')">
             <b></b>
             <a href="#">EN</a>
           </li>
@@ -51,6 +51,25 @@
       }
     },
     methods: {
+    	// 中英文切换
+    	toggleLang(lang) {
+	      if(lang == 'zh'){
+	        localStorage.setItem('locale', 'zh')
+	        this.$i18n.locale = localStorage.getItem('locale')
+	        this.$message({
+	          message: '切换为中文！',
+	          type: 'success'
+	        })
+	      } else if (lang == 'en') {
+	        localStorage.setItem('locale', 'en')
+	        this.$i18n.locale = localStorage.getItem('locale')
+	        this.$message({
+	          message: 'Switch to English!',
+	          type: 'success'
+	      	})
+				}
+	    },
+    	
       skipTo(name) {
         this.$router.push({
           name

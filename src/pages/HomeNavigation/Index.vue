@@ -29,6 +29,13 @@
         </ul>
       </div>
     </div>
+    
+    <!-- 测试代码 -->
+      <div style="margin: 20px; font-size: 30px; color: red;">
+	      <h1>{{$t("message.title")}}</h1>
+	      <input style="width: 300px;" class="form-control" :placeholder="$t('placeholder.enter')">
+	    </div>
+    
     <div style="overflow: hidden" v-show="searchList.length > 0">
       <div id="left_search">
         <div id="title">

@@ -7,7 +7,7 @@ export default {
   check_numberMixLetter: check_numberMixLetter,
   check_emailValid: check_emailValid,
   memberId: "",																// 用户 id
-
+	getCookie: getCookie
 }
 
 // 公共方法
@@ -40,4 +40,11 @@ function check_emailValid(str){
 　}
 }
 
-// 4:
+// 4: 创建 读取cookie的公共方法
+function getCookie(name,defaultValue) {
+  var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+  if (arr = document.cookie.match(reg))
+    return unescape(arr[2]);
+  else
+    return defaultValue;
+}
