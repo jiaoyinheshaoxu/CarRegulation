@@ -70,13 +70,11 @@
 	          password: this.password
 	        }
 	        let data = await this.api.post(url ,params);
-	        console.log(data);
 	        if (data.LoginStatus == 1) {
 	          // 登录成功 => 回到首页 => 将用户 id 存入 session 和 global 中
 	          this.global.userEmail = this.username;
 	          this.global.userPassword = this.password;
 	          this.global.memberId = data.memberId;
-	          console.log(this.global)
             this.$store.commit('get_username', {username: this.username})
 	          this.global.HYType	= data.HYType;
 	          sessionStorage.setItem('userEmail', this.username);

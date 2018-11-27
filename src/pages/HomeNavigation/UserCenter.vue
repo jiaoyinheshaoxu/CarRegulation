@@ -555,7 +555,7 @@
 				let url = 'OtherService.asmx/AddSysMessageInfo';
 				let params = {
 					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
-					title: "只是一条信息"
+					title: "这是一条消息"
 				}
 				let data = await this.api.post(url, params, { loading: true });
 				if(data[0] == true){
@@ -605,7 +605,6 @@
 			// 获取用户副账户列表 OtherService.asmx/GetDeputyMemberListByUserId
 			async getDeputyMemberListByUserId() {
 				let url = 'OtherService.asmx/GetDeputyMemberListByUserId';
-				//	        memberId:	this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
 				let params = {
 					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
 				}
@@ -731,7 +730,6 @@
 			async delete_collect(id){
 				let url = "OtherService.asmx/DelMyCollectById";
 				let params = {
-//					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
 					id: id
 				}
 				let data = await this.api.post(url, params);
@@ -924,18 +922,6 @@
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-
-
-
-
-
-
-
-
-
-
-
-
 			// 用户退出 => 跳转到登录页面
 			confirm_quit() {
 				this.$router.push({
