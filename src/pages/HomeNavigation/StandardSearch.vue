@@ -326,7 +326,7 @@
   #right_list{
     float: right;
     width: 79%;
-    height:620px;
+    min-height:620px;
   }
   .pageStyle{
     text-align: center;

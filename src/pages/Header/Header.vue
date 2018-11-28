@@ -38,6 +38,7 @@
 
 <script>
   export default {
+    inject: ['reload'],
     data() {
       return {
       }
@@ -69,8 +70,9 @@
 	      	})
 				}
 	    },
-    	
+
       skipTo(name) {
+    	  this.reload()
         this.$router.push({
           name
         })
@@ -94,6 +96,7 @@
         })*/
       },
       goUserCenter() {
+    	  this.reload()
         this.$router.push({
           path: '/UserCenter'
         })

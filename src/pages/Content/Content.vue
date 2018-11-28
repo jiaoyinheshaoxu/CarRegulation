@@ -21,6 +21,7 @@
 
 <script>
   export default {
+    inject: ['reload'],
     data() {
       return {
       }
@@ -32,6 +33,7 @@
     },
     methods: {
       skipTo(name) {
+        this.reload()
         this.$router.push({
           name
         })

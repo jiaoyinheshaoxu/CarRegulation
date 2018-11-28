@@ -36,7 +36,7 @@
 	      <input style="width: 300px;" class="form-control" :placeholder="$t('placeholder.enter')">
 	    </div>-->
 
-    <div style="overflow: hidden" v-show="searchList.length > 0">
+    <div style="overflow: hidden" v-show="(searchList.length > 0 && searchType == 3) || (searchType == 1 || searchType == 2)">
       <div id="left_search">
         <div id="title">
           <a  href="#" :class="{'title_a_active':cur_active == 'standard' }" @click="standardClick()">标准</a>
@@ -135,6 +135,7 @@
           </el-table-column>
         </el-table>
         <el-pagination
+          v-show="searchList.length > 0"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage"
@@ -451,6 +452,9 @@
         }
       },
       async SearchForIndexByLabelOrTitle() {
+        if(!this.searchStr){
+          return
+        }
         this.searchType = 3
         this.AddDocumentSearchKeys()
         if ($('#i_fisrt').html().includes("标题")) {
@@ -746,7 +750,7 @@
   #right_list{
     float: right;
     width: 79%;
-    height:620px;
+    min-height:620px;
   }
   .noDateTip{
     height: 36px;
