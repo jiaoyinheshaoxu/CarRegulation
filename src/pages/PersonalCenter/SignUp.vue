@@ -84,7 +84,7 @@
       		  email: this.email,
       		  userPassword: this.userPassword,
       		  isSubscription: this.isSubscription=='true' ? true : false,
-      		  subscriptionLanguage: this.global.language == 'Chinese' ? 1 : 2
+      		  subscriptionLanguage: this.$t('language')
       		}
       		let data = await this.api.post(url ,params);
       		if (data[0]) {
