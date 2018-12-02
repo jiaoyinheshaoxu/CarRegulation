@@ -11,8 +11,7 @@
             <input type="text" id="email" v-model="email" placeholder="邮箱"/>
         </div>
         <p class="tips tips_success" v-show="confirmResult == 1">邮箱有效并且已发送激活邮件！</p>
-        <p class="tips tips_danger" v-show="confirmResult == 2">邮箱有效但是没查出用户！</p>
-        <p class="tips tips_danger" v-show="confirmResult == 3">系统无此邮箱！</p>
+        <p class="tips tips_danger" v-show="confirmResult == 2">{{emailErroMsg}}</p>
         
         <div class="login_tab login_btn">
             <input type="button" value="确认发送"  @click="send_emailComfirm()"/>
@@ -45,7 +44,8 @@
     data() {
       return {
         email: '',
-        confirmResult: 0
+        confirmResult: 0,
+        emailErroMsg: ""
       }
     },
     methods: {
@@ -60,23 +60,21 @@
       		this.email = "";
       		return;
       	}else{
-      		let url = 'OtherService.asmx/CheckUserByEmail'
+      		let url = 'OtherService.asmx/FindPasswordCheckUserByEmail'
       		let params = {
-      		  email: this.email
+      		  email: this.email,
+      		  language: this.$t('language')
       		}
       		let data = await this.api.post(url ,params);
-      		if (data[0] == 1) {
+      		if (data.resultCode == 1000) {
       		  // 邮箱已经发送到邮箱
       		  this.confirmResult = 1;
       		  this.$message.success("邮箱有效并且已发送激活邮件！");
-      		}else if(data[0] == 2){
-      			// 有邮箱但是没查出用户
-      			this.confirmResult = 2;
-      			this.$message.error("邮箱有效但是没查出用户！");
       		}else{
       			// 系统无此邮箱
-      			this.confirmResult = 3;
-      			this.$message.error("系统无此邮箱！");
+      			this.confirmResult = 2;
+      			this.emailErroMsg = data.resultMessage;
+      			this.$message.error(data.resultMessage);
       		}
       	}
       },
