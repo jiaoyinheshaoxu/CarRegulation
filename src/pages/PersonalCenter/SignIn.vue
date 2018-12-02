@@ -67,29 +67,28 @@
       		let url = 'LoginService.asmx/CheckLogin'
 	        let params = {
 	          username: this.username,
-	          password: this.password
+	          password: this.password,
+	          language: this.$t('language')
 	        }
 	        let data = await this.api.post(url ,params);
-	        if (data.LoginStatus == 1) {
+	        if (data.resultCode == 1000) {
+	        	this.$message.success(data.resultMessage);
 	          // 登录成功 => 回到首页 => 将用户 id 存入 session 和 global 中
 	          this.global.userEmail = this.username;
 	          this.global.userPassword = this.password;
-	          this.global.memberId = data.memberId;
+	          this.global.memberId = data.data.memberId;
             this.$store.commit('get_username', {username: this.username})
-	          this.global.HYType	= data.HYType;
+	          this.global.HYType	= data.data.HYType;
 	          sessionStorage.setItem('userEmail', this.username);
 	          sessionStorage.setItem('userPassword', this.password);
-	          sessionStorage.setItem('memberId', data.memberId);
+	          sessionStorage.setItem('memberId', data.data.memberId);
 	          this.$router.push({
 		          name: 'Home'
 		        })
-	        }else if(data.LoginStatus == 2){
-	        	this.password = "";
-      			this.$message.error("密码错误，请重新输入！");
 	        }else{
 	        	this.email = "";
 	        	this.password = "";
-	        	this.$message.error("邮箱不存在！");
+	        	this.$message.error(data.resultMessage);
 	        }
       	}
       },

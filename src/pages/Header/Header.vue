@@ -87,13 +87,13 @@
         sessionStorage.removeItem('userPassword', '')
         sessionStorage.removeItem('userEmail', '')
         this.$store.commit('get_username', {username: ''})
+        this.$router.push({
+			    name: 'SignIn'
+			  })
         this.$message({
           showClose: true,
           message: '退出登录成功！'
         });
-        /*this.$router.push({
-          path: '/Index'
-        })*/
       },
       goUserCenter() {
     	  this.reload()

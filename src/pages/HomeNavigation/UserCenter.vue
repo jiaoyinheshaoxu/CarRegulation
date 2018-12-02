@@ -535,7 +535,6 @@
 			// 获取用户信息 OtherService.asmx/GetMemberInfo => 判断用户权限
 			async getMemberInfo() {
 				let url = 'OtherService.asmx/GetMemberInfo';
-				//	        memberId:	this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
 				let params = {
 					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
 				}
@@ -645,21 +644,23 @@
 					var params = {
 						email: this.point_account_email,
 			      userPassword: this.point_account_password,
-			      superUId: this.point_account_id
+			      superUId: this.point_account_id,
+			      language: this.$t('language')
 					}
 				}else{
 					var params = {
 						newEmail: this.point_account_email,
 			      newPassword: this.point_account_password,
-			      id: this.point_account_id
+			      id: this.point_account_id,
+			      language: this.$t('language')
 					}
 				}
 				let data = await this.api.post(url, params);
 				// 成功回调 => 刷新列表
-				if(data[0] == 1){
+				if(data.resultCode == 1000){
 					this.$message({
             showClose: true,
-            message: (url == "OtherService.asmx/AddDeputyMember") ? '成功添加副账户！' : '成功修改副账户！',
+            message: (url == "OtherService.asmx/AddDeputyMember") ? data.resultMessage : data.resultMessage,
             type: 'success',
             duration: 2000
           })
@@ -668,7 +669,7 @@
 				}else{
 					this.$message({
             showClose: true,
-            message: '返回错误' + data[0],
+            message: '返回错误' + data.resultMessage,
             type: 'warning',
             duration: 2000
           })
@@ -709,7 +710,7 @@
 					page: this.page,
 					rows: this.rows,
 					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
-					languageType: 1
+					languageType: this.$t('language')
 				}
 				let data = await this.api.post(url, params, { loading: true });
 				this.total = data.total;
@@ -759,7 +760,7 @@
 	    		page: this.page,
 	    		rows: this.rows,
 	    		memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
-					languageType: 1
+					languageType: this.$t('language')
 	    	}
 	    	let data = await this.api.post(url, params, { loading: true });
 				this.total = data.total;
@@ -856,10 +857,6 @@
 				this.getSysMessageInfo();
 			},
 
-			async getData(url,params){
-				return await this.api.post(url, params);
-			},
-
 			// 修改密码
 			submitForm(formName) {
 				var _this = this;
@@ -869,7 +866,8 @@
             let params = {
             	userOldPassword: _this.ruleForm2.userOldPassword,
             	userNewPassword: _this.ruleForm2.userNewPassword,
-            	memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
+            	memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
+            	language: this.$t('language')
             }
             $.ajax({
 							type: "POST",
@@ -879,7 +877,7 @@
 							contentType: "application/json;charset=utf-8",
 							success: function(data) {
 								// 1修改成功 2此用户不存在 3旧密码错误
-								if(data[0] == 1){
+								if(data.resultCode == 1000){
 									_this.$message({
 				            showClose: true,
 				            message: "密码修改成功，稍后将重新登录！",
@@ -891,17 +889,10 @@
 			    						name: 'SignIn'
 			  						})
 									},2000)
-								}else if (data[0] == 2){
-									_this.$message({
-				            showClose: true,
-				            message: "此用户不存在！",
-				            type: 'warning',
-				            duration: 2000
-				          })
 								}else{
 									_this.$message({
 				            showClose: true,
-				            message: "旧密码错误！",
+				            message: data.resultMessage,
 				            type: 'warning',
 				            duration: 2000
 				          })
