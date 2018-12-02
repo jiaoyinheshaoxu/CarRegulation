@@ -108,7 +108,7 @@
         pageSize: 10,
         total: 100,
         standardList: [],
-        languageType: 1,
+        languageType: 2,
         cur_fieldCode: '',
         cur_statusCode: '',
         cur_adoptCode: ''

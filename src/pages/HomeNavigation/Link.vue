@@ -6,7 +6,7 @@
       </div>
       <div class="nav-content">
         <div class="nav-left">
-          <ul>
+          <!--<ul>
             <li :class="{'li_active': cur_showType == 'government'}">
               <a @click="maoClick('government')" :class="{'a_active': cur_showType == 'government'}">政府网站</a>
             </li>
@@ -16,10 +16,15 @@
             <li :class="{'li_active': cur_showType == 'detection'}">
               <a @click="maoClick('detection')" :class="{'a_active': cur_showType == 'detection'}">检测机构</a>
             </li>
+          </ul>-->
+          <ul>
+            <li v-for="item in typeList" :class="{'li_active': typeTitle == item.TypeTitle}">
+              <a @click="typeClick(item.TypeTitle)" :class="{'a_active': typeTitle == item.TypeTitle}">{{item.TypeTitle}}</a>
+            </li>
           </ul>
         </div>
         <div class="nav-right">
-          <div id="zhengfu" v-show="cur_showType == 'government'">
+          <!--<div id="zhengfu" v-show="cur_showType == 'government'">
             <div class="nav-header">
               <h5>政府网站</h5>
             </div>
@@ -63,6 +68,20 @@
                 </li>
               </ul>
             </div>
+          </div>-->
+          <div id="zhengfu">
+            <div class="nav-header">
+              <h5>{{typeTitle}}</h5>
+            </div>
+            <div class="nav-list">
+              <ul>
+                <li v-for="row in itemList">
+                  <a :href="row.href" target="_blank">
+                    <h5 style="text-align: center;line-height: 90px">{{row.Title}}</h5>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -75,7 +94,7 @@
     data() {
       return {
         cur_showType: 'government',
-        governmentWebList: [
+        /*governmentWebList: [
           {c_name: '工业和信息化部',e_name: 'Ministry of Industry and information Technology', href: 'http://www.miit.gov.cn/'},
           {c_name: '国家发展和改革委员会',e_name: 'National Development and Reform Commission', href: 'http://www.ndrc.gov.cn/'},
           {c_name: '公安部',e_name: 'Ministry of Public Security', href: 'http://www.mps.gov.cn/'},
@@ -100,15 +119,45 @@
           {c_name: '中汽研汽车检验中心(天津)有限公司',e_name: 'CATARC Automotive Test Center （Tianjin）Co., Ltd.', href: 'http://www.tatc.com.cn/'},
           {c_name: '上海机动车险测认证技术研究中心有限公司',e_name: 'Shanghal Mctor Vehicle inspsctonCertication & Techrology novotian', href: 'http://www.smvic.com.cn/'},
           {c_name: '国家汽车质量监督检验中心(襄阳)',e_name: 'Natcnal Autor otlle Qua ity Supervisicnand" Test Center (Xlangrnp)', href: 'http://www.nast.com.cn/'}
-        ]
+        ],*/
+        languageType: 1,
+        typeList: [],
+        DetailsList: [],
+        typeTitle: '',
+        itemList: [],
       }
     },
     mounted() {
-
+      this.GetLinkList()
     },
     methods: {
-      maoClick (type) {
+      /*maoClick (type) {
         this.cur_showType = type
+      },*/
+      typeClick(type){
+        this.typeTitle = type
+        for(let i = 0, len = this.detailsList.length; i < len; i++){
+          if(this.detailsList[i].TypeTitle == this.typeTitle){
+            this.itemList = this.detailsList[i].ItemList
+          }
+        }
+      },
+      async GetLinkList(){
+        let url = 'OtherService.asmx/GetLinkList'
+        let params = {
+          languageType: this.languageType
+        }
+        let data = await this.api.post(url, params)
+        if(data){
+          this.typeList = data.TypeList
+          this.detailsList = data.DetailsList
+          this.typeTitle = this.typeList[0].TypeTitle
+          for(let i = 0, len = this.detailsList.length; i < len; i++){
+            if(this.detailsList[i].TypeTitle == this.typeTitle){
+              this.itemList = this.detailsList[i].ItemList
+            }
+          }
+        }
       }
     }
   }

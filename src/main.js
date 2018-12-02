@@ -21,12 +21,11 @@ import router from './router'
 import './filter'
 
 //引入VueI18n
-import i18n from './i18n/i18n' 
+import i18n from './i18n/i18n'
 
 
 /*全局样式*/
 import './assets/css/global.css'
-import './assets/css/question.css'
 async function user_login() {
   let url = 'LoginService.asmx/CheckLogin'
   let params = {

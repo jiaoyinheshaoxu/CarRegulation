@@ -602,7 +602,7 @@
       async GetIndexByTopList () {
         let url = 'DocumentService.asmx/GetIndexByTopList'
         let params = {
-          languageType: 1,
+          languageType: this.languageType,
           topNum: 10
         }
         let data = await this.api.post(url, params)

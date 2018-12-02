@@ -7,7 +7,7 @@
       <div class="nav-content">
         <div class="nav-left">
           <ul>
-            <li :class="{'li_active': cur_showType == 'government'}">
+            <!--<li :class="{'li_active': cur_showType == 'government'}">
               <a @click="maoClick('government')" :class="{'a_active': cur_showType == 'government'}">会员注册</a>
             </li>
             <li :class="{'li_active': cur_showType == 'approve'}">
@@ -15,11 +15,14 @@
             </li>
             <li :class="{'li_active': cur_showType == 'detection'}">
               <a @click="maoClick('detection')" :class="{'a_active': cur_showType == 'detection'}">付费渠道</a>
+            </li>-->
+            <li v-for="item in typeList" :class="{'li_active': type == item.code}">
+              <a @click="typeClick(item.code)" :class="{'a_active': type == item.code}">{{item.text}}</a>
             </li>
           </ul>
         </div>
         <div class="nav-right">
-          <div id="zhengfu" v-show="cur_showType == 'government'">
+          <!--<div id="zhengfu" v-show="cur_showType == 'government'">
             <p>会员常见的问题可以通过这里了进一步内容。</p>
             <h2>普通会员可以下载吗？</h2>
             <p>尊敬的客户，普通用户暂时无法下载。请升级到高级会员，可以进行下载与打印。</p>
@@ -33,6 +36,10 @@
           </div>
           <div id="jiance" v-show="cur_showType == 'detection'">
             <p>付费渠道...</p>
+          </div>-->
+          <div class="answer">
+            <h4 v-html="title"></h4>
+            <div v-html="answer" class="answerList"></div>
           </div>
         </div>
       </div>
@@ -44,21 +51,83 @@
   export default {
     data() {
       return {
-        cur_showType: 'government'
+        cur_showType: 'government',
+        languageType: 1,
+        type: '',
+        typeList: [],
+        questionAnswerList: [],
+        answer: '',
+        title: '',
+        rows: 10,
+        page: 1
       }
     },
     mounted() {
-
+      this.GetQuestionAnswerTypeList()
     },
     methods: {
-      maoClick (type) {
+      /*maoClick (type) {
         this.cur_showType = type
+      },*/
+      typeClick(type){
+        this.type = type
+        for(let i = 0, len = this.questionAnswerList.length; i < len; i++){
+          if(this.questionAnswerList[i].Type == this.type){
+            this.answer = this.questionAnswerList[i].Answer
+            this.title = this.questionAnswerList[i].Title
+          }
+        }
+      },
+      async GetQuestionAnswerTypeList(){
+        let url = 'OtherService.asmx/GetQuestionAnswerTypeList'
+        let params = {
+          languageType: this.languageType
+        }
+        let data = await this.api.get(url, params)
+        if(data){
+          this.typeList = data.questionAnswerTypeList
+          this.type = this.typeList[0].code
+          this.GetQuestionAnswerDataList()
+        }
+      },
+      async GetQuestionAnswerDataList(){
+        let url = 'OtherService.asmx/GetQuestionAnswerDataList'
+        let params = {
+          languageType: this.languageType,
+          rows: this.rows,
+          page: this.page,
+          type: this.type
+        }
+        let data = await this.api.get(url, params)
+        if(data){
+          this.questionAnswerList = data.questionAnswerList
+          for(let i = 0, len = this.questionAnswerList.length; i < len; i++){
+            if(this.questionAnswerList[i].Type == this.type){
+              this.answer = this.questionAnswerList[i].Answer
+              this.title = this.questionAnswerList[i].Title
+            }
+          }
+        }
       }
     }
   }
 </script>
 
 <style scoped>
+  .answer{
+    padding: 20px;
+  }
+  .answer h4{
+    height: 36px;
+    line-height: 36px;
+    font-size: 20px;
+    font-weight: 600;
+    text-indent: 20px;
+  }
+  .answer .answerList{
+    margin-top: 20px;
+    text-indent: 20px;
+  }
   .center {
     width: 100%;
     margin: 0 auto;
