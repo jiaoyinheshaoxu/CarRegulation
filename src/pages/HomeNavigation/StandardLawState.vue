@@ -38,7 +38,6 @@
         pageSize: 10,
         currentPage: 1,
         total: 0,
-        languageType: 1,
         standardLawList: []
       }
     },
@@ -52,7 +51,7 @@
           type: 1,
           page: this.currentPage,
           rows: this.pageSize,
-          languageType: this.languageType
+          languageType: this.$t('language')
         }
         let data = await this.api.post(url, params)
         this.total = data.total

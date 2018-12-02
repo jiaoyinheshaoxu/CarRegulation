@@ -202,7 +202,6 @@
         currentPage: 1,
         pageSize: 10,
         total: 0,
-        languageType: 1, //1汉语 2英语
         searchList: [],
         hotList: [],
         cur_hot: '',
@@ -247,7 +246,7 @@
           fileState: this.cur_restatusCode,
           publisher: this.cur_publishCode,
           direction: this.cur_directionCode,
-          languageType: this.languageType,
+          languageType: this.$t('language'),
           type: 2,
           page: this.currentPage,
           rows: this.pageSize,
@@ -307,7 +306,7 @@
       async getRegulationLeft () {
         let url = '/DocumentService.asmx/RegulationType'
         let params = {
-          languageType: this.languageType
+          languageType: this.$t('language')
         }
         let data = await this.api.get(url, params)
         if (data) {
@@ -383,7 +382,7 @@
             domain: this.cur_fieldCode,
             fileState: this.cur_statusCode,
             acquisitionStandard: this.cur_adoptCode,
-            languageType: this.languageType,
+            languageType: this.$t('language'),
             page: this.currentPage,
             rows: this.pageSize,
             keyword: this.searchStr,
@@ -396,7 +395,7 @@
             domain: '',
             fileState: this.cur_restatusCode,
             acquisitionStandard: '',
-            languageType: this.languageType,
+            languageType: this.$t('language'),
             page: this.currentPage,
             rows: this.pageSize,
             keyword: this.searchStr,
@@ -419,7 +418,7 @@
       async getStandardSearchLeft () {
         let url = '/DocumentService.asmx/CriterionType'
         let params = {
-          languageType: this.languageType
+          languageType: this.$t('language')
         }
         let data = await this.api.post(url, params)
         if (data) {
@@ -463,7 +462,7 @@
             page: this.currentPage,
             rows: this.pageSize,
             keyword: this.searchStr,
-            languageType: this.languageType
+            languageType: this.$t('language')
           }
           let data = await this.api.post(url, params, {loading: true})
           if (data) {
@@ -484,7 +483,7 @@
             page: this.currentPage,
             rows: this.pageSize,
             keyword: this.searchStr,
-            languageType: this.languageType
+            languageType: this.$t('language')
           }
           let data = await this.api.post(url, params)
           if (data) {
@@ -602,7 +601,7 @@
       async GetIndexByTopList () {
         let url = 'DocumentService.asmx/GetIndexByTopList'
         let params = {
-          languageType: this.languageType,
+          languageType: this.$t('language'),
           topNum: 10
         }
         let data = await this.api.post(url, params)

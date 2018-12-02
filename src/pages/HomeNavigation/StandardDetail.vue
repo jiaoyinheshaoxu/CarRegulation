@@ -198,7 +198,8 @@
         idList: [],
         aList: [],
         pre_scrollTop: 0,
-        showDate: true
+        showDate: true,
+        cur_type: '' //4中情况
       }
     },
     computed: {
@@ -437,7 +438,7 @@
         let params = {
           memberId: this.global.memberId,
           documentId: this.documentId,
-          type: this.languageType
+          type: this.$t('language')
         }
         let data = await this.api.get(url, params)
         if(data){
@@ -566,13 +567,14 @@
         if(!type) {
           type = 2
         }
+        this.cur_type = type
         /*this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
         this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'*/
         let url = 'DocumentService.asmx/GetDocumentInfoById'
         let params = {
           documentId: this.documentId,
           memberId: this.global.memberId,
-          languageType: this.languageType,
+          languageType: this.$t('language'),
           type: type
         }
         let data = await this.api.post(url, params, {loading: true})
@@ -705,7 +707,7 @@
         let url = 'DocumentService.asmx/GetDocumentInformationInfoById'
         let params = {
           documentId: this.documentId,
-          languageType: this.languageType
+          languageType: this.$t('language')
         }
         let data = await this.api.get(url, params, {loading: true})
         if (data) {
@@ -727,14 +729,15 @@
         }
       },
       DownloadFile() {
-        window.open(`${this.global.jiekou_url}/DocumentService.asmx/DownloadPDFFile?documentId=${this.documentId}&memberId=${this.global.memberId}&languageType=${this.languageType}`)
+        //window.open(`${this.global.jiekou_url}/DocumentService.asmx/DownloadPDFFile?documentId=${this.documentId}&memberId=${this.global.memberId}&languageType=${this.$t('language')}`)
+        window.open(`${this.global.jiekou_url}/DocumentService.asmx/DownloadPDFFile?documentId=${this.documentId}&memberId=${this.global.memberId}&languageType=${this.cur_type}`)
         /*this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
         this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'*/
         /*let url = 'DocumentService.asmx/DownloadPDFFile'
         let params = {
           documentId: this.documentId,
           memberId: this.global.memberId,
-          languageType: this.languageType
+          languageType: this.$t('language')
         }
         let data = await this.api.get(url ,params)
         if (data) {

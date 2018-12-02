@@ -108,7 +108,6 @@
         pageSize: 10,
         total: 100,
         standardList: [],
-        languageType: 2,
         cur_fieldCode: '',
         cur_statusCode: '',
         cur_adoptCode: ''
@@ -161,7 +160,7 @@
           domain: this.cur_fieldCode,
           fileState: this.cur_statusCode,
           acquisitionStandard: this.cur_adoptCode,
-          languageType: this.languageType,
+          languageType: this.$t('language'),
           type: 1,
           page: this.currentPage,
           rows: this.pageSize

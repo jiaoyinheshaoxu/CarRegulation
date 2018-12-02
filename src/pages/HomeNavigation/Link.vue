@@ -145,7 +145,7 @@
       async GetLinkList(){
         let url = 'OtherService.asmx/GetLinkList'
         let params = {
-          languageType: this.languageType
+          languageType: this.$t('language')
         }
         let data = await this.api.post(url, params)
         if(data){

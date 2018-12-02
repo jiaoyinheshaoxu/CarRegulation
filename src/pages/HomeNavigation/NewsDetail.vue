@@ -149,7 +149,6 @@
       return {
         showDirectoryButton: false,
         documentId: '',
-        languageType: 1,
         memberId: '',
         detail: {},
         downDialog: false,
@@ -402,7 +401,7 @@
         let params = {
           memberId: this.global.memberId,
           documentId: this.documentId,
-          type: this.languageType
+          type: this.$t('language')
         }
         let data = await this.api.post(url, params)
         if(data){
@@ -518,7 +517,7 @@
         let params = {
           documentId: this.documentId,
           memberId: this.global.memberId,
-          languageType: this.languageType
+          languageType: this.$t('language')
         }
         let data = await this.api.post(url, params)
         if (data) {
@@ -571,7 +570,7 @@
         let url = 'DocumentService.asmx/GetDocumentInformationInfoById'
         let params = {
           documentId: this.documentId,
-          languageType: this.languageType,
+          languageType: this.$t('language'),
           type: type
         }
         let data = await this.api.get(url, params, {loading: true})
@@ -632,7 +631,7 @@
         let params = {
           documentId: this.documentId,
           memberId: this.global.memberId,
-          languageType: this.languageType
+          languageType: this.$t('language')
         }
         let data = await this.api.post(url ,params)
         if (data) {

@@ -110,8 +110,7 @@
         lawList: [],
         cur_publishCode: '',
         cur_statusCode: '',
-        cur_directionCode: '',
-        languageType: 1
+        cur_directionCode: ''
       }
     },
     mounted() {
@@ -157,7 +156,7 @@
           fileState: this.cur_statusCode,
           publisher: this.cur_publishCode,
           direction: this.cur_directionCode,
-          languageType: this.languageType,
+          languageType: this.$t('language'),
           type: 2,
           page: this.currentPage,
           rows: this.pageSize
