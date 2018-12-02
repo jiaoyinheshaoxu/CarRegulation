@@ -1,6 +1,6 @@
 export default {
   //jiekou_url: 'http://47.92.160.129:8080',
-  jiekou_url: 'http://www.chineseautoregs.com:8080',
+  jiekou_url: 'http://www.chineseautoregs.com:8081',
   userEmail: "",															// 用户邮箱
   userPassword: "",														// 用户密码
   check_strEmpty: check_strEmpty,

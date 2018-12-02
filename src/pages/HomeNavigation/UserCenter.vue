@@ -298,7 +298,7 @@
 				<el-dialog title="温馨提示" :visible.sync="showDialog_checkDetail" width="40%" left>
 					<p class="upgrade_tips">
 						<span class="main_warn_icon"></span>
-						<span>请尽快将 99 元 转账到以下账户以升级成高级会员：</span>
+						<span>请尽快将 {{upgrade_type == 1 ? memberFee_threeMonth : memberFee_oneYear}} 元 转账到以下账户以升级成高级会员：</span>
 					</p>
 					<p class="marginLeft_2em upgrade_tips dangerFont">中国银行：6226 6602 1888 6889 576</p>
 					<p class="marginLeft_2em upgrade_tips dangerFont">收 款 人 ：Dai yong ming</p>
@@ -313,10 +313,10 @@
 					<p class="upgrade_tips" v-show="memberInfo.F_HYType==0">您将获得：<span class="blueFont">搜索、查看全部文档、下载与打印、设置两名副用户</span></p>
 					<p class="upgrade_tips">{{ memberInfo.F_HYType==0 ? '选择套餐' : '续费类型' }}：</p>
 					<p class="choice">
-						<el-radio v-model="upgrade_type" label="1">季付 每月120元 共54次打印或下载机会</el-radio>
+						<el-radio v-model="upgrade_type" label="1">季付 每月{{memberFee_threeMonth}}元 共54次打印或下载机会</el-radio>
 					</p>
 					<p class="choice">
-						<el-radio v-model="upgrade_type" label="2">年付 每年450元 共220打印或下载机会</el-radio>
+						<el-radio v-model="upgrade_type" label="2">年付 每年{{memberFee_oneYear}}元 共220打印或下载机会</el-radio>
 					</p>
 					<p class="upgrade_tips mTop20" v-show="memberInfo.F_HYType==0">所在国家：
 						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="user_country" placeholder="您的国家"></el-input>
@@ -460,7 +460,9 @@
 				point_account_password: "",		// 指定的 账户password (""=>添加 不是""=>修改)
 				addOrModify_api_url:	"",			// 新增或者修改账户的接口地址
 
-				upgrade_type: "", 						// 选择升级类型  1=>季付	2=>年付
+				upgrade_type: "1", 						// 选择升级类型  1=>季付	2=>年付
+				memberFee_threeMonth: "120",	// 季付价格			(后期根据实际情况改动)
+				memberFee_oneYear: "450",			// 年付价格			(后期根据实际情况改动)
 				user_country: "", 						// 所在国家
 				user_phone:	"",								// 您的电话
 				wantToUpgrade: false, 				// 默认为未提交(高级会员申请) => 判断个人信息栏提示付费显示隐藏
@@ -551,29 +553,34 @@
 
 			// 升级或续费 		OtherService.asmx/AddSysMessageInfo
 			async confirm_upgradeOrRepay (){
-				let url = 'OtherService.asmx/AddSysMessageInfo';
-				let params = {
-					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
-					title: "这是一条消息"
-				}
-				let data = await this.api.post(url, params, { loading: true });
-				if(data[0] == true){
-					this.$message({
-            showClose: true,
-            message: "请查看消息管理...",
-            type: 'success',
-            duration: 2000
-          })
-					this.showDialog_upgrade = false;
-					this.wantToUpgrade = true;
-				}else{
-					this.$message({
-            showClose: true,
-            message: data.result,
-            type: 'success',
-            duration: 2000
-          });
-				}
+				// 一下接口不暴露前端, 注释
+				this.showDialog_upgrade = false;
+				this.wantToUpgrade = true;
+				this.showDialog_checkDetail = true;
+				
+//				let url = 'OtherService.asmx/AddSysMessageInfo';
+//				let params = {
+//					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
+//					title: "这是一条消息"
+//				}
+//				let data = await this.api.post(url, params, { loading: true });
+//				if(data[0] == true){
+//					this.$message({
+//          showClose: true,
+//          message: "请查看消息管理...",
+//          type: 'success',
+//          duration: 2000
+//        })
+//					this.showDialog_upgrade = false;
+//					this.wantToUpgrade = true;
+//				}else{
+//					this.$message({
+//          showClose: true,
+//          message: data.result,
+//          type: 'success',
+//          duration: 2000
+//        });
+//				}
 			},
 
 			// 取消订阅 / 订阅 切换		OtherService.asmx/SetMemberIsSubscription
@@ -710,7 +717,7 @@
 					page: this.page,
 					rows: this.rows,
 					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
-					languageType: this.$t('language')
+					language: this.$t('language')
 				}
 				let data = await this.api.post(url, params, { loading: true });
 				this.total = data.total;
@@ -760,7 +767,7 @@
 	    		page: this.page,
 	    		rows: this.rows,
 	    		memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
-					languageType: this.$t('language')
+					language: this.$t('language')
 	    	}
 	    	let data = await this.api.post(url, params, { loading: true });
 				this.total = data.total;
@@ -782,7 +789,8 @@
 	    	let params = {
 	    		page: this.page,
 	    		rows: this.rows,
-	    		memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId')
+	    		memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
+	    		language: this.$t('language')
 	    	}
 	    	let data = await this.api.post(url, params, { loading: true });
 				this.total = data.total;
