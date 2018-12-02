@@ -51,7 +51,7 @@
           type: 1,
           page: this.currentPage,
           rows: this.pageSize,
-          languageType: this.$t('language')
+          language: this.$t('language')
         }
         let data = await this.api.get(url, params)
         this.total = data.total

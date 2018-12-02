@@ -9,7 +9,8 @@
         <p id="type_area" class="area_link"><span></span>按发布方</p>
         <ul id="a_content" class="area_content">
           <li v-for="row in publishList">
-            <a @click="publishClick(row)" :class="{'selected': cur_publishId == row.id}">{{row.itemName}}</a>
+            <a v-show="$t('language') == 1" @click="publishClick(row)" :class="{'selected': cur_publishId == row.id}">{{row.itemName}}</a>
+            <a v-show="$t('language') == 2" @click="publishClick(row)" :class="{'selected': cur_publishId == row.id}">{{row.itemCode}}</a>
           </li>
         </ul>
       </div>
@@ -17,7 +18,8 @@
         <p  id="type_state"class="area_link"><span></span>按状态</p>
         <ul id="s_content" class="area_content">
           <li v-for="row in statusList">
-            <a @click="statusClick(row)" :class="{'selected': cur_statusId == row.id}">{{row.itemName}}</a>
+            <a v-show="$t('language') == 1" @click="statusClick(row)" :class="{'selected': cur_statusId == row.id}">{{row.itemName}}</a>
+            <a v-show="$t('language') == 2" @click="statusClick(row)" :class="{'selected': cur_statusId == row.id}">{{row.itemCode}}</a>
           </li>
         </ul>
       </div>
@@ -25,7 +27,8 @@
         <p id="type_notic" class="area_link"><span></span>按方向</p>
         <ul id="n_content" class="area_content">
           <li v-for="row in directionList">
-            <a @click="directionClick(row)" :class="{'selected': cur_directionId == row.id}">{{row.itemName}}</a>
+            <a v-show="$t('language') == 1" @click="directionClick(row)" :class="{'selected': cur_directionId == row.id}">{{row.itemName}}</a>
+            <a v-show="$t('language') == 2" @click="directionClick(row)" :class="{'selected': cur_directionId == row.id}">{{row.itemCode}}</a>
           </li>
         </ul>
       </div>
@@ -156,7 +159,7 @@
           fileState: this.cur_statusCode,
           publisher: this.cur_publishCode,
           direction: this.cur_directionCode,
-          languageType: this.$t('language'),
+          language: this.$t('language'),
           type: 2,
           page: this.currentPage,
           rows: this.pageSize

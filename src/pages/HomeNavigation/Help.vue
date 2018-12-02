@@ -80,7 +80,7 @@
       async GetQuestionAnswerTypeList(){
         let url = 'OtherService.asmx/GetQuestionAnswerTypeList'
         let params = {
-          languageType: this.$t('language')
+          language: this.$t('language')
         }
         let data = await this.api.get(url, params)
         if(data){
@@ -92,7 +92,7 @@
       async GetQuestionAnswerDataList(){
         let url = 'OtherService.asmx/GetQuestionAnswerDataList'
         let params = {
-          languageType: this.$t('language'),
+          language: this.$t('language'),
           rows: this.rows,
           page: this.page,
           type: this.type

@@ -120,7 +120,6 @@
           {c_name: '上海机动车险测认证技术研究中心有限公司',e_name: 'Shanghal Mctor Vehicle inspsctonCertication & Techrology novotian', href: 'http://www.smvic.com.cn/'},
           {c_name: '国家汽车质量监督检验中心(襄阳)',e_name: 'Natcnal Autor otlle Qua ity Supervisicnand" Test Center (Xlangrnp)', href: 'http://www.nast.com.cn/'}
         ],*/
-        languageType: 1,
         typeList: [],
         DetailsList: [],
         typeTitle: '',
@@ -145,7 +144,7 @@
       async GetLinkList(){
         let url = 'OtherService.asmx/GetLinkList'
         let params = {
-          languageType: this.$t('language')
+          language: this.$t('language')
         }
         let data = await this.api.post(url, params)
         if(data){

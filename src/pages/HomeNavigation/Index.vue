@@ -46,7 +46,8 @@
           <p id="type_area" class="area_link"><span></span>按领域</p>
           <ul id="a_content" class="area_content">
             <li v-for="row in fieldList">
-              <a @click="fieldClick(row)" :class="{'selected': cur_fieldId == row.id}">{{row.itemName}}</a>
+              <a v-show="$t('language') == 1" @click="fieldClick(row)" :class="{'selected': cur_fieldId == row.id}">{{row.itemName}}</a>
+              <a v-show="$t('language') == 2" @click="fieldClick(row)" :class="{'selected': cur_fieldId == row.id}">{{row.itemCode}}</a>
             </li>
           </ul>
         </div>
@@ -54,7 +55,8 @@
           <p  id="type_state"class="area_link"><span></span>按状态</p>
           <ul id="s_content" class="area_content">
             <li v-for="row in statusList">
-              <a @click="statusClick(row)" :class="{'selected': cur_statusId == row.id}">{{row.itemName}}</a>
+              <a v-show="$t('language') == 1" @click="statusClick(row)" :class="{'selected': cur_statusId == row.id}">{{row.itemName}}</a>
+              <a v-show="$t('language') == 2" @click="statusClick(row)" :class="{'selected': cur_statusId == row.id}">{{row.itemCode}}</a>
             </li>
           </ul>
         </div>
@@ -62,7 +64,8 @@
           <p id="type_notic" class="area_link"><span></span>按采标</p>
           <ul id="n_content" class="area_content">
             <li v-for="row in adoptList">
-              <a @click="adoptClick(row)" :class="{'selected': cur_adoptId == row.id}">{{row.itemName}}</a>
+              <a v-show="$t('language') == 1" @click="adoptClick(row)" :class="{'selected': cur_adoptId == row.id}">{{row.itemName}}</a>
+              <a v-show="$t('language') == 2" @click="adoptClick(row)" :class="{'selected': cur_adoptId == row.id}">{{row.itemCode}}</a>
             </li>
           </ul>
         </div>
@@ -70,7 +73,8 @@
           <p id="type_area" class="area_link"><span></span>按发布方</p>
           <ul id="a_content" class="area_content">
             <li v-for="row in publishList">
-              <a @click="publishClick(row)" :class="{'selected': cur_publishId == row.id}">{{row.itemName}}</a>
+              <a v-show="$t('language') == 1" @click="publishClick(row)" :class="{'selected': cur_publishId == row.id}">{{row.itemName}}</a>
+              <a v-show="$t('language') == 2" @click="publishClick(row)" :class="{'selected': cur_publishId == row.id}">{{row.itemCode}}</a>
             </li>
           </ul>
         </div>
@@ -78,7 +82,8 @@
           <p  id="type_state"class="area_link"><span></span>按状态</p>
           <ul id="s_content" class="area_content">
             <li v-for="row in restatusList">
-              <a @click="restatusClick(row)" :class="{'selected': cur_restatusId == row.id}">{{row.itemName}}</a>
+              <a v-show="$t('language') == 1" @click="restatusClick(row)" :class="{'selected': cur_restatusId == row.id}">{{row.itemName}}</a>
+              <a v-show="$t('language') == 2" @click="restatusClick(row)" :class="{'selected': cur_restatusId == row.id}">{{row.itemCode}}</a>
             </li>
           </ul>
         </div>
@@ -86,7 +91,8 @@
           <p id="type_notic" class="area_link"><span></span>按方向</p>
           <ul id="n_content" class="area_content">
             <li v-for="row in directionList">
-              <a @click="directionClick(row)" :class="{'selected': cur_directionId == row.id}">{{row.itemName}}</a>
+              <a v-show="$t('language') == 1" @click="directionClick(row)" :class="{'selected': cur_directionId == row.id}">{{row.itemName}}</a>
+              <a v-show="$t('language') == 2" @click="directionClick(row)" :class="{'selected': cur_directionId == row.id}">{{row.itemCode}}</a>
             </li>
           </ul>
         </div>
@@ -148,7 +154,7 @@
       </div>
     </div>
 
-    <div style="overflow: hidden; background-color: #ffffff" v-show="searchList.length == 0">
+    <div style="overflow: hidden; background-color: #ffffff" v-show="searchList.length == 0 && searchType == 3">
       <!-- 标准动态 -->
       <div id="standard_activit">
         <!-- title -->
@@ -246,7 +252,7 @@
           fileState: this.cur_restatusCode,
           publisher: this.cur_publishCode,
           direction: this.cur_directionCode,
-          languageType: this.$t('language'),
+          language: this.$t('language'),
           type: 2,
           page: this.currentPage,
           rows: this.pageSize,
@@ -306,7 +312,7 @@
       async getRegulationLeft () {
         let url = '/DocumentService.asmx/RegulationType'
         let params = {
-          languageType: this.$t('language')
+          language: this.$t('language')
         }
         let data = await this.api.get(url, params)
         if (data) {
@@ -382,7 +388,7 @@
             domain: this.cur_fieldCode,
             fileState: this.cur_statusCode,
             acquisitionStandard: this.cur_adoptCode,
-            languageType: this.$t('language'),
+            language: this.$t('language'),
             page: this.currentPage,
             rows: this.pageSize,
             keyword: this.searchStr,
@@ -395,7 +401,7 @@
             domain: '',
             fileState: this.cur_restatusCode,
             acquisitionStandard: '',
-            languageType: this.$t('language'),
+            language: this.$t('language'),
             page: this.currentPage,
             rows: this.pageSize,
             keyword: this.searchStr,
@@ -418,7 +424,7 @@
       async getStandardSearchLeft () {
         let url = '/DocumentService.asmx/CriterionType'
         let params = {
-          languageType: this.$t('language')
+          language: this.$t('language')
         }
         let data = await this.api.post(url, params)
         if (data) {
@@ -462,7 +468,7 @@
             page: this.currentPage,
             rows: this.pageSize,
             keyword: this.searchStr,
-            languageType: this.$t('language')
+            language: this.$t('language')
           }
           let data = await this.api.post(url, params, {loading: true})
           if (data) {
@@ -483,7 +489,7 @@
             page: this.currentPage,
             rows: this.pageSize,
             keyword: this.searchStr,
-            languageType: this.$t('language')
+            language: this.$t('language')
           }
           let data = await this.api.post(url, params)
           if (data) {
@@ -601,7 +607,7 @@
       async GetIndexByTopList () {
         let url = 'DocumentService.asmx/GetIndexByTopList'
         let params = {
-          languageType: this.$t('language'),
+          language: this.$t('language'),
           topNum: 10
         }
         let data = await this.api.post(url, params)

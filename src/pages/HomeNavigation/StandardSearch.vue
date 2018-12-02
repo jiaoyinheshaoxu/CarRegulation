@@ -9,7 +9,8 @@
         <p id="type_area" class="area_link"><span></span>按领域</p>
         <ul id="a_content" class="area_content">
           <li v-for="row in fieldList">
-            <a @click="fieldClick(row)" :class="{'selected': cur_fieldId == row.id}">{{row.itemName}}</a>
+            <a v-show="$t('language') == 1" @click="fieldClick(row)" :class="{'selected': cur_fieldId == row.id}">{{row.itemName}}</a>
+            <a v-show="$t('language') == 2" @click="fieldClick(row)" :class="{'selected': cur_fieldId == row.id}">{{row.itemCode}}</a>
           </li>
         </ul>
       </div>
@@ -17,7 +18,8 @@
         <p  id="type_state"class="area_link"><span></span>按状态</p>
         <ul id="s_content" class="area_content">
           <li v-for="row in statusList">
-            <a @click="statusClick(row)" :class="{'selected': cur_statusId == row.id}">{{row.itemName}}</a>
+            <a v-show="$t('language') == 1" @click="statusClick(row)" :class="{'selected': cur_statusId == row.id}">{{row.itemName}}</a>
+            <a v-show="$t('language') == 2" @click="statusClick(row)" :class="{'selected': cur_statusId == row.id}">{{row.itemCode}}</a>
           </li>
         </ul>
       </div>
@@ -25,7 +27,8 @@
         <p id="type_notic" class="area_link"><span></span>按采标</p>
         <ul id="n_content" class="area_content">
           <li v-for="row in adoptList">
-            <a @click="adoptClick(row)" :class="{'selected': cur_adoptId == row.id}">{{row.itemName}}</a>
+            <a v-show="$t('language') == 1" @click="adoptClick(row)" :class="{'selected': cur_adoptId == row.id}">{{row.itemName}}</a>
+            <a v-show="$t('language') == 2" @click="adoptClick(row)" :class="{'selected': cur_adoptId == row.id}">{{row.itemCode}}</a>
           </li>
         </ul>
       </div>
@@ -160,7 +163,7 @@
           domain: this.cur_fieldCode,
           fileState: this.cur_statusCode,
           acquisitionStandard: this.cur_adoptCode,
-          languageType: this.$t('language'),
+          language: this.$t('language'),
           type: 1,
           page: this.currentPage,
           rows: this.pageSize
