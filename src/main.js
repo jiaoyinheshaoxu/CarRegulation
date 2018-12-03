@@ -30,10 +30,11 @@ async function user_login() {
   let url = 'LoginService.asmx/CheckLogin'
   let params = {
     username: sessionStorage.getItem('userEmail'),
-    password: sessionStorage.getItem('userPassword')
+    password: sessionStorage.getItem('userPassword'),
+    language: sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 1
   }
   let data = await api.post(url, params);
-  if (data.LoginStatus == 1) {
+  if (data.resultCode == 1000) {
     // 登录成功 => 回到首页 => 将用户 id 存入 session 和 global 中
     global.userEmail = sessionStorage.getItem('userEmail');
     global.userPassword = sessionStorage.getItem('userPassword');

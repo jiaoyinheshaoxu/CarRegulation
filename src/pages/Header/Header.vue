@@ -56,6 +56,7 @@
     	toggleLang(lang) {
 	      if(lang == 'zh'){
 	        localStorage.setItem('locale', 'zh')
+          sessionStorage.setItem('language', 1)
 	        this.$i18n.locale = localStorage.getItem('locale')
 	        this.$message({
 	          message: '切换为中文！',
@@ -63,6 +64,7 @@
 	        })
 	      } else if (lang == 'en') {
 	        localStorage.setItem('locale', 'en')
+          sessionStorage.setItem('language', 2)
 	        this.$i18n.locale = localStorage.getItem('locale')
 	        this.$message({
 	          message: 'Switch to English!',

@@ -644,16 +644,17 @@
         let params = {
           documentId: this.documentId,
           memberId: this.global.memberId,
+          language: this.$t('language')
         }
         let data = await this.api.post(url, params)
         if (data) {
-          if (data[0] == 1) {
+          if (data.resultCode == 1000) {
             this.$message({
               showClose: true,
               message: '收藏成功！'
             });
             this.isSave = true
-          } else if(data[0] == 2) {
+          } else if(data.resultCode == 1001) {
             this.$message({
               showClose: true,
               message: '已经收藏！',
@@ -684,6 +685,7 @@
         let params = {
           documentId: this.documentId,
           memberId: this.global.memberId,
+          language: this.$t('language')
         }
         let data = await this.api.post(url, params)
         if (data) {

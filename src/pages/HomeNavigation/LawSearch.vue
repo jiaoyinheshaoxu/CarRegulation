@@ -128,8 +128,12 @@
             return val
           }
         }
-        let time = new Date(row.implementDate)
-        return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
+        if(row.implementDate){
+          let time = new Date(row.implementDate)
+          return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
+        }else{
+          return ''
+        }
       },
       dealReleaseDate(row) {
         function addZero(val) {
@@ -139,8 +143,12 @@
             return val
           }
         }
-        let time = new Date(row.releaseDate)
-        return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
+        if(row.releaseDate){
+          let time = new Date(row.releaseDate)
+          return time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate())
+        }else {
+          return ''
+        }
       },
       dealFileState(row) {
         return row.fileState
