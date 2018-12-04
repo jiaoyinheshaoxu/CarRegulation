@@ -64,6 +64,16 @@
     mounted() {
       this.GetQuestionAnswerTypeList()
     },
+    computed: {
+      language() {
+        return this.$store.state.language
+      }
+    },
+    watch: {
+      language: function () {
+        this.GetQuestionAnswerTypeList()
+      }
+    },
     methods: {
       /*maoClick (type) {
         this.cur_showType = type

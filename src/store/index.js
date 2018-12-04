@@ -4,7 +4,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     route_name: '',
-    username: ''
+    username: '',
+    language: sessionStorage.getItem('language') ? sessionStorage.getItem('language') : '1'
   },
   mutations: {
     change_route(state, payload) {
@@ -12,6 +13,9 @@ const store = new Vuex.Store({
     },
     get_username(state, payload) {
       state.username = payload.username
+    },
+    get_language(state, payload) {
+      state.language = payload.language
     }
   }
 })

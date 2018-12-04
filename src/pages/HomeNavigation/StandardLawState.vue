@@ -44,6 +44,16 @@
     mounted() {
       this.getStandardLawList()
     },
+    computed: {
+      language() {
+        return this.$store.state.language
+      }
+    },
+    watch: {
+      language: function () {
+        this.getStandardLawList()
+      }
+    },
     methods: {
       async getStandardLawList () {
         let url = 'DocumentService.asmx/SearchInformationList'

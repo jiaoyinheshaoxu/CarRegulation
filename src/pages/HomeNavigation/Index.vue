@@ -205,6 +205,7 @@
     data() {
       return {
         searchStr: '',
+        cur_searchStr: '',
         currentPage: 1,
         pageSize: 10,
         total: 0,
@@ -391,7 +392,7 @@
             language: this.$t('language'),
             page: this.currentPage,
             rows: this.pageSize,
-            keyword: this.searchStr,
+            keyword: this.cur_searchStr,
             publisher: '',
             direction: ''
           }
@@ -450,15 +451,20 @@
       async AddDocumentSearchKeys() {
         let url = '/OtherService.asmx/AddDocumentSearchKeys'
         let params = {
-          keys: this.searchStr
+          keys: this.cur_searchStr
         }
         let data = await this.api.post(url, params)
         if (data) {
         }
       },
-      async SearchForIndexByLabelOrTitle() {
-        if(!this.searchStr){
+      async SearchForIndexByLabelOrTitle(str) {
+        if(!this.searchStr && !str){
           return
+        }
+        if(str){
+          this.cur_searchStr = str
+        }else{
+          this.cur_searchStr = this.searchStr
         }
         this.searchType = 3
         this.AddDocumentSearchKeys()
@@ -467,7 +473,7 @@
           let params = {
             page: this.currentPage,
             rows: this.pageSize,
-            keyword: this.searchStr,
+            keyword: this.cur_searchStr,
             language: this.$t('language')
           }
           let data = await this.api.post(url, params, {loading: true})
@@ -624,7 +630,6 @@
       }
     },
     mounted() {
-      this.AddDocumentSearchKeys()
       this.GetIndexByTopList()
       this.getHotKeys()
       $('.i_son_ul').hide();
@@ -655,6 +660,21 @@
         $('.i_select_box b').addClass("down");
         $("#search_content").css("border-radius","5px")
       });
+    },
+    computed: {
+      language() {
+        return this.$store.state.language
+      }
+    },
+    watch: {
+      language: function () {
+        this.GetIndexByTopList()
+        if(this.searchType == 3){
+          this.SearchForIndexByLabelOrTitle(this.cur_searchStr)
+        }else{
+          this.getStandardAndRegulationSearch()
+        }
+      }
     }
   }
 </script>

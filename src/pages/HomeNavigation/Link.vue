@@ -129,6 +129,16 @@
     mounted() {
       this.GetLinkList()
     },
+    computed: {
+      language() {
+        return this.$store.state.language
+      }
+    },
+    watch: {
+      language: function () {
+        this.GetLinkList()
+      }
+    },
     methods: {
       /*maoClick (type) {
         this.cur_showType = type

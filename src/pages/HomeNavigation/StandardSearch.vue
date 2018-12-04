@@ -120,6 +120,16 @@
     mounted() {
       this.getStandardSearch()
     },
+    computed: {
+      language() {
+        return this.$store.state.language
+      }
+    },
+    watch: {
+      language: function () {
+        this.getStandardSearch()
+      }
+    },
     methods: {
       fieldClick (row) {
         if (this.cur_fieldId == row.id) {

@@ -118,6 +118,15 @@
     },
     mounted() {
       this.getStandardSearch()
+    },computed: {
+      language() {
+        return this.$store.state.language
+      }
+    },
+    watch: {
+      language: function () {
+        this.getStandardSearch()
+      }
     },
     methods: {
       dealImplementDate(row) {
