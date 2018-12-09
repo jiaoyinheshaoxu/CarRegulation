@@ -1,6 +1,6 @@
 // 注意：一定是 exports，不是 export，否则会报错，报错信息是下列的中的内容不是 string
 module.exports = {
-  language: '2', 
+  language: '1', 
   // UserCenter 页面
   userCenter: {
   	_0: 'User center',
@@ -20,7 +20,7 @@ module.exports = {
   	_14: 'Date',
   	_15: 'Membership level：',
   	_16: 'Upgrade now',
-  	_17: 'Renew',
+  	_17: 'Renew your membership',
   	_18: 'Subscription status：',
   	_19: 'Subscribe',
   	_20: 'Cancel',
@@ -83,7 +83,6 @@ module.exports = {
   	_77: 'Yes',
   	_78: 'Delete messages',
   	_79: 'All your selected system messages will be deleted. Continue?',
-  	_79_2: 'This your selected system messag will be deleted. Continue?',
   	_80: 'Message details：',
   	_81: 'Notification time setting：',
   	_82: 'Old password',
@@ -104,20 +103,20 @@ module.exports = {
   	_97: 'The affiliated account has been successfully changed !',
   	_98: 'Return error',
   	_99: 'The affiliated account has been sucessfully removed !',
-  	_100: 'Successfully !',
+  	_100: 'Successfully unsaved !',
   	_101: 'Please select the message you want to delete.',
   	_102: 'The message has been successfully deleted !',
   	_103: 'Your password has been changed successfully. You will be redirected to the login page !',
   	_104: 'Please enter your email address！',
   	_105: 'Incorrect Old Password',
   	_106: 'The password provided is invalid. Please enter a valid password !',
-  	_107: 'Modify',
-  	_108: 'Downloaded',
-  	_109: 'Printed',
-  	_110: 'Title',
-  	_111: 'Cancel',
-  	_112: 'Confirm',
-  	_113: 'Are you sure to logout ?',
+  	_107: '',
+  	_108: '',
+  	_109: '',
+  	_110: '',
+  	_111: '',
+  	_112: '',
+  	_113: '',
   	_114: '',
   	_115: '',
   	_116: '',
@@ -125,9 +124,5 @@ module.exports = {
   	_118: '',
   	_119: '',
   	_120: ''
-  },
-  // findPassword 页面
-  findPassword:{
-  	
   }
 }

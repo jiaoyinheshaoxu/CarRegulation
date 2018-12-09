@@ -2,30 +2,30 @@
 
 	<!--内容-->
 	<div id="main_content">
-		<div id="main_title">个人中心</div>
+		<div id="main_title">{{$t("userCenter._0")}}</div>
 		<div id="child_content">
 			<!--内容左-->
 			<div id="main_left">
 				<ul id="main_title_list">
 					<li @click="checkSubBar('main_personal')" :class="[subTabBar == 'main_personal' ? 'main_title_hover' : '']" v-show="true">
-						个人信息
+						{{$t("userCenter._1")}}
 					</li>
 					<li @click="checkSubBar('main_sub_accounts')" :class="[subTabBar == 'main_sub_accounts' ? 'main_title_hover' : '']" v-show="true">
-						副账户管理
+						{{$t("userCenter._2")}}
 					</li>
 					<li @click="checkSubBar('main_add')" :class="[subTabBar == 'main_add' ? 'main_title_hover' : '']" v-show="true">
-						我的收藏
+						{{$t("userCenter._3")}}
 					</li>
 					<li @click="checkSubBar('main_down_print')" :class="[subTabBar == 'main_down_print' ? 'main_title_hover' : '']" v-show="true">
-						下载与打印记录
+						{{$t("userCenter._4")}}
 					</li>
 					<li @click="checkSubBar('main_mess')" :class="[subTabBar == 'main_mess' ? 'main_title_hover' : '']" v-show="true">
-						消息管理
+						{{$t("userCenter._5")}}
 					</li>
 					<li @click="checkSubBar('main_merge_pwd')" :class="[subTabBar == 'main_merge_pwd' ? 'main_title_hover' : '']" v-show="true">
-						修改密码
+						{{$t("userCenter._6")}}
 					</li>
-					<li @click="showDialog_quit_account = true">退出登录</li>
+					<li @click="showDialog_quit_account = true">{{$t("userCenter._7")}}</li>
 				</ul>
 			</div>
 			<!--内容右-->
@@ -34,49 +34,49 @@
 				<div id="main_personal" v-show="subTabBar == 'main_personal'">
 					<div id="main_personal_warn" v-show="wantToUpgrade">
 						<span class="main_warn_icon"></span>
-						<span>尊敬的用户，您已选择高级会员，请及时汇款到指定账户，本消息三日内有效。</span>
-						<span class="main_warn_detail" @click="showDialog_checkDetail = true">查看详情</span>
+						<span>{{$t("userCenter._8")}}</span>
+						<span class="main_warn_detail" @click="showDialog_checkDetail = true">{{$t("userCenter._9")}}</span>
 					</div>
 					<div class="main_content_title">
-						<span class="mess_title_cont">个人资料</span>
+						<span class="mess_title_cont">{{$t("userCenter._10")}}</span>
 						<div id="main_personal_cont">
 							<ul id="main_personal_ul">
 								<li>
-									<span class="main_li_title">注册邮箱：</span>
+									<span class="main_li_title">{{$t("userCenter._11")}}</span>
 									<span>{{ memberInfo.F_Email }}</span>
 								</li>
 								<li>
-									<span class="main_li_title">注册日期：</span>
-									<span>{{ memberInfo.F_CreatorTime.length > 0 ? memberInfo.F_CreatorTime.slice(0,10) : "日期返回错误" }}日</span>
+									<span class="main_li_title">{{$t("userCenter._12")}}</span>
+									<span>{{ memberInfo.F_CreatorTime.length > 0 ? memberInfo.F_CreatorTime.slice(0,10) : $t("userCenter._13") }} {{$t("userCenter._14")}}</span>
 								</li>
 								<li>
-									<span class="main_li_title">会员级别：</span>
+									<span class="main_li_title">{{$t("userCenter._15")}}</span>
 									<span v-html="memberInfo.F_HYTypeName"></span>
-									<span class="main_personal_btn" v-show="memberInfo.F_HYType==0" @click="showDialog_upgrade = true">马上升级</span>
-									<span class="main_personal_btn" v-show="memberInfo.F_HYType==1 || memberInfo.F_HYType==2" @click="showDialog_upgrade = true">续费</span>
+									<span class="main_personal_btn" v-show="memberInfo.F_HYType==0" @click="showDialog_upgrade = true">{{$t("userCenter._16")}}</span>
+									<span class="main_personal_btn" v-show="memberInfo.F_HYType==1 || memberInfo.F_HYType==2" @click="showDialog_upgrade = true">{{$t("userCenter._17")}}</span>
 								</li>
 								<li>
-									<span class="main_li_title">订阅状态：</span>
-									<el-switch v-model="memberInfo.F_IsSubscription" active-text="开启订阅" inactive-text="取消订阅" @change="setMemberIsSubscription()"></el-switch>
+									<span class="main_li_title">{{$t("userCenter._18")}}</span>
+									<el-switch v-model="memberInfo.F_IsSubscription" :active-text="$t('userCenter._19')" :inactive-text="$t('userCenter._20')" @change="setMemberIsSubscription()"></el-switch>
 								</li>
 								<li v-show="memberInfo.F_HYType==1 || memberInfo.F_HYType==2">
 									<!-- 高级会员 -->
-									<span class="main_li_title marginLeft_2em">来自：</span>
+									<span class="main_li_title marginLeft_2em">{{$t("userCenter._21")}}</span>
 									<span>{{ memberInfo.F_Country }}</span>
 								</li>
 								<li v-show="memberInfo.F_HYType==1 || memberInfo.F_HYType==2">
 									<!-- 高级会员 -->
-									<span class="main_li_title marginLeft_2em">电话：</span>
+									<span class="main_li_title marginLeft_2em">{{$t("userCenter._22")}}</span>
 									<span>{{ memberInfo.F_Phone }}</span>
 								</li>
 								<li v-show="memberInfo.F_HYType==1 || memberInfo.F_HYType==2">
 									<!-- 高级会员 -->
-									<span class="main_li_title">有效期至：</span>
+									<span class="main_li_title">{{$t("userCenter._23")}}</span>
 									<span>{{ memberInfo.F_EndDate }}</span>
 								</li>
 								<li v-show="memberInfo.F_HYType==1 || memberInfo.F_HYType==2">
 									<!-- 高级会员 -->
-									<span class="main_li_title">剩余点数：</span>
+									<span class="main_li_title">{{$t("userCenter._24")}}</span>
 									<span class="dangerFont">{{ memberInfo.residueDownloadNum }}</span>
 								</li>
 
@@ -88,34 +88,34 @@
 				<!-- 副账户管理 -->
 				<div id="main_sub_accounts" v-show="subTabBar == 'main_sub_accounts'">
 					<div class="main_content_title">
-						<span class="mess_title_cont">副账户管理</span>
+						<span class="mess_title_cont">{{$t("userCenter._2")}}</span>
 						<p class="sub_create_btn">
 							<span>{{ memberInfo.F_Phone }}</span>
 							<!--系统允许您创建三个副账户-->
-							<b class="sub_create_enable" @click="addOrModify_sub_account('')">创建</b>
+							<b class="sub_create_enable" @click="addOrModify_sub_account('')">{{$t("userCenter._25")}}</b>
 						</p>
 					</div>
 					<div id="main_sub_table">
 						<table>
 							<thead>
 								<tr>
-									<th width="50">序号</th>
-									<th>邮箱</th>
-									<th>密码</th>
-									<th width="100">管理</th>
+									<th width="50">{{$t("userCenter._26")}}</th>
+									<th>{{$t("userCenter._27")}}</th>
+									<th>{{$t("userCenter._28")}}</th>
+									<th width="100">{{$t("userCenter._29")}}</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr v-show="!DeputyMemberList.length || DeputyMemberList.length == 0">
-									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">您 还 没 有 添 加 任 何 副 账 户 ！</a></span></td>
+									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">{{$t("userCenter._30")}}</a></span></td>
 								</tr>
 								<tr v-show="DeputyMemberList.length || DeputyMemberList.length > 0" v-for="(item,index) in DeputyMemberList" :key="index">
 									<td>{{ index+1 }}</td>
 									<td class="email_password_td" :title="item.Email">{{ item.Email }}</td>
 									<td class="email_password_td" :title="item.Password">{{ item.Password }}</td>
 									<td class="last_sub_table">
-										<span><a href="javascript: void(0);" @click="addOrModify_sub_account(item.Id,item.Email,item.Password)">修改</a></span>
-										<span><a href="javascript: void(0);" @click="delete_sub_account(item.Id)">删除</a></span>
+										<span><a href="javascript: void(0);" @click="addOrModify_sub_account(item.Id,item.Email,item.Password)">{{$t("userCenter._107")}}</a></span>
+										<span><a href="javascript: void(0);" @click="delete_sub_account(item.Id)">{{$t("userCenter._31")}}</a></span>
 									</td>
 								</tr>
 							</tbody>
@@ -126,7 +126,7 @@
 				<!--我的收藏-->
 				<div id="main_add" v-show="subTabBar == 'main_add'">
 					<div class="main_content_title">
-						<span class="mess_title_cont">我的收藏记录</span>
+						<span class="mess_title_cont">{{$t("userCenter._32")}}</span>
 						<p class="sub_create_btn">
 							<span></span>
 						</p>
@@ -136,22 +136,22 @@
 						<table>
 							<thead>
 								<tr>
-									<th width="50">序号</th>
-									<th>标准名称</th>
-									<th width="200">日期</th>
-									<th width="100">管理</th>
+									<th width="50">{{$t("userCenter._26")}}</th>
+									<th>{{$t("userCenter._33")}}</th>
+									<th width="200">{{$t("userCenter._34")}}</th>
+									<th width="100">{{$t("userCenter._29")}}</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr v-show="!myCollectList.length || myCollectList.length == 0">
-									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">您 还 没 有 添 加 任 何 收 藏 ！</a></span></td>
+									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">{{$t("userCenter._35")}}</a></span></td>
 								</tr>
 								<tr v-show="myCollectList.length || myCollectList.length > 0" v-for="(item,index) in myCollectList" :key="index">
 									<td>{{ index+1 }}</td>
 									<td class="email_password_td" :title="item.Title">{{ item.Title }}</td>
-									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime.length>0 ? item.CreatorTime.slice(0,10)+"日 "+item.CreatorTime.slice(11,19) : "日期返回错误" }}</td>
+									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime.length>0 ? item.CreatorTime.slice(0,10)+$t("userCenter._14")+item.CreatorTime.slice(11,19) : $t("userCenter._13") }}</td>
 									<td class="last_sub_table">
-										<span><a href="javascript: void(0);" @click="delete_collect(item.Id)">取消关注</a></span>
+										<span><a href="javascript: void(0);" @click="delete_collect(item.Id)">{{$t("userCenter._36")}}</a></span>
 									</td>
 								</tr>
 							</tbody>
@@ -174,9 +174,9 @@
 				<!-- 下载与打印记录 -->
 				<div id="main_down_print" v-show="subTabBar == 'main_down_print'">
 					<div class="main_content_title">
-						<span class="mess_title_cont">我的下载与打印记录</span>
+						<span class="mess_title_cont">{{$t("userCenter._37")}}</span>
 						<p class="sub_create_btn">
-							点数消耗：
+							{{$t("userCenter._38")}}
 							<span>{{ memberInfo.downloadCount }}/{{ memberInfo.downAndPrintCount }}</span>
 						</p>
 					</div>
@@ -184,21 +184,21 @@
 						<table>
 							<thead>
 								<tr>
-									<th width="50">类别</th>
-									<th>标准名称</th>
-									<th width="50">消耗</th>
-									<th width="200">日期</th>
+									<th width="50">{{$t("userCenter._39")}}</th>
+									<th>{{$t("userCenter._33")}}</th>
+									<th width="50">{{$t("userCenter._40")}}</th>
+									<th width="200">{{$t("userCenter._34")}}</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr v-show="!downloadInfoList.length || downloadInfoList.length == 0">
-									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">您 还 没 有 任 何 下 载 或 打 印 记 录 ！</a></span></td>
+									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">{{$t("userCenter._41")}}</a></span></td>
 								</tr>
 								<tr v-show="downloadInfoList.length || downloadInfoList.length > 0" v-for="(item,index) in downloadInfoList" :key="index">
-									<td class="email_password_td" :title="item.Type">{{ item.Type == 1 ? "下载" : "打印" }}</td>
+									<td class="email_password_td" :title="item.Type">{{ item.Type == 1 ? $t("userCenter._108") : $t("userCenter._109") }}</td>
 									<td class="email_password_td" :title="item.Title">{{ item.Title }}</td>
 									<td>{{ item.Num }}</td>
-									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime.length>0 ? item.CreatorTime.slice(0,10)+"日 "+item.CreatorTime.slice(11,19) : "日期返回错误" }}</td>
+									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime.length>0 ? item.CreatorTime.slice(0,10)+$t("userCenter._14")+item.CreatorTime.slice(11,19) : $t("userCenter._13") }}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -220,10 +220,10 @@
 				<!--信息管理-->
 				<div id="main_mess" v-show="subTabBar == 'main_mess'">
 					<div class="main_content_title">
-						<span class="mess_title_cont">消息管理</span>
+						<span class="mess_title_cont">{{$t("userCenter._5")}}</span>
 						<p class="sub_create_btn">
 							<span></span>
-							<b class="sub_create_enable" @click="group_delete_message()">批量删除</b>
+							<b class="sub_create_enable" @click="group_delete_message()">{{$t("userCenter._42")}}</b>
 						</p>
 					</div>
 
@@ -232,22 +232,22 @@
 							<thead>
 								<tr>
 									<th width="50"><input type="checkbox" name="checkAllOrNot" id="checkAllOrNot" value="" /></th>
-									<th>标题</th>
-									<th width="200">留言日期</th>
-									<th width="150">操作</th>
+									<th>{{$t("userCenter._110")}}</th>
+									<th width="200">{{$t("userCenter._43")}}</th>
+									<th width="150">{{$t("userCenter._44")}}</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr v-show="!sysMessageInfoEntityList.length || sysMessageInfoEntityList.length == 0">
-									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">您 还 未 收 到 任 何 系 统 消 息 ！</a></span></td>
+									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">{{$t("userCenter._45")}}</a></span></td>
 								</tr>
 								<tr v-show="sysMessageInfoEntityList.length || sysMessageInfoEntityList.length > 0" v-for="(item,index) in sysMessageInfoEntityList" :key="index">
 									<td><input type="checkbox" name="checkNode" class="checkNode" value="" :nodeId="item.Id" @change="sel_single()" /></td>
 									<td class="email_password_td" :title="item.Title">{{ item.Title }}</td>
-									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime.length>0 ? item.CreatorTime.slice(0,10)+"日 "+item.CreatorTime.slice(11,19) : "日期返回错误" }}</td>
+									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime.length>0 ? item.CreatorTime.slice(0,10)+$t("userCenter._14")+item.CreatorTime.slice(11,19) : $t("userCenter._13") }}</td>
 									<td class="last_sub_table">
-										<span><a href="javascript: void(0);" @click="delete_system_message(item.Id)">删除</a></span>
-										<span><a href="javascript: void(0);" @click="check_systemMsg_detail(item.Id,item.Title,item.CreatorTime)">查看详情</a></span>
+										<span><a href="javascript: void(0);" @click="delete_system_message(item.Id)">{{$t("userCenter._31")}}</a></span>
+										<span><a href="javascript: void(0);" @click="check_systemMsg_detail(item.Id,item.Title,item.CreatorTime)">{{$t("userCenter._9")}}</a></span>
 									</td>
 								</tr>
 							</tbody>
@@ -270,113 +270,114 @@
 				<!-- 修改密码 -->
 				<div id="main_merge_pwd" v-show="subTabBar == 'main_merge_pwd'">
 					<div class="main_content_title">
-						<span class="mess_title_cont">修改密码</span>
+						<span class="mess_title_cont">{{$t("userCenter._6")}}</span>
 						<p class="sub_create_btn">
 							<span></span>
 						</p>
 					</div>
 
-					<el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-					  <el-form-item label="旧密码" prop="userOldPassword">
+					<el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="200px" class="demo-ruleForm">
+					  <el-form-item :label="$t('userCenter._46')" prop="userOldPassword">
 					    <el-input type="password" v-model="ruleForm2.userOldPassword" autoComplete="off"></el-input>
 					  </el-form-item>
-					  <el-form-item label="新密码" prop="userNewPassword">
+					  <el-form-item :label="$t('userCenter._47')" prop="userNewPassword">
 					    <el-input type="password" v-model="ruleForm2.userNewPassword" autoComplete="off"></el-input>
 					  </el-form-item>
-					  <el-form-item label="确认密码" prop="newPasswordConfirm">
+					  <el-form-item :label="$t('userCenter._48')" prop="newPasswordConfirm">
 					    <el-input type="password" v-model="ruleForm2.newPasswordConfirm" autoComplete="off"></el-input>
 					  </el-form-item>
 					  <el-form-item>
-					    <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
-					    <el-button @click="resetForm('ruleForm2')">重置</el-button>
+					    <el-button type="primary" @click="submitForm('ruleForm2')">{{$t("userCenter._49")}}</el-button>
+					    <el-button @click="resetForm('ruleForm2')">{{$t("userCenter._50")}}</el-button>
 					  </el-form-item>
 					</el-form>
 
 				</div>
 
-				<!--查看详情弹窗-->
-				<el-dialog title="温馨提示" :visible.sync="showDialog_checkDetail" width="40%" left>
+				<!--查看详情弹窗 v-show="" -->
+				<el-dialog :title="$t('userCenter._51')" :visible.sync="showDialog_checkDetail" width="40%" left>
 					<p class="upgrade_tips">
 						<span class="main_warn_icon"></span>
-						<span>请尽快将 {{upgrade_type == 1 ? memberFee_threeMonth : memberFee_oneYear}} 元 转账到以下账户以升级成高级会员：</span>
+						<span v-show="upgrade_type == 1">{{$t("userCenter._52")}}</span>
+						<span v-show="upgrade_type == 2">{{$t("userCenter._63")}}</span>
 					</p>
-					<p class="marginLeft_2em upgrade_tips dangerFont">中国银行：6226 6602 1888 6889 576</p>
-					<p class="marginLeft_2em upgrade_tips dangerFont">收 款 人 ：Dai yong ming</p>
+					<p class="marginLeft_2em upgrade_tips dangerFont">{{$t("userCenter._53")}}6226 6602 1888 6889 576</p>
+					<p class="marginLeft_2em upgrade_tips dangerFont">{{$t("userCenter._54")}}Dai yong ming</p>
 
 					<span slot="footer" class="dialog-footer">
-				    <el-button type="primary" @click="showDialog_checkDetail = false">知 道 了</el-button>
+				    <el-button type="primary" @click="showDialog_checkDetail = false">{{$t("userCenter._55")}}</el-button>
 				  </span>
 				</el-dialog>
 
 				<!--升级为高级会员弹窗-->
-				<el-dialog :title="memberInfo.F_HYType==0 ? '升级为高级会员' : '立即续费'" :visible.sync="showDialog_upgrade" width="40%" left>
-					<p class="upgrade_tips" v-show="memberInfo.F_HYType==0">您将获得：<span class="blueFont">搜索、查看全部文档、下载与打印、设置两名副用户</span></p>
-					<p class="upgrade_tips">{{ memberInfo.F_HYType==0 ? '选择套餐' : '续费类型' }}：</p>
+				<el-dialog :title="memberInfo.F_HYType==0 ? $t('userCenter._56') : $t('userCenter._17')" :visible.sync="showDialog_upgrade" width="40%" left>
+					<p class="upgrade_tips" v-show="memberInfo.F_HYType==0">{{$t("userCenter._57")}}<span class="blueFont">{{$t("userCenter._58")}}</span></p>
+					<p class="upgrade_tips">{{ memberInfo.F_HYType==0 ? $t('userCenter._59') : $t('userCenter._60') }}：</p>
 					<p class="choice">
-						<el-radio v-model="upgrade_type" label="1">季付 每月{{memberFee_threeMonth}}元 共54次打印或下载机会</el-radio>
+						<el-radio v-model="upgrade_type" label="1">{{$t('userCenter._61')}}</el-radio>
 					</p>
 					<p class="choice">
-						<el-radio v-model="upgrade_type" label="2">年付 每年{{memberFee_oneYear}}元 共220打印或下载机会</el-radio>
+						<el-radio v-model="upgrade_type" label="2">{{$t('userCenter._62')}}</el-radio>
 					</p>
-					<p class="upgrade_tips mTop20" v-show="memberInfo.F_HYType==0">所在国家：
-						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="user_country" placeholder="您的国家"></el-input>
+					<p class="upgrade_tips mTop20" v-show="memberInfo.F_HYType==0">{{$t('userCenter._64')}}
+						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="user_country" :placeholder="$t('userCenter._65')"></el-input>
 					</p>
-					<p class="upgrade_tips mTop20" v-show="memberInfo.F_HYType==0">你的电话：
-						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="user_phone" placeholder="您的电话"></el-input>
+					<p class="upgrade_tips mTop20" v-show="memberInfo.F_HYType==0">{{$t('userCenter._67')}}
+						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="user_phone" :placeholder="$t('userCenter._67')"></el-input>
 					</p>
 					<span slot="footer" class="dialog-footer">
-				    <el-button @click="showDialog_upgrade = false">取 消</el-button>
-				    <el-button type="primary" @click="confirm_upgradeOrRepay()">确 定</el-button>
+				    <el-button @click="showDialog_upgrade = false">{{$t('userCenter._111')}}</el-button>
+				    <el-button type="primary" @click="confirm_upgradeOrRepay()">{{$t('userCenter._112')}}</el-button>
 				  </span>
 				</el-dialog>
 
 				<!-- 添加或者修改副账户 -->
-				<el-dialog :title="point_account_email=='' ? '添加副账户' : '修改副账户'" :visible.sync="showDialog_addOrmidify_account" width="40%" left>
-					<p class="upgrade_tips mTop20">账户邮箱：
-						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="point_account_email" placeholder="账户邮箱"></el-input>
+				<el-dialog :title="point_account_email=='' ? $t('userCenter._68') : $t('userCenter._69')" :visible.sync="showDialog_addOrmidify_account" width="40%" left>
+					<p class="upgrade_tips mTop20">{{$t('userCenter._70')}}
+						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="point_account_email" :placeholder="$t('userCenter._70')"></el-input>
 					</p>
-					<p class="upgrade_tips mTop20">账户密码：
-						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="point_account_password" placeholder="账户密码"></el-input>
+					<p class="upgrade_tips mTop20">{{$t('userCenter._71')}}
+						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="point_account_password" :placeholder="$t('userCenter._71')"></el-input>
 					</p>
 					<span slot="footer" class="dialog-footer">
-				    <el-button @click="showDialog_addOrmidify_account = false">取 消</el-button>
-				    <el-button type="primary" @click="confirm_addOrModify_account()">确 定</el-button>
+				    <el-button @click="showDialog_addOrmidify_account = false">{{$t('userCenter._111')}}</el-button>
+				    <el-button type="primary" @click="confirm_addOrModify_account()">{{$t('userCenter._112')}}</el-button>
 				  </span>
 				</el-dialog>
 
 				<!-- 退出登录 => 跳转到登录页面前提示 -->
-				<el-dialog title="退出登录" :visible.sync="showDialog_quit_account" width="400px" left>
-					<p class="upgrade_tips dangerFont text-center">您 确 定 要 退 出 登 录 ？</p>
+				<el-dialog :title="$t('userCenter._7')" :visible.sync="showDialog_quit_account" width="400px" left>
+					<p class="upgrade_tips dangerFont text-center">{{$t('userCenter._113')}}</p>
 					<span slot="footer" class="dialog-footer">
-				    <el-button @click="showDialog_quit_account = false">手 抖 了</el-button>
-				    <el-button type="primary" @click="confirm_quit()">残忍退出</el-button>
+				    <el-button @click="showDialog_quit_account = false">{{$t('userCenter._73')}}</el-button>
+				    <el-button type="primary" @click="confirm_quit()">{{$t('userCenter._74')}}</el-button>
 				  </span>
 				</el-dialog>
 
 				<!-- 删除副账户弹窗 => 刷新列表 -->
-				<el-dialog title="删除副账户" :visible.sync="showDialog_delete_account" width="400px" left>
-					<p class="upgrade_tips dangerFont text-center">您 确 定 要 删 除 副 账 户 ？</p>
+				<el-dialog :title="$t('userCenter._75')" :visible.sync="showDialog_delete_account" width="400px" left>
+					<p class="upgrade_tips dangerFont text-center">{{$t('userCenter._76')}}</p>
 					<span slot="footer" class="dialog-footer">
-				    <el-button @click="showDialog_delete_account = false">手 抖 了</el-button>
-				    <el-button type="primary" @click="confirm_delete_account()">残忍删除</el-button>
+				    <el-button @click="showDialog_delete_account = false">{{$t('userCenter._73')}}</el-button>
+				    <el-button type="primary" @click="confirm_delete_account()">{{$t('userCenter._77')}}</el-button>
 				  </span>
 				</el-dialog>
 
 				<!-- 删除系统消息弹窗 => 刷新列表 -->
-				<el-dialog title="删除系统消息" :visible.sync="showDialog_delete_message" width="400px" left>
-					<p class="upgrade_tips dangerFont text-center">{{ (messageIds && messageIds.indexOf(',') > -1) ? "您 确 定 要 批 量 删 除 这 些 系 统 消 息 ？" : "您 确 定 要 删 除 该 条 系 统 消 息 ？"}}</p>
+				<el-dialog :title="$t('userCenter._78')" :visible.sync="showDialog_delete_message" width="400px" left>
+					<p class="upgrade_tips dangerFont text-center">{{ (messageIds && messageIds.indexOf(',') > -1) ? $t('userCenter._79') : $t('userCenter._79_2')}}</p>
 					<span slot="footer" class="dialog-footer">
-				    <el-button @click="showDialog_delete_message = false">手 抖 了</el-button>
-				    <el-button type="primary" @click="confirm_delete_message()">残忍删除</el-button>
+				    <el-button @click="showDialog_delete_message = false">{{$t('userCenter._73')}}</el-button>
+				    <el-button type="primary" @click="confirm_delete_message()">{{$t('userCenter._77')}}</el-button>
 				  </span>
 				</el-dialog>
 
 				<!-- 查看消息详情弹窗 -->
-				<el-dialog title="消息详情" :visible.sync="showDialog_checkMsg_detail" width="400px" left>
-					<p class="upgrade_tips">消息详情：<span class="blueFont">{{ singleMessage.title }}</span></p>
-					<p class="upgrade_tips">提醒时间：<span class="blueFont">{{ singleMessage.time.length>0 ? singleMessage.time.slice(0,10)+"日 "+singleMessage.time.slice(11,19) : "日期返回错误" }}</span></p>
+				<el-dialog :title="$t('userCenter._80')" :visible.sync="showDialog_checkMsg_detail" width="400px" left>
+					<p class="upgrade_tips">{{$t('userCenter._80')}}<span class="blueFont">{{ singleMessage.title }}</span></p>
+					<p class="upgrade_tips">{{$t('userCenter._81')}}<span class="blueFont">{{ singleMessage.time.length>0 ? singleMessage.time.slice(0,10)+$t('userCenter._14')+singleMessage.time.slice(11,19) : $t('userCenter._13') }}</span></p>
 					<span slot="footer" class="dialog-footer">
-				    <el-button type="primary" @click="showDialog_checkMsg_detail = false">知 道 了</el-button>
+				    <el-button type="primary" @click="showDialog_checkMsg_detail = false">{{$t('userCenter._55')}}</el-button>
 				  </span>
 				</el-dialog>
 
@@ -390,9 +391,9 @@
 		data() {
       var validatePass = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请输入旧密码'));
+          callback(new Error(this.$t('userCenter._82')));
         }else if(!this.global.check_numberMixLetter(value)){
-        	callback(new Error('6-12位密码，且只支持英文字母与数字的组合！'));
+        	callback(new Error(this.$t('userCenter._83')));
         } else {
           if (this.ruleForm2.userNewPassword !== '') {
             this.$refs.ruleForm2.validateField('userNewPassword');
@@ -402,22 +403,22 @@
       };
       var validatePass2 = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请输入新密码'));
+          callback(new Error(this.$t('userCenter._84')));
         } else if (value == this.ruleForm2.userOldPassword) {
-          callback(new Error('新密码不能与旧密码相同!'));
+          callback(new Error(this.$t('userCenter._85')));
         }else if(!this.global.check_numberMixLetter(value)){
-        	callback(new Error('6-12位密码，且只支持英文字母与数字的组合！'));
+        	callback(new Error(this.$t('userCenter._83')));
         } else {
           callback();
         }
       };
       var validatePass3 = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请再次确认新密码'));
+          callback(new Error(this.$t('userCenter._86')));
         } else if (value !== this.ruleForm2.userNewPassword) {
-          callback(new Error('两次输入密码不一致!'));
+          callback(new Error(this.$t('userCenter._87')));
         } else if(!this.global.check_numberMixLetter(value)){
-        	callback(new Error('6-12位密码，且只支持英文字母与数字的组合！'));
+        	callback(new Error(this.$t('userCenter._83')));
         }else {
           callback();
         }
@@ -522,6 +523,37 @@
 	    });
 
 		},
+		computed: {
+      language() {
+        return this.$store.state.language
+      }
+    },
+    // 监听 language 变化
+    watch: {
+      language: function () {
+				switch(this.subTabBar) {
+					case "main_personal":
+						this.getMemberInfo();
+						break;
+					case "main_sub_accounts":
+						this.getDeputyMemberListByUserId();
+						break;
+					case "main_add":
+						this.getMyCollect();
+						break;
+					case "main_down_print":
+						this.getDownloadInfoList();
+						break;
+					case "main_mess":
+						this.getSysMessageInfo();
+						break;
+					case "main_merge_pwd":
+						break;
+					default:
+						break;
+				}
+      }
+    },
 		methods: {
 			 // 单个选择方法
 	    sel_single(){
@@ -543,11 +575,11 @@
 				let data = await this.api.post(url, params, { loading: true });
 				this.memberInfo = data;
 				if(this.memberInfo.F_HYType == 0){
-					this.memberInfo.F_HYTypeName = "普通会员";
+					this.memberInfo.F_HYTypeName = this.$t('userCenter._88');
 				}else if(this.memberInfo.F_HYType == 1){
-					this.memberInfo.F_HYTypeName = "高级会员<span class='blueFont marginLeft_2em'>( 季付 )</span>";
+					this.memberInfo.F_HYTypeName = this.$t('userCenter._89')+"<span class='blueFont marginLeft_2em'>( "+this.$t('userCenter._90')+" )</span>";
 				}else{
-					this.memberInfo.F_HYTypeName = "高级会员<span class='blueFont marginLeft_2em'>( 年付 )</span>";
+					this.memberInfo.F_HYTypeName = this.$t('userCenter._89')+"<span class='blueFont marginLeft_2em'>( "+this.$t('userCenter._91')+" )</span>";
 				}
 			},
 
@@ -557,30 +589,6 @@
 				this.showDialog_upgrade = false;
 				this.wantToUpgrade = true;
 				this.showDialog_checkDetail = true;
-				
-//				let url = 'OtherService.asmx/AddSysMessageInfo';
-//				let params = {
-//					memberId: this.global.memberId ? this.global.memberId : sessionStorage.getItem('memberId'),
-//					title: "这是一条消息"
-//				}
-//				let data = await this.api.post(url, params, { loading: true });
-//				if(data[0] == true){
-//					this.$message({
-//          showClose: true,
-//          message: "请查看消息管理...",
-//          type: 'success',
-//          duration: 2000
-//        })
-//					this.showDialog_upgrade = false;
-//					this.wantToUpgrade = true;
-//				}else{
-//					this.$message({
-//          showClose: true,
-//          message: data.result,
-//          type: 'success',
-//          duration: 2000
-//        });
-//				}
 			},
 
 			// 取消订阅 / 订阅 切换		OtherService.asmx/SetMemberIsSubscription
@@ -594,7 +602,7 @@
 				if(data.result == true){
 					this.$message({
             showClose: true,
-            message: this.memberInfo.F_IsSubscription ? '恭喜您，订阅成功！' : '您已取消订阅！',
+            message: this.memberInfo.F_IsSubscription ? this.$t('userCenter._93') : this.$t('userCenter._94'),
             type: 'success',
             duration: 2000
           })
@@ -624,7 +632,7 @@
 					if(this.memberInfo.F_HYType == 0){
 						this.$message({
 	            showClose: true,
-	            message: "普通会员没有创建副账户权限，敬请升级为高级会员！",
+	            message: this.$t('userCenter._95'),
 	            type: 'warning',
 	            duration: 5000
 	          });
@@ -676,7 +684,7 @@
 				}else{
 					this.$message({
             showClose: true,
-            message: '返回错误' + data.resultMessage,
+            message: this.$t('userCenter._98') + data.resultMessage,
             type: 'warning',
             duration: 2000
           })
@@ -700,7 +708,7 @@
 				if(data[0] == true){
 					this.$message({
             showClose: true,
-            message: '成功删除副账户！',
+            message: this.$t('userCenter._97'),
             type: 'success',
             duration: 2000
           })
@@ -744,7 +752,7 @@
 				if(data[0] == true){
 					this.$message({
             showClose: true,
-            message: '成功取消关注！',
+            message: this.$t('userCenter._100'),
             type: 'success',
             duration: 2000
           })
@@ -805,7 +813,7 @@
 				if(this.messageIds == ""){
 					this.$message({
             showClose: true,
-            message: '请勾选您要删除的消息！',
+            message: this.$t('userCenter._101'),
             type: 'warning',
             duration: 2000
           })
@@ -829,7 +837,7 @@
 				if(data[0] == true){
 					this.$message({
             showClose: true,
-            message: '成功删除消息！',
+            message: this.$t('userCenter._102'),
             type: 'success',
             duration: 2000
           })
@@ -888,7 +896,7 @@
 								if(data.resultCode == 1000){
 									_this.$message({
 				            showClose: true,
-				            message: "密码修改成功，稍后将重新登录！",
+				            message: this.$t('userCenter._103'),
 				            type: 'success',
 				            duration: 2000
 				          })
@@ -910,7 +918,7 @@
           } else {
             this.$message({
 	            showClose: true,
-	            message: '修改密码格式不对，请修改后再次提交！',
+	            message: this.$t('userCenter._106'),
 	            type: 'warning',
 	            duration: 2000
 	          })
