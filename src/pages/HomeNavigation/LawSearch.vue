@@ -3,10 +3,10 @@
     <!-- 左侧查询条件 -->
     <div id="left_search">
       <div id="title">
-        <a  href="#">法规</a>
+        <a  href="#">{{$t('lawSearch.0')}}</a>
       </div>
       <div id="area">
-        <p id="type_area" class="area_link"><span></span>按发布方</p>
+        <p id="type_area" class="area_link"><span></span>{{$t('lawSearch.1')}}</p>
         <ul id="a_content" class="area_content">
           <li v-for="row in publishList">
             <a v-show="$t('language') == 1" @click="publishClick(row)" :class="{'selected': cur_publishId == row.id}">{{row.itemName}}</a>
@@ -15,7 +15,7 @@
         </ul>
       </div>
       <div id ="state">
-        <p  id="type_state"class="area_link"><span></span>按状态</p>
+        <p  id="type_state"class="area_link"><span></span>{{$t('lawSearch.2')}}</p>
         <ul id="s_content" class="area_content">
           <li v-for="row in statusList">
             <a v-show="$t('language') == 1" @click="statusClick(row)" :class="{'selected': cur_statusId == row.id}">{{row.itemName}}</a>
@@ -24,7 +24,7 @@
         </ul>
       </div>
       <div id ="notic">
-        <p id="type_notic" class="area_link"><span></span>按方向</p>
+        <p id="type_notic" class="area_link"><span></span>{{$t('lawSearch.3')}}</p>
         <ul id="n_content" class="area_content">
           <li v-for="row in directionList">
             <a v-show="$t('language') == 1" @click="directionClick(row)" :class="{'selected': cur_directionId == row.id}">{{row.itemName}}</a>
@@ -49,21 +49,21 @@
           </el-table-column>
           <el-table-column
             prop="title"
-            label="标准或法规名称"
+            :label="$t('index.3')"
             sortable
             header-align="center"
             align="left">
           </el-table-column>
           <el-table-column
             prop="fileState"
-            label="状态"
+            :label="$t('index.4')"
             align="center"
             width="100"
             :formatter="dealFileState">
           </el-table-column>
           <el-table-column
             prop="releaseDate"
-            label="发布日期"
+            :label="$t('index.5')"
             sortable
             align="center"
             :formatter="dealReleaseDate"
@@ -71,7 +71,7 @@
           </el-table-column>
           <el-table-column
             prop="implementDate"
-            label="实施日期"
+            :label="$t('index.6')"
             sortable
             align="center"
             :formatter="dealImplementDate"
@@ -194,7 +194,7 @@
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
-            message: '该操作只有登录后才可以有效，请先登录！'
+            message: this.$t('index.13')
           });
           return
         }
@@ -205,7 +205,7 @@
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
-            message: '该操作只有登录后才可以有效，请先登录！'
+            message: this.$t('index.13')
           });
           return
         }

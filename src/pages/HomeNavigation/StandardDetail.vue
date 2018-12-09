@@ -5,31 +5,31 @@
         <div id="menu" class="clearfix" style="margin-top: -40px">
           <div>
             <div id="fontSize">
-              <span>字号：</span>
-              <button id="small" data-index=1>小</button>
-              <button id="middle" class="font-active" data-index=2>中</button>
-              <button id="big" data-index=3>大</button>
+              <span>{{$t('detail.0')}}：</span>
+              <button id="small" data-index=1>{{$t('detail.29')}}</button>
+              <button id="middle" class="font-active" data-index=2>{{$t('detail.28')}}</button>
+              <button id="big" data-index=3>{{$t('detail.27')}}</button>
             </div>
             <div id="mode">
-              <span>模式：</span>
+              <span>{{$t('detail.1')}}：</span>
               <button id="sun"></button>
               <button class="moon" id="moon"></button>
             </div>
           </div>
           <div>
             <div id="language">
-              <button class="china lan font-active" @click="languageClick('china')">中文</button>
+              <button class="china lan font-active" @click="languageClick('china')">{{$t('detail.30')}}</button>
               <button class="english lan" @click="languageClick('english')">EN</button>
               <button class="shu" @click="languageClick('shu')"></button>
               <button class="heng" @click="languageClick('heng')"></button>
             </div>
             <div id="download" style="cursor: pointer" @click="showDownPdf">
               <button></button>
-              <span>下载</span>
+              <span>{{$t('detail.2')}}</span>
             </div>
             <div id="print" style="cursor: pointer" @click="print()">
               <button></button>
-              <span>打印</span>
+              <span>{{$t('detail.3')}}</span>
             </div>
           </div>
         </div>
@@ -37,15 +37,15 @@
       <div id="article-header">
         <div class="line1 clearfix">
           <div id="bread-nav">
-            <a v-show="route_name.includes('Index')" @click="$router.push({name: 'Index'})">首页</a>
-            <a v-show="route_name.includes('StandardSearch')" @click="$router.push({name: 'StandardSearch'})">标准检索</a>
-            <a v-show="route_name.includes('LawSearch')" @click="$router.push({name: 'LawSearch'})">法规检索</a>
-            <a v-show="route_name.includes('StandardLawState')" @click="$router.push({name: 'StandardLawState'})">标准法规动态</a>
-            <a v-show="route_name.includes('LatestTranslation')" @click="$router.push({name: 'LatestTranslation'})">最新翻译</a>
+            <a v-show="route_name.includes('Index')" @click="$router.push({name: 'Index'})">{{$t('content.0')}}</a>
+            <a v-show="route_name.includes('StandardSearch')" @click="$router.push({name: 'StandardSearch'})">{{$t('content.1')}}</a>
+            <a v-show="route_name.includes('LawSearch')" @click="$router.push({name: 'LawSearch'})">{{$t('content.2')}}</a>
+            <a v-show="route_name.includes('StandardLawState')" @click="$router.push({name: 'StandardLawState'})">{{$t('content.3')}}</a>
+            <a v-show="route_name.includes('LatestTranslation')" @click="$router.push({name: 'LatestTranslation'})">{{$t('content.4')}}</a>
             <span>/</span>
             <!--<a href="">标准搜索</a>
             <span>/</span>-->
-            <a @click="goSelf()">动态详情</a>
+            <a @click="goSelf()">{{$t('detail.4')}}</a>
           </div>
 
         </div>
@@ -69,15 +69,23 @@
         </div>
         <div class="line3" v-show="detail.f_ChineseTitle">
           <div class="effectiveDate" v-show="showDate">
-            <span v-show="detail.f_ReleaseDate">发布日期（Date issued）{{new Date(detail.f_ReleaseDate).getTime() | formatTime('YMD')}}</span>
-            <span style="margin-left: 40px" v-show="detail.f_ImplementDate">实施日期（Effective date）{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}</span>
+            <span v-show="detail.f_ReleaseDate">
+              <span>{{$t('index.5')}}</span>
+              <span>：</span>
+              <span>{{new Date(detail.f_ReleaseDate).getTime() | formatTime('YMD')}}</span>
+            </span>
+            <span style="margin-left: 40px" v-show="detail.f_ImplementDate">
+              <span>{{$t('index.6')}}</span>
+              <span>：</span>
+              <span>{{new Date(detail.f_ImplementDate).getTime() | formatTime('YMD')}}</span>
+            </span>
           </div>
           <div class="label" v-if="detail.f_Label">
             <span v-for="row in detail.f_Label.split('；')" v-show="row">{{row}}</span>
           </div>
-          <span class="doSave" style="float: right;cursor: pointer;color: red" v-show="!isSave" @click="Save()">收藏</span>
+          <span class="doSave" style="float: right;cursor: pointer;color: red" v-show="!isSave" @click="Save()">{{$t('detail.18')}}</span>
           <span class="no-heart fav" style="float:right;" v-show="!isSave"></span>
-          <span class="doSave" style="float: right;cursor: pointer;color: red" v-show="isSave" @click="unSave()">已收藏</span>
+          <span class="doSave" style="float: right;cursor: pointer;color: red" v-show="isSave" @click="unSave()">{{$t('detail.19')}}</span>
           <span class="heart fav" style="float:right;" v-show="isSave"></span>
         </div>
       </div>
@@ -209,6 +217,15 @@
       },
       user_name() {
         return this.$store.state.username
+      }
+    },
+    watch: {
+      user_name: function () {
+        if(!this.user_name){
+          $('.see_onePage').css({
+            maxHeight: '830px'
+          })
+        }
       }
     },
     mounted() {
@@ -501,14 +518,16 @@
           }
           this.pre_scrollTop = this.scroll
           if(this.scroll > $(window).height()) {
-            /*if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
-              document.documentElement.scrollTop = $(window).height()
-              document.body.scrollTop = $(window).height()
-              this.$message({
-                showClose: true,
-                message: '游客或者普通会员只能看一页，赶快去升级为高级会员！'
-              });
-            }*/
+            if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
+              if(this.scroll > 2000){
+                document.documentElement.scrollTop = $(window).height()
+                document.body.scrollTop = $(window).height()
+                this.$message({
+                  showClose: true,
+                  message: this.$t('detail.14')
+                });
+              }
+            }
             if(this.hasCatalogue && this.user_name) {
               this.showMuluButton = true
             }
@@ -549,14 +568,14 @@
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
-            message: '请您先登录，游客不能打印！'
+            message: this.$t('detail.20')
           });
           return
         }
         if(!(this.global.HYType == 1 || this.global.HYType == 1)) {
           this.$message({
             showClose: true,
-            message: '该操作只有高级会员才有请您先升级为高级会员！'
+            message: this.$t('detail.21')
           });
           return
         }
@@ -627,7 +646,7 @@
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
-            message: '请您先登录，才可以进一步操作！'
+            message: this.$t('detail.22')
           });
           return
         }
@@ -636,7 +655,7 @@
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
-            message: '请登录以后才可以收藏！'
+            message: this.$t('detail.23')
           });
           return
         }
@@ -651,20 +670,20 @@
           if (data.resultCode == 1000) {
             this.$message({
               showClose: true,
-              message: '收藏成功！'
+              message: this.$t('detail.15')
             });
             this.isSave = true
           } else if(data.resultCode == 1001) {
             this.$message({
               showClose: true,
-              message: '已经收藏！',
+              message: this.$t('detail.24'),
               type: 'warning'
             });
             this.isSave = true
           }else {
             this.$message({
               showClose: true,
-              message: '收藏失败！',
+              message: this.$t('detail.25'),
               type: 'warning'
             });
             this.isSave = false
@@ -675,7 +694,7 @@
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
-            message: '请您先登录，才可以进一步操作！'
+            message: this.$t('detail.22')
           });
           return
         }
@@ -692,13 +711,13 @@
           if (data[0] == true) {
             this.$message({
               showClose: true,
-              message: '取消收藏成功！'
+              message: this.$t('detail.16')
             });
             this.isSave = false
           } else {
             this.$message({
               showClose: true,
-              message: '取消收藏失败！',
+              message: this.$t('detail.26'),
               type: 'warning'
             });
             this.isSave = true
@@ -767,7 +786,7 @@
           if(this.residueDownloadNum < 1) {
             this.$message({
               showClose: true,
-              message: '你的下载剩余下载次数不够了，请充值会员后再下载！'
+              message: this.$t('detail.17')
             });
             return
           } else if(this.downType == 1) {
@@ -789,14 +808,14 @@
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
-            message: '请您先登录，游客不能打印！'
+            message: this.$t('detail.20')
           });
           return
         }
         if(!(this.global.HYType == 1 || this.global.HYType == 1)) {
           this.$message({
             showClose: true,
-            message: '该操作只有高级会员才有请您先升级为高级会员！'
+            message: this.$t('detail.21')
           });
           return
         }
@@ -821,7 +840,7 @@
         if(!this.global.memberId){
           this.$message({
             showClose: true,
-            message: '请先登录或者注册账号！'
+            message: this.$t('detail.31')
           });
           return
         }
@@ -843,7 +862,7 @@
 
 <style scoped>
   .see_onePage{
-    height: 830px;
+    max-height: 830px;
     overflow: hidden;
   }
   .noMemeber{
@@ -1047,7 +1066,7 @@
     background-color: transparent;
   }
   #fontSize {
-    flex: 2;
+    /*flex: 2;*/
   }
   #small,
   #middle,
@@ -1065,8 +1084,9 @@
     font-size: 18px;
   }
   #mode {
-    display: flex;
-    flex: 3;
+    /*display: flex;
+    flex: 3;*/
+    margin-left: 20px;
     align-items: center;
   }
   #sun,

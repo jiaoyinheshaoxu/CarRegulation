@@ -2,16 +2,16 @@
   <div id="main">
     <div class="center">
       <div class="nav-title">
-        <h1>关于我们</h1>
+        <h1>{{$t('aboutUs.0')}}</h1>
       </div>
       <div class="nav-content">
         <div class="nav-left">
           <ul>
             <li :class="{'li_active': cur_showType == 'government'}">
-              <a @click="maoClick('government')" :class="{'a_active': cur_showType == 'government'}">了解我们</a>
+              <a @click="maoClick('government')" :class="{'a_active': cur_showType == 'government'}">{{$t('aboutUs.1')}}</a>
             </li>
             <li :class="{'li_active': cur_showType == 'approve'}">
-              <a @click="maoClick('approve')" :class="{'a_active': cur_showType == 'approve'}">关于迅孚</a>
+              <a @click="maoClick('approve')" :class="{'a_active': cur_showType == 'approve'}">{{$t('aboutUs.2')}}</a>
             </li>
           </ul>
         </div>

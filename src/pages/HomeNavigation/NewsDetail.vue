@@ -5,31 +5,31 @@
         <div id="menu" class="clearfix" style="margin-top: -40px">
           <div>
             <div id="fontSize">
-              <span>字号：</span>
-              <button id="small" data-index=1>小</button>
-              <button id="middle" class="font-active" data-index=2>中</button>
-              <button id="big" data-index=3>大</button>
+              <span>{{$t('detail.0')}}：</span>
+              <button id="small" data-index=1>{{$t('detail.29')}}</button>
+              <button id="middle" class="font-active" data-index=2>{{$t('detail.28')}}</button>
+              <button id="big" data-index=3>{{$t('detail.27')}}</button>
             </div>
             <div id="mode">
-              <span>模式：</span>
+              <span>{{$t('detail.1')}}：</span>
               <button id="sun"></button>
               <button class="moon" id="moon"></button>
             </div>
           </div>
           <div>
             <div id="language">
-              <button class="china lan font-active" @click="languageClick('china')">中文</button>
+              <button class="china lan font-active" @click="languageClick('china')">{{$t('detail.30')}}</button>
               <button class="english lan" @click="languageClick('english')" style="margin-left: -400px">EN</button>
               <button class="shu" @click="languageClick('shu')" style="display: none"></button>
               <button class="heng" @click="languageClick('heng')" style="display: none"></button>
             </div>
             <div id="download" style="cursor: pointer;display: none" @click="showDownPdf">
               <button></button>
-              <span>下载</span>
+              <span>{{$t('detail.2')}}</span>
             </div>
             <div id="print" style="cursor: pointer;display: none">
               <button></button>
-              <span>打印</span>
+              <span>{{$t('detail.3')}}</span>
             </div>
           </div>
         </div>
@@ -37,15 +37,15 @@
       <div id="article-header">
         <div class="line1 clearfix">
           <div id="bread-nav">
-            <a v-show="route_name.includes('Index')" @click="$router.push({name: 'Index'})">首页</a>
-            <a v-show="route_name.includes('StandardSearch')" @click="$router.push({name: 'StandardSearch'})">标准检索</a>
-            <a v-show="route_name.includes('LawSearch')" @click="$router.push({name: 'LawSearch'})">法规检索</a>
-            <a v-show="route_name.includes('StandardLawState')" @click="$router.push({name: 'StandardLawState'})">标准法规动态</a>
-            <a v-show="route_name.includes('LatestTranslation')" @click="$router.push({name: 'LatestTranslation'})">最新翻译</a>
+            <a v-show="route_name.includes('Index')" @click="$router.push({name: 'Index'})">{{$t('content.0')}}</a>
+            <a v-show="route_name.includes('StandardSearch')" @click="$router.push({name: 'StandardSearch'})">{{$t('content.1')}}</a>
+            <a v-show="route_name.includes('LawSearch')" @click="$router.push({name: 'LawSearch'})">{{$t('content.2')}}</a>
+            <a v-show="route_name.includes('StandardLawState')" @click="$router.push({name: 'StandardLawState'})">{{$t('content.3')}}</a>
+            <a v-show="route_name.includes('LatestTranslation')" @click="$router.push({name: 'LatestTranslation'})">{{$t('content.4')}}</a>
             <span>/</span>
             <!--<a href="">标准搜索</a>
             <span>/</span>-->
-            <a @click="goSelf()">动态详情</a>
+            <a @click="goSelf()">{{$t('detail.4')}}</a>
           </div>
 
         </div>
@@ -57,8 +57,16 @@
         </div>
         <div class="line3">
           <div class="effectiveDate" v-show="detail.f_ChineseTitle">
-            <span v-show="detail.f_CreatorTime && showDate">创建日期{{new Date(detail.f_CreatorTime).getTime() | formatTime('YMD')}}</span>
-            <span style="margin-left: 40px" v-show="detail.f_LastModifyTime && showDate">修改日期{{new Date(detail.f_LastModifyTime).getTime() | formatTime('YMD')}}</span>
+            <span v-show="detail.f_CreatorTime && showDate">
+              <span>{{$t('detail.32')}}</span>
+              <span>：</span>
+              <span>{{new Date(detail.f_CreatorTime).getTime() | formatTime('YMD')}}</span>
+            </span>
+            <span style="margin-left: 40px" v-show="detail.f_LastModifyTime && showDate">
+              <span>{{$t('detail.33')}}</span>
+              <span>：</span>
+              <span>{{new Date(detail.f_LastModifyTime).getTime() | formatTime('YMD')}}</span>
+            </span>
           </div>
           <div class="label" v-if="detail.f_Label">
             <span v-for="row in detail.f_Label.split('；')" v-show="row">{{row}}</span>
@@ -191,6 +199,15 @@
       },
       user_name() {
         return this.$store.state.username
+      }
+    },
+    watch: {
+      user_name: function () {
+        if(!this.user_name){
+          $('.see_onePage').css({
+            maxHeight: '830px'
+          })
+        }
       }
     },
     mounted() {
@@ -463,14 +480,16 @@
             this.showDate = true
           }
           if(this.scroll > $(window).height()) {
-            /*if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
-              document.documentElement.scrollTop = $(window).height() //谷歌
-              document.body.scrollTop = $(window).height() //ie
-              this.$message({
-                showClose: true,
-                message: '游客或者普通会员只能看一页，赶快去升级为高级会员！'
-              });
-            }*/
+            if(!(this.global.HYType == 1 || this.global.HYType == 2)) {
+              if(this.scroll > 2000){
+                document.documentElement.scrollTop = $(window).height() //谷歌
+                document.body.scrollTop = $(window).height() //ie
+                this.$message({
+                  showClose: true,
+                  message: this.$t('detail.14')
+                });
+              }
+            }
             if(this.hasCatalogue) {
               this.showMuluButton = true
             }
@@ -538,7 +557,7 @@
           if (data[0] == true) {
             this.$message({
               showClose: true,
-              message: '收藏成功！'
+              message: this.$t('detail.15')
             });
             this.isSave = true
           }
@@ -557,7 +576,7 @@
           if (data[0] == true) {
             this.$message({
               showClose: true,
-              message: '取消收藏成功！'
+              message: this.$t('detail.26')
             });
             this.isSave = false
           }
@@ -649,7 +668,7 @@
           if(this.residueDownloadNum < 1) {
             this.$message({
               showClose: true,
-              message: '你的下载剩余下载次数不够了，请充值会员后再下载！'
+              message: this.$t('detail.17')
             });
             this.DownloadFile()
           } else {
@@ -671,7 +690,7 @@
         if(!this.global.memberId){
           this.$message({
             showClose: true,
-            message: '请先登录或者注册账号！'
+            message: this.$t('detail.31')
           });
           return
         }
@@ -693,7 +712,7 @@
 
 <style scoped>
   .see_onePage{
-    height: 830px;
+    max-height: 830px;
     overflow: hidden;
   }
   .noMemeber{
@@ -897,7 +916,7 @@
     background-color: transparent;
   }
   #fontSize {
-    flex: 2;
+    /*flex: 2;*/
   }
   #small,
   #middle,
@@ -915,9 +934,10 @@
     font-size: 18px;
   }
   #mode {
-    display: flex;
-    flex: 3;
+    /*display: flex;
+    flex: 3;*/
     align-items: center;
+    margin-left: 20px;
   }
   #sun,
   #moon,

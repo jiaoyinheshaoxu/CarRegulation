@@ -5,36 +5,44 @@
         <li>
           <ul class="service_list_colomu">
             <li>
-              <h3>产品与服务</h3>
+              <h3>{{$t('footer.0')}}</h3>
             </li>
-            <li><a href="/StandardSearch" target="_blank">标准检索</a></li>
-            <li><a href="/LawSearch" target="_blank">法规检索</a></li>
-            <li><a href="/StandardLawState" target="_blank">标准法规动态</a></li>
-            <li><a href="/LatestTranslation" target="_blank">最新翻译</a></li>
-            <li><a href="/Link" target="_blank">链接</a></li>
+            <li><a href="/StandardSearch" target="_blank">{{$t('content.1')}}</a></li>
+            <li><a href="/LawSearch" target="_blank">{{$t('content.2')}}</a></li>
+            <li><a href="/StandardLawState" target="_blank">{{$t('content.3')}}</a></li>
+            <li><a href="/LatestTranslation" target="_blank">{{$t('content.4')}}</a></li>
+            <li><a href="/Link" target="_blank">{{$t('content.5')}}</a></li>
           </ul>
         </li>
         <li>
           <ul class="service_list_colomu">
             <li>
-              <h3>关于</h3>
+              <h3>{{$t('footer.3')}}</h3>
             </li>
-            <li><a href="/AboutUs" target="_blank">关于网站</a></li>
-            <li><a href="/ContactUs" target="_blank">联系我们</a></li>
-            <li><a href="/Help" target="_blank">帮助</a></li>
-            <li><a href="#">隐私声明</a></li>
-            <li><a href="#">使用条款</a></li>
+            <li><a href="/AboutUs" target="_blank">{{$t('footer.6')}}</a></li>
+            <li><a href="/ContactUs" target="_blank">{{$t('footer.7')}}</a></li>
+            <li><a href="/Help" target="_blank">{{$t('header.0')}}</a></li>
+            <li><a href="#">{{$t('footer.5')}}</a></li>
+            <li><a href="#">{{$t('footer.4')}}</a></li>
           </ul>
         </li>
       </ul>
       <!-- 联系我们 -->
       <div id="contact">
-        <h2>联系我们</h2>
-        <p>微博  微信  Facebook  Twitter</p>
+        <h2>{{$t('footer.7')}}</h2>
+        <p>
+          <span>{{$t('footer.8')}}</span>
+          <span>&nbsp;&nbsp;</span>
+          <span>{{$t('footer.9')}}</span>
+        </p>
       </div>
     </div>
     <div id="copyright">
-      <p>京ICP备14055711号-2 © 2012-2018  中国汽车法规标准库-在这里了解中国</p>
+      <!--<p>京ICP备14055711号-2 © 2012-2018  中国汽车法规标准库-在这里了解中国</p>-->
+      <p>
+        <span>{{$t('footer.10')}}</span>
+        <span>{{$t('footer.11')}}</span>
+      </p>
     </div>
   </div>
 </template>
@@ -102,8 +110,9 @@
     height: 75px;
     line-height: 75px;
     color: #9B9B9B;
-    width:440px;
+    width: 100%;
     margin: 0 auto;
     font-size: 13px;
+    text-align: center;
   }
 </style>

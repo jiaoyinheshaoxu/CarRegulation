@@ -6,22 +6,22 @@
         <div id="i_page_center">
           <ul id="i_main_box">
             <li class="i_select_box">
-              <span id="i_fisrt">标题 </span>
-              <b class="down" style="cursor: pointer"></b>
+              <span id="i_fisrt">{{$t('index.11')}}</span>
+              <b class="down" style="cursor: pointer;float: right;margin-top: 12px"></b>
               <ul class="i_son_ul">
-                <li><span>标题</span></li>
-                <li><span>内容</span></li>
+                <li><span>{{$t('index.11')}}</span></li>
+                <li><span>{{$t('index.0')}}</span></li>
               </ul>
             </li>
           </ul>
         </div>
-        <input type="text" placeholder="请输入内容" class="search_input" v-model="searchStr">
+        <input type="text" :placeholder="$t('index.12')" class="search_input" v-model="searchStr">
         <div id="search_btn" @click="SearchForIndexByLabelOrTitle()">
-          <a>搜索</a>
+          <a>{{$t('index.1')}}</a>
         </div>
       </div>
       <div id="hot">
-        <span>热门：</span>
+        <span>{{$t('index.2')}}：</span>
         <ul>
           <li v-for="row in hotList" v-show="row.keys">
             <a @click="hotClick(row)" :class="{'blue': cur_hot == row.keys}">{{row.keys}}</a>
@@ -39,11 +39,11 @@
     <div style="overflow: hidden" v-show="(searchList.length > 0 && searchType == 3) || (searchType == 1 || searchType == 2)">
       <div id="left_search">
         <div id="title">
-          <a  href="#" :class="{'title_a_active':cur_active == 'standard' }" @click="standardClick()">标准</a>
-          <a  href="#" :class="{'title_a_active':cur_active == 'regulation' }" @click="regulationClick()">法规</a>
+          <a  href="#" :class="{'title_a_active':cur_active == 'standard' }" @click="standardClick()">{{$t('standardSearch.0')}}</a>
+          <a  href="#" :class="{'title_a_active':cur_active == 'regulation' }" @click="regulationClick()">{{$t('lawSearch.0')}}</a>
         </div>
         <div id="area" v-show="cur_active == 'standard'">
-          <p id="type_area" class="area_link"><span></span>按领域</p>
+          <p id="type_area" class="area_link"><span></span>{{$t('standardSearch.1')}}</p>
           <ul id="a_content" class="area_content">
             <li v-for="row in fieldList">
               <a v-show="$t('language') == 1" @click="fieldClick(row)" :class="{'selected': cur_fieldId == row.id}">{{row.itemName}}</a>
@@ -52,7 +52,7 @@
           </ul>
         </div>
         <div id ="state" v-show="cur_active == 'standard'">
-          <p  id="type_state"class="area_link"><span></span>按状态</p>
+          <p  id="type_state"class="area_link"><span></span>{{$t('lawSearch.2')}}</p>
           <ul id="s_content" class="area_content">
             <li v-for="row in statusList">
               <a v-show="$t('language') == 1" @click="statusClick(row)" :class="{'selected': cur_statusId == row.id}">{{row.itemName}}</a>
@@ -61,7 +61,7 @@
           </ul>
         </div>
         <div id ="notic" v-show="cur_active == 'standard'">
-          <p id="type_notic" class="area_link"><span></span>按采标</p>
+          <p id="type_notic" class="area_link"><span></span>{{$t('standardSearch.1')}}</p>
           <ul id="n_content" class="area_content">
             <li v-for="row in adoptList">
               <a v-show="$t('language') == 1" @click="adoptClick(row)" :class="{'selected': cur_adoptId == row.id}">{{row.itemName}}</a>
@@ -70,7 +70,7 @@
           </ul>
         </div>
         <div id="area" v-show="cur_active == 'regulation'">
-          <p id="type_area" class="area_link"><span></span>按发布方</p>
+          <p id="type_area" class="area_link"><span></span>{{$t('lawSearch.1')}}</p>
           <ul id="a_content" class="area_content">
             <li v-for="row in publishList">
               <a v-show="$t('language') == 1" @click="publishClick(row)" :class="{'selected': cur_publishId == row.id}">{{row.itemName}}</a>
@@ -79,7 +79,7 @@
           </ul>
         </div>
         <div id ="state" v-show="cur_active == 'regulation'">
-          <p  id="type_state"class="area_link"><span></span>按状态</p>
+          <p  id="type_state"class="area_link"><span></span>{{$t('lawSearch.2')}}</p>
           <ul id="s_content" class="area_content">
             <li v-for="row in restatusList">
               <a v-show="$t('language') == 1" @click="restatusClick(row)" :class="{'selected': cur_restatusId == row.id}">{{row.itemName}}</a>
@@ -88,7 +88,7 @@
           </ul>
         </div>
         <div id ="notic" v-show="cur_active == 'regulation'">
-          <p id="type_notic" class="area_link"><span></span>按方向</p>
+          <p id="type_notic" class="area_link"><span></span>{{$t('lawSearch.3')}}</p>
           <ul id="n_content" class="area_content">
             <li v-for="row in directionList">
               <a v-show="$t('language') == 1" @click="directionClick(row)" :class="{'selected': cur_directionId == row.id}">{{row.itemName}}</a>
@@ -111,21 +111,21 @@
           </el-table-column>
           <el-table-column
             prop="Title"
-            label="标准或法规名称"
+            :label="$t('index.3')"
             sortable
             header-align="center"
             align="left">
           </el-table-column>
           <el-table-column
             prop="FileState"
-            label="状态"
+            :label="$t('index.4')"
             align="center"
             width="100"
             :formatter="dealFileState">
           </el-table-column>
           <el-table-column
             prop="ReleaseDate"
-            label="发布日期"
+            :label="$t('index.5')"
             sortable
             align="center"
             :formatter="dealReleaseDate"
@@ -133,7 +133,7 @@
           </el-table-column>
           <el-table-column
             prop="ImplementDate"
-            label="实施日期"
+            :label="$t('index.6')"
             sortable
             align="center"
             :formatter="dealImplementDate"
@@ -159,10 +159,10 @@
       <div id="standard_activit">
         <!-- title -->
         <div class="activit">
-          <span>标准法规动态</span>
-          <a @click="goStandardRow()">更多 ></a>
+          <span>{{$t('content.3')}}</span>
+          <a @click="goStandardRow()">{{$t('index.7')}} ></a>
         </div>
-        <p v-show="LawList.length == 0" class="noDateTip">暂无数据</p>
+        <p v-show="LawList.length == 0" class="noDateTip">{{$t('index.8')}}</p>
         <!-- 内容 -->
         <ul id="act_content" class="activit_content">
           <li v-for="row in LawList">
@@ -177,10 +177,10 @@
       <div id="new_translate">
         <!-- title -->
         <div class="activit">
-          <span>最新翻译</span>
-          <a @click="goLatestTrans()">更多 ></a>
+          <span>{{$t('content.4')}}</span>
+          <a @click="goLatestTrans()">{{$t('index.7')}} ></a>
         </div>
-        <p v-show="LatestList.length == 0" class="noDateTip">暂无数据</p>
+        <p v-show="LatestList.length == 0" class="noDateTip">{{$t('index.8')}}</p>
         <!-- 内容 -->
         <ul class="activit_content">
           <li v-for="row in LatestList">
@@ -194,8 +194,8 @@
     </div>
     <!-- 声明 -->
     <div id="declare" style="margin-top: 20px">
-      <h2>免责声明</h2>
-      <p>本网站中提供的所有英文译本均为中文原文的非正式译文，仅供参考。如果翻译与原始中文文本之间存在任何分歧或差异，则应始终以中文文本为准。所有文件或材料，无论整体或部分，均不得用于任何商业目的使用、复制或分发。我们对于英语翻译的准确性、完整性或可靠性不作任何陈述或保证，并且对翻译中的任何错误、不完整或不准确不承担任何责任。所有中文原始文件的版权归中国政府所有。</p>
+      <h2>{{$t('index.9')}}</h2>
+      <p>{{$t('index.10')}}</p>
     </div>
   </div>
 </template>
@@ -266,7 +266,7 @@
           if (this.searchList.length == 0) {
             this.$message({
               showClose: true,
-              message: '暂无搜索结果！'
+              message: this.$t('index.14')
             });
           }
         }
@@ -378,9 +378,9 @@
       },
       async getStandardAndRegulationSearch () {
         let url, params
-        if ($('#i_fisrt').html().includes("标题")) {
+        if ($('#i_fisrt').html().includes("标题") || $('#i_fisrt').html().includes("Title")) {
           url = 'DocumentService.asmx/SearchForIndexByLabelOrTitleSecond'
-        } else if ($('#i_fisrt').html().includes('内容')) {
+        } else if ($('#i_fisrt').html().includes('内容') || $('#i_fisrt').html().includes('Content')) {
           url = 'DocumentService.asmx/SearchForIndexByContentSecond'
         }
         if(this.searchType == 1){
@@ -417,7 +417,7 @@
           if (this.searchList.length == 0) {
             this.$message({
               showClose: true,
-              message: '暂无搜索结果！'
+              message: this.$t('index.14')
             });
           }
         }
@@ -468,7 +468,7 @@
         }
         this.searchType = 3
         this.AddDocumentSearchKeys()
-        if ($('#i_fisrt').html().includes("标题")) {
+        if ($('#i_fisrt').html().includes("标题") || $('#i_fisrt').html().includes("Title")) {
           let url = 'DocumentService.asmx/SearchForIndexByLabelOrTitle'
           let params = {
             page: this.currentPage,
@@ -483,13 +483,13 @@
             if (this.searchList.length == 0) {
               this.$message({
                 showClose: true,
-                message: '暂无搜索结果！'
+                message: this.$t('index.14')
               });
             }
             this.getStandardSearchLeft()
             this.getRegulationLeft()
           }
-        } else if ($('#i_fisrt').html().includes('内容')) {
+        } else if ($('#i_fisrt').html().includes('内容') || $('#i_fisrt').html().includes('Content')) {
           let url = 'DocumentService.asmx/SearchForIndexByContent'
           let params = {
             page: this.currentPage,
@@ -506,7 +506,7 @@
             if (this.searchList.length == 0) {
               this.$message({
                 showClose: true,
-                message: '暂无搜索结果！'
+                message: this.$t('index.14')
               });
             }
           }
@@ -550,7 +550,7 @@
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
-            message: '该操作只有登录后才可以有效，请先登录！'
+            message: this.$t('index.13')
           });
           return
         }
@@ -565,7 +565,7 @@
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
-            message: '该操作只有登录后才可以有效，请先登录！'
+            message: this.$t('index.13')
           });
           return
         }
@@ -668,6 +668,21 @@
     },
     watch: {
       language: function () {
+        if(this.$t('language') == 1){
+          if($('#i_fisrt span').html() == 'Title'){
+            $('#i_fisrt span').html('标题')
+          }
+          if($('#i_fisrt span').html() == 'Content'){
+            $('#i_fisrt span').html('内容')
+          }
+        } else if(this.$t('language') == 2){
+          if($('#i_fisrt span').html() == '标题'){
+            $('#i_fisrt span').html('Title')
+          }
+          if($('#i_fisrt span').html() == '内容'){
+            $('#i_fisrt span').html('Content')
+          }
+        }
         this.GetIndexByTopList()
         if(this.searchType == 3){
           this.SearchForIndexByLabelOrTitle(this.cur_searchStr)
@@ -834,7 +849,7 @@
   }
   .i_select_box {
     position: relative;
-    width:65px;
+    width:92px;
     text-align: center;
     background-color: #FFFFFF;
     list-style: none;
@@ -848,15 +863,15 @@
   }
   #i_fisrt {
     cursor: pointer;
-    display: inline;
+    display: block;
     line-height: 38px;
-    width: 100%;
+    width: 80px;
     height: 38px;
-    text-align: left;
+    text-align: center;
     box-sizing: border-box;
-    padding-left: 17px;
     font-size: 14px;
-    color: #6f6f6f
+    color: #6f6f6f;
+    float: left;
 
   }
   .up{
@@ -867,7 +882,7 @@
     color: #6F6F6F;
   }
   .i_son_ul {
-    width:64px;
+    width:80px;
     border-top:1px solid #DADADA;
     background-color: #FFFFFF;
     z-index:100;
@@ -881,7 +896,7 @@
     display:block;
     line-height:25px;
     padding-left:0px;
-    width:65px;
+    width:80px;
     z-index:100;
     color: #000000;
     list-style: none;
@@ -889,9 +904,9 @@
   .i_son_ul span {
     cursor:pointer;
     display: inline-block;
-    width: 30px;
+    width: 80px;
     font-size: 14px;
-    text-align: left;
+    text-align: center;
   }
   #search_content input{
     outline: 0;
@@ -910,8 +925,8 @@
     color: #fff;
     height:40px;
     line-height: 40px;
-    width:35px;
-    margin: 0 auto;
+    width:100%;
+    text-align: center;
   }
   #search_btn:hover{
     border: 1px solid #2f9cec;
@@ -1018,6 +1033,7 @@
   }
   .search_input{
     font-size: 14px;
-    width: 540px;
+    width: 510px;
+    padding-left: 30px;
   }
 </style>

@@ -2,7 +2,7 @@
   <div id="main">
     <div class="center">
       <div class="nav-title">
-        <h1>帮助中心</h1>
+        <h1>{{$t('help.0')}}</h1>
       </div>
       <div class="nav-content">
         <div class="nav-left">

@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="box">
     <div id="activit">
-      <h3>最新翻译</h3>
+      <h3>{{$t('content.4')}}</h3>
       <ul class="activit_content" id="activit_content">
         <li v-for="row in standardLawList" @click="goDetail(row)">
           <a>
@@ -15,7 +15,7 @@
           </a>
         </li>
       </ul>
-      <p v-show="standardLawList.length == 0" class="noDateTip">暂无数据</p>
+      <p v-show="standardLawList.length == 0" class="noDateTip">{{$t('index.8')}}</p>
       <el-pagination
         v-show="standardLawList.length > 0"
         @size-change="handleSizeChange"
@@ -71,7 +71,7 @@
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
-            message: '该操作只有登录后才可以有效，请先登录！'
+            message: this.$t('index.13')
           });
           return
         }
@@ -82,7 +82,7 @@
         if(!this.global.memberId) {
           this.$message({
             showClose: true,
-            message: '该操作只有登录后才可以有效，请先登录！'
+            message: this.$t('index.13')
           });
           return
         }

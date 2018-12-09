@@ -9,14 +9,14 @@
       <!-- 右边登录注册 -->
       <div id="navright">
         <ul id="aboutus">
-          <li><a @click="skipTo('AboutUs')" :class="{'routeActive': route_name.includes('AboutUs')}">关于我们</a></li>
-          <li><a @click="skipTo('ContactUs')" :class="{'routeActive': route_name.includes('ContactUs')}">联系我们</a></li>
-          <li><a @click="skipTo('Help')" :class="{'routeActive': route_name.includes('Help')}">帮助</a></li>
+          <li><a @click="skipTo('AboutUs')" :class="{'routeActive': route_name.includes('AboutUs')}">{{$t('footer.6')}}</a></li>
+          <li><a @click="skipTo('ContactUs')" :class="{'routeActive': route_name.includes('ContactUs')}">{{$t('footer.7')}}</a></li>
+          <li><a @click="skipTo('Help')" :class="{'routeActive': route_name.includes('Help')}">{{$t('header.0')}}</a></li>
         </ul>
         <ul id="enchina">
           <li id="china" @click="toggleLang('zh')">
             <b></b>
-            <a href="#">中文</a>
+            <a href="#">{{$t('header.1')}}</a>
           </li>
           <li id="english" @click="toggleLang('en')">
             <b></b>
@@ -24,12 +24,12 @@
           </li>
         </ul>
         <ul id="reg" v-show="!get_username">
-          <li><a @click="skipTo('SignUp')" :class="{'routeActive': route_name == 'SignUp'}">注册</a></li>
-          <li><a @click="skipTo('SignIn')" :class="{'routeActive': route_name == 'SignIn'}">登录</a></li>
+          <li><a @click="skipTo('SignUp')" :class="{'routeActive': route_name == 'SignUp'}">{{$t('header.2')}}</a></li>
+          <li><a @click="skipTo('SignIn')" :class="{'routeActive': route_name == 'SignIn'}">{{$t('header.3')}}</a></li>
         </ul>
         <ul id="reg" v-show="get_username">
           <li><a style="color: #1C92FE;" @click="goUserCenter()">{{get_username}}</a></li>
-          <li><a @click="loginOut()" style="color: #1C92FE">退出登录</a></li>
+          <li><a @click="loginOut()" style="color: #1C92FE">{{$t('header.4')}}</a></li>
         </ul>
       </div>
     </div>
@@ -91,9 +91,9 @@
         sessionStorage.removeItem('userPassword', '')
         sessionStorage.removeItem('userEmail', '')
         this.$store.commit('get_username', {username: ''})
-        this.$router.push({
+        /*this.$router.push({
 			    name: 'SignIn'
-			  })
+			  })*/
         this.$message({
           showClose: true,
           message: '退出登录成功！'
