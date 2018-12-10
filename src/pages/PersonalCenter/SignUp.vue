@@ -3,17 +3,17 @@
     <div id="login_content">
       <form id="register_form">
         <div class="log"></div>
-        <h5>把握未来走向，囊括行业标准，做中国第一双语法规网站</h5>
-        <h4>注册</h4>
+        <h5>{{$t('signIn._0')}}</h5>
+        <h4>{{$t('signIn._2')}}</h4>
         <div class="login_tab user">
-          <input type="text" name="email" id="email" v-model="email" placeholder="邮箱"/>
+          <input type="text" name="email" id="email" v-model="email" :placeholder="$t('signIn._9')"/>
         </div>
         <div class="login_tab password">
-          <input type="password" name="userPassword" id="userPassword" v-model="userPassword" placeholder="6-12位密码，区分大小写"/>
+          <input type="password" name="userPassword" id="userPassword" v-model="userPassword" :placeholder="$t('signUp._0')"/>
         </div>
         
         <div class="login_tab">
-          <input type="password" id="againPassword" v-model="confirmPassword"  placeholder="确认密码"/>
+          <input type="password" id="againPassword" v-model="confirmPassword"  :placeholder="$t('signUp._1')"/>
         </div>
         
         <!-- 密码强度 -->
@@ -25,19 +25,19 @@
 					<el-progress :percentage="100" status="success" :stroke-width="10"></el-progress>
 				</div>-->
         
-        <el-checkbox label="是否接受邮件订阅？" class="fLeft mTop10_anti mBottom20" 
+        <el-checkbox :label="$t('signUp._2')" class="fLeft mTop10_anti mBottom20" 
         	v-model="isSubscription" false-label="false" true-label="true">
         </el-checkbox>
         
         <div class="login_tab login_btn">
-          <input @click="register_user()" type="button" value="注册"/>
-          <a @click="go_signIn()" class="exists">使用已有账户登录</a>
+          <input @click="register_user()" type="button" :value="$t('signUp._4')"/>
+          <a @click="go_signIn()" class="exists">{{$t('signUp._3')}}</a>
         </div>
         <div class="login_tab footer">
-          <a href="">帮助</a>
-          <a href="" class="mid">隐私</a>
-          <a href="">条款</a>
-          <p>copyright @ 2012-2018 中国汽车法规标准库 - 在这里了解中国</p>
+        	<a href="">{{$t('signIn._5')}}</a>
+        	<a href="" class="mid">{{$t('signIn._6')}}</a>
+        	<a href="">{{$t('signIn._7')}}</a>
+        	<p>copyright @ 2012-2018 {{$t('signIn._8')}}</p>
         </div>
         <label id="emailMess" class="label_mess"></label>
         <label id="passwordMess" class="password_mess"></label>
@@ -62,19 +62,19 @@
     	// 提交注册 email  userPassword  isSubscription  subscriptionLanguage
       async register_user () {
       	if(!this.global.check_strEmpty(this.email)){
-      		this.$message.error("邮箱不能为空！");
+      		this.$message.error(this.$t('signIn._11'));
       		this.email = "";
       		return;
       	}else if(!this.global.check_emailValid(this.email)){
-      		this.$message.error("邮箱格式不正确！");
+      		this.$message.error(this.$t('signIn._12'));
       		this.email = "";
       		return;
       	}else if(!this.global.check_numberMixLetter(this.userPassword)){
-      		this.$message.error("6-12位密码，且只支持英文字母与数字的组合！");
+      		this.$message.error(this.$t('signIn._13'));
       		this.userPassword = "";
       		return;
       	}else if(this.userPassword != this.confirmPassword){
-      		this.$message.error("两次密码输入不一致，请重新输入！");
+      		this.$message.error(this.$t('signUp._5'));
       		this.confirmPassword = "";
       		return;
       	}else{
@@ -95,7 +95,7 @@
 			      })
       		}else{
       			// 注册失败 => 提示注册失败
-        		this.$message.error("注册邮箱失败原因：邮箱已存在！");
+        		this.$message.error(this.$t('signUp._6'));
       		}
       	}
       },

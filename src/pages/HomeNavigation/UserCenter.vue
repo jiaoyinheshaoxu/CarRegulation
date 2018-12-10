@@ -314,10 +314,10 @@
 					<p class="upgrade_tips" v-show="memberInfo.F_HYType==0">{{$t("userCenter._57")}}<span class="blueFont">{{$t("userCenter._58")}}</span></p>
 					<p class="upgrade_tips">{{ memberInfo.F_HYType==0 ? $t('userCenter._59') : $t('userCenter._60') }}：</p>
 					<p class="choice">
-						<el-radio v-model="upgrade_type" label="1">{{$t('userCenter._61')}}</el-radio>
+						<el-radio v-model="upgrade_type" label="1" style="white-space:normal; line-height: 25px;">{{$t('userCenter._61')}}</el-radio>
 					</p>
 					<p class="choice">
-						<el-radio v-model="upgrade_type" label="2">{{$t('userCenter._62')}}</el-radio>
+						<el-radio v-model="upgrade_type" label="2" style="white-space:normal; line-height: 25px;">{{$t('userCenter._62')}}</el-radio>
 					</p>
 					<p class="upgrade_tips mTop20" v-show="memberInfo.F_HYType==0">{{$t('userCenter._64')}}
 						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="user_country" :placeholder="$t('userCenter._65')"></el-input>
@@ -1280,7 +1280,6 @@
 
 	.choice {
 		margin-left: 6.5em;
-		height: 25px;
 		line-height: 25px;
 	}
 </style>

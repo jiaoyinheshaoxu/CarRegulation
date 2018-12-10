@@ -3,20 +3,20 @@
     <div id="login_content">
       <form id="register_form">
         <div class="log"></div>
-        <h5>把握未来走向，囊括行业标准，做中国第一双语法规网站</h5>
+        <h5>{{$t('signIn._0')}}</h5>
         <h4><img class="tips_icon" src="../../assets/images/signUp_success.png"/></h4>
-        <p class="successTitle">你的帐户：{{userEmail}} 注册成功，请激活。</p>
-        <p class="successContent">激活邮件已发送到你的邮箱中，邮件有效期为24小时。请及时登录邮箱，点击邮件中的链接激活帐户。</p>
+        <p class="successTitle">{{$t('signUpSuccess._0')}}{{userEmail}} {{$t('signUpSuccess._1')}}</p>
+        <p class="successContent">{{$t('signUpSuccess._2')}}</p>
         
         <div class="login_tab login_btn">
-          <input @click="go_home()" type="button" value="返回首页"/>
+          <input @click="go_home()" type="button" :value="$t('signUpSuccess._3')"/>
         </div>
         
         <div class="login_tab footer">
-          <a href="">帮助</a>
-          <a href="" class="mid">隐私</a>
-          <a href="">条款</a>
-          <p>copyright @ 2012-2018 中国汽车法规标准库 - 在这里了解中国</p>
+        	<a href="">{{$t('signIn._5')}}</a>
+        	<a href="" class="mid">{{$t('signIn._6')}}</a>
+        	<a href="">{{$t('signIn._7')}}</a>
+        	<p>copyright @ 2012-2018 {{$t('signIn._8')}}</p>
         </div>
         <label id="emailMess" class="label_mess"></label>
         <label id="passwordMess" class="password_mess"></label>

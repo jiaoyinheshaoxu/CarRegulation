@@ -3,33 +3,33 @@
     <div id="login_content">
       <form id="register_form">
         <div class="log"></div>
-        <h5>把握未来走向，囊括行业标准，做中国第一双语法规网站</h5>
-        <h4>找回密码</h4>
+        <h5>{{$t('signIn._0')}}</h5>
+        <h4>{{$t('findPassword._0')}}</h4>
         
         <div class="login_tab user">
             <a class="user_logo"></a>
-            <input type="text" id="email" v-model="email" placeholder="邮箱"/>
+            <input type="text" id="email" v-model="email" :placeholder="$t('signIn._9')"/>
         </div>
-        <p class="tips tips_success" v-show="confirmResult == 1">邮箱有效并且已发送激活邮件！</p>
+        <p class="tips tips_success" v-show="confirmResult == 1">{{$t('findPassword._1')}}</p>
         <p class="tips tips_danger" v-show="confirmResult == 2">{{emailErroMsg}}</p>
         
         <div class="login_tab login_btn">
-            <input type="button" value="确认发送"  @click="send_emailComfirm()"/>
+            <input type="button" :value="$t('findPassword._2')"  @click="send_emailComfirm()"/>
         </div>
         
         <div class="login_tab tipsBox">
         	<img class="tips_icon" src="../../assets/images/tips.png"/>
         	<div class="tipsContent">
-        		<p class="tipsTitle">帮助提示</p>
-        		<p class="contentDetail">亲爱的用户，我们将向您的注册的邮箱发送修改密码的链接，请确保您输入的邮箱正确。</p>
+        		<p class="tipsTitle">{{$t('findPassword._3')}}</p>
+        		<p class="contentDetail">{{$t('findPassword._4')}}</p>
         	</div>
         </div>
         
         <div class="login_tab footer">
-          <a href="">帮助</a>
-          <a href="" class="mid">隐私</a>
-          <a href="">条款</a>
-          <p>copyright @ 2012-2018 中国汽车法规标准库 - 在这里了解中国</p>
+        	<a href="">{{$t('signIn._5')}}</a>
+        	<a href="" class="mid">{{$t('signIn._6')}}</a>
+        	<a href="">{{$t('signIn._7')}}</a>
+        	<p>copyright @ 2012-2018 {{$t('signIn._8')}}</p>
         </div>
         <label id="emailMess" class="label_mess"></label>
         <label id="passwordMess" class="password_mess"></label>
@@ -52,11 +52,11 @@
     	// 发送邮箱 => 找回密码 => 1: 邮箱有效并且已发送激活邮件！	2: 邮箱有效但是没查出用户！ 	3:系统无此邮箱！
       async send_emailComfirm () {
       	if(!this.global.check_strEmpty(this.email)){
-      		this.$message.error("邮箱不能为空！");
+      		this.$message.error(this.$t('signIn._11'));
       		this.email = "";
       		return;
       	}else if(!this.global.check_emailValid(this.email)){
-      		this.$message.error("邮箱格式不正确！");
+      		this.$message.error(this.$t('signIn._12'));
       		this.email = "";
       		return;
       	}else{
@@ -69,7 +69,7 @@
       		if (data.resultCode == 1000) {
       		  // 邮箱已经发送到邮箱
       		  this.confirmResult = 1;
-      		  this.$message.success("邮箱有效并且已发送激活邮件！");
+      		  this.$message.success(this.$t('findPassword._1'));
       		}else{
       			// 系统无此邮箱
       			this.confirmResult = 2;

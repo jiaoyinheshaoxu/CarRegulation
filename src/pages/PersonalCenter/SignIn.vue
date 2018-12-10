@@ -3,30 +3,30 @@
     <div id="login_content">
       <form id="register_form">
         <div class="log"></div>
-        <h5>把握未来走向，囊括行业标准，做中国第一双语法规网站</h5>
-        <h4>欢迎登录</h4>
+        <h5>{{$t('signIn._0')}}</h5>
+        <h4>{{$t('signIn._1')}}</h4>
 
         <div class="login_tab user">
             <a class="user_logo"></a>
-            <input type="text" id="email" v-model="username" placeholder="邮箱"/>
+            <input type="text" id="email" v-model="username" :placeholder="$t('signIn._9')"/>
         </div>
         <div class="login_tab password">
             <a class="password_logo"></a>
-            <input type="password" id="password" v-model="password" placeholder="密码"/>
+            <input type="password" id="password" v-model="password" :placeholder="$t('signIn._10')"/>
         </div>
         <div class="login_tab forget">
-            <a class="lf" @click="go_signUp()">注册账户</a>
-            <a class="rt" @click="go_findPassword()">忘记密码</a>
+            <a class="lf" @click="go_signUp()">{{$t('signIn._2')}}</a>
+            <a class="rt" @click="go_findPassword()">{{$t('signIn._3')}}</a>
         </div>
         <div class="login_tab login_btn">
-            <input type="button" value="登录"  @click="user_login()"/>
+            <input type="button" :value="$t('signIn._4')"  @click="user_login()"/>
         </div>
 
         <div class="login_tab footer">
-          <a href="">帮助</a>
-          <a href="" class="mid">隐私</a>
-          <a href="">条款</a>
-          <p>copyright @ 2012-2018 中国汽车法规标准库 - 在这里了解中国</p>
+          <a href="">{{$t('signIn._5')}}</a>
+          <a href="" class="mid">{{$t('signIn._6')}}</a>
+          <a href="">{{$t('signIn._7')}}</a>
+          <p>copyright @ 2012-2018 {{$t('signIn._8')}}</p>
         </div>
         <label id="emailMess" class="label_mess"></label>
         <label id="passwordMess" class="password_mess"></label>
@@ -48,15 +48,15 @@
     	// 用户登录接口
       async user_login () {
       	if(!this.global.check_strEmpty(this.username)){
-      		this.$message.error("邮箱不能为空！");
+      		this.$message.error(this.$t('signIn._11'));
       		this.username = "";
       		return;
       	}else if(!this.global.check_emailValid(this.username)){
-      		this.$message.error("邮箱格式不正确！");
+      		this.$message.error(this.$t('signIn._12'));
       		this.username = "";
       		return;
       	}else if(!this.global.check_numberMixLetter(this.password)){
-      		this.$message.error("6-12位密码，且只支持英文字母与数字的组合！");
+      		this.$message.error(this.$t('signIn._13'));
       		this.password = "";
       		return;
       	}else{

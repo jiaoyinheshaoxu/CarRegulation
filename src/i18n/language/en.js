@@ -1,6 +1,5 @@
 // 注意：一定是 exports，不是 export，否则会报错，报错信息是下列的中的内容不是 string
 module.exports = {
-<<<<<<< HEAD
   language: '2',
   //首页
   content: {
@@ -138,10 +137,7 @@ module.exports = {
     31: '请先登录或者注册账号！',
     32: '创建日期',
     33: '修改日期'
-  }
-}
-=======
-  language: '2', 
+  },
   // UserCenter 页面
   userCenter: {
   	_0: 'User center',
@@ -268,8 +264,69 @@ module.exports = {
   	_120: ''
   },
   // findPassword 页面
-  findPassword:{
-  	
-  }
+  findPassword: {
+  	_0: 'Password Reset',
+  	_1: 'Your email address is valid, and we have sent an email with a activation link to your email address !',
+  	_2: 'Send,Continue?',
+  	_3: 'Notification',
+  	_4: 'Dear user, we will send a password change email to your registration email address. Make sure the email you enter is correct。',
+  	_5: '',
+  	_6: '',
+  	_7: '',
+  	_8: '',
+  	_9: '',
+  	_10: ''
+  },
+  // SignIn 页面
+  signIn: {
+  	_0: 'Grasp the Future Trend, Include Industry Standards, Be the First Bilingual Regulation Website in China !',
+  	_1: 'Welcome to Chineseautoregs',
+  	_2: 'Sign up',
+  	_3: 'Forgot your password?',
+  	_4: 'Sign in',
+  	_5: 'Help',
+  	_6: 'Privacy',
+  	_7: 'Terms of service',
+  	_8: 'China Automobile Regulatory Standard Library - Learn about China here',
+  	_9: 'your email',
+  	_10: 'your password',
+  	_11: 'Please enter your email address！',
+    _12: 'Please enter a valid email address！',
+  	_13: 'Your password must be 6-12 characters, with both numbers and letters !',
+  	_14: '',
+  	_15: '',
+  	_16: '',
+  	_17: '',
+  	_18: '',
+  	_19: '',
+  	_20: ''
+  },
+  // SignUp 页面
+  signUp: {
+  	_0: '6-12-bit password, case-sensitive',
+  	_1: 'confirm password',
+  	_2: 'Subscribe to our newsletter?',
+  	_3: 'Sign In',
+  	_4: 'Sign Up',
+  	_5: 'Your password and confirmation password do not match !',
+  	_6: 'Email activation error: that email address has already been taken !',
+  	_7: '',
+  	_8: '',
+  	_9: '',
+  	_10: ''
+  },
+	// SignUpSuccess 页面
+	signUpSuccess: {
+		_0: 'Your account：',
+		_1: 'Your Account has been successfully created. Please activate it.',
+		_2: 'An email with an activation link has been sent to your email address. Please check your email to activate your account within 24 hours.',
+		_3: 'Return home',
+		_4: '',
+		_5: '',
+		_6: '',
+		_7: '',
+		_8: '',
+		_9: '',
+		_10: ''
+	}
 }
->>>>>>> f1461b030e35c8c8e0a888357c09b675a26eb2e5
