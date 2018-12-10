@@ -38,12 +38,12 @@ async function user_login() {
     // 登录成功 => 回到首页 => 将用户 id 存入 session 和 global 中
     global.userEmail = sessionStorage.getItem('userEmail');
     global.userPassword = sessionStorage.getItem('userPassword');
-    global.memberId = data.memberId;
+    global.memberId = data.data.memberId;
     store.commit('get_username', {username: sessionStorage.getItem('userEmail')})
-    global.HYType = data.HYType;
+    global.HYType = data.data.HYType;
     sessionStorage.setItem('userEmail', sessionStorage.getItem('userEmail'));
     sessionStorage.setItem('userPassword', sessionStorage.getItem('userPassword'));
-    sessionStorage.setItem('memberId', data.memberId);
+    sessionStorage.setItem('memberId', data.data.memberId)
   } else {
     sessionStorage.setItem('userEmail', '')
     sessionStorage.setItem('userPassword', '')
