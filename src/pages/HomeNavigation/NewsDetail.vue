@@ -51,7 +51,7 @@
         </div>
         <div class="line2 clearfix" v-show="detail.f_ChineseTitle">
           <div class="art-title">
-            <h3>{{detail.f_ChineseTitle}}<span>（{{detail.f_FileState}}）</span></h3>
+            <h3>{{detail.f_ChineseTitle}}<span v-show="detail.f_FileState">（{{detail.f_FileState}}）</span></h3>
             <h3>{{detail.f_EnglishTitle}}</h3>
           </div>
         </div>

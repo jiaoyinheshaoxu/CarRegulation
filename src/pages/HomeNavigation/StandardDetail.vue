@@ -207,7 +207,8 @@
         aList: [],
         pre_scrollTop: 0,
         showDate: true,
-        cur_type: '' //4中情况
+        cur_type: '', //4中情况
+        docShowType: ''
       }
     },
     computed: {
@@ -601,6 +602,7 @@
           this.AddDocumentVisitInfo()
           this.isSave = data.isCollect
           this.detail = data.documentEntity
+          this.docShowType = data.DocShowType
           if(!data.catalogue) {
             this.hasCatalogue = false
           } else {
@@ -750,8 +752,9 @@
         }
       },
       DownloadFile() {
+        let language = this.$t('language')
         //window.open(`${this.global.jiekou_url}/DocumentService.asmx/DownloadPDFFile?documentId=${this.documentId}&memberId=${this.global.memberId}&language=${this.$t('language')}`)
-        window.open(`${this.global.jiekou_url}/DocumentService.asmx/DownloadPDFFile?documentId=${this.documentId}&memberId=${this.global.memberId}&language=${this.cur_type}`)
+        window.open(`${this.global.jiekou_url}/DocumentService.asmx/DownloadPDFFile?documentId=${this.documentId}&memberId=${this.global.memberId}&docShowType=${this.docShowType}&language=${language}`)
         /*this.documentId = '250f177b-0c08-4a64-a798-6fb7f0641af3'
         this.memberId = '2ed9a56b-6f0a-4d6e-97f6-38ec2f6a4dab'*/
         /*let url = 'DocumentService.asmx/DownloadPDFFile'
