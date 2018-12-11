@@ -184,7 +184,7 @@
 						<table>
 							<thead>
 								<tr>
-									<th width="50">{{$t("userCenter._39")}}</th>
+									<th width="100">{{$t("userCenter._39")}}</th>
 									<th>{{$t("userCenter._33")}}</th>
 									<th width="50">{{$t("userCenter._40")}}</th>
 									<th width="200">{{$t("userCenter._34")}}</th>
@@ -195,7 +195,7 @@
 									<td colspan="4" class="last_sub_table"><span><a href="javascript: void(0);">{{$t("userCenter._41")}}</a></span></td>
 								</tr>
 								<tr v-show="downloadInfoList.length || downloadInfoList.length > 0" v-for="(item,index) in downloadInfoList" :key="index">
-									<td class="email_password_td" :title="item.Type">{{ item.Type == 1 ? $t("userCenter._108") : $t("userCenter._109") }}</td>
+									<td class="email_password_td" :title='item.Type == 1 ? $t("userCenter._108") : $t("userCenter._109")'>{{ item.Type == 1 ? $t("userCenter._108") : $t("userCenter._109") }}</td>
 									<td class="email_password_td" :title="item.Title">{{ item.Title }}</td>
 									<td>{{ item.Num }}</td>
 									<td class="email_password_td" :title="item.CreatorTime">{{ item.CreatorTime.length>0 ? item.CreatorTime.slice(0,10)+$t("userCenter._14")+item.CreatorTime.slice(11,19) : $t("userCenter._13") }}</td>
@@ -334,10 +334,10 @@
 				<!-- 添加或者修改副账户 -->
 				<el-dialog :title="point_account_email=='' ? $t('userCenter._68') : $t('userCenter._69')" :visible.sync="showDialog_addOrmidify_account" width="40%" left>
 					<p class="upgrade_tips mTop20">{{$t('userCenter._70')}}
-						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="point_account_email" :placeholder="$t('userCenter._70')"></el-input>
+						<el-input class="fRight" style="width: 50%; left: -15%;" size="small" v-model="point_account_email" :placeholder="$t('userCenter._70')"></el-input>
 					</p>
 					<p class="upgrade_tips mTop20">{{$t('userCenter._71')}}
-						<el-input class="fRight" style="width: 50%; left: -25%;" size="small" v-model="point_account_password" :placeholder="$t('userCenter._71')"></el-input>
+						<el-input class="fRight" style="width: 50%; left: -15%;" size="small" v-model="point_account_password" :placeholder="$t('userCenter._71')"></el-input>
 					</p>
 					<span slot="footer" class="dialog-footer">
 				    <el-button @click="showDialog_addOrmidify_account = false">{{$t('userCenter._111')}}</el-button>

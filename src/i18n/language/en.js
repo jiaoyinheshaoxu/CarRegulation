@@ -211,7 +211,7 @@ module.exports = {
   	_68: 'Add an affiliated account',
   	_69: 'Change an affiliated account',
   	_70: 'Email address：',
-  	_71: 'Account and password：',
+  	_71: 'Your password：',
   	_72: 'Are you sure you want to sign out',
   	_73: 'No',
   	_74: 'Yes',
