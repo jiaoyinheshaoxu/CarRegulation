@@ -94,7 +94,7 @@
 
         </article>
       </div>
-      <div class="noMemeber" v-show="!user_name">
+      <div class="noMemeber" v-show="!user_name && $t('language') == 1">
         <h3>以下内容仅对<span>普通会员</span>开放</h3>
         <p>
           您好：您现在要进入的是中国汽车标准法规网会员专区。
@@ -108,6 +108,21 @@
         </div>
         <p class="p_center">
           已经是会员，马上<a @click="goLogin()">登录</a></p>
+      </div>
+      <div class="noMemeber" v-show="!user_name && $t('language') == 2">
+        <h3>The following content is only available to <span> ordinary members </span></h3>
+        <p>
+          Hello, what you are going to enter is the member zone of China automobile standard and regulation net.
+        </p>
+        <p>
+          If you are our member, you can <a @click="goLogin()">login</a> directly and enter the member zone to inquire the information you need;If you are not a member of us;You can make a single purchase through offline payment. After successful payment, you can get the content through email.If the logo is "the following content is only open to senior members", you can login, choose to upgrade to senior members, upgrade methods can be seen: <a @click="goUserCenter()">how to upgrade to senior members</a>>?
+        </p>
+        <div class="noMemeber_button">
+          <el-button @click="goRegister()">Registered ordinary member</el-button>
+          <el-button type="primary" style="margin-left: 20px" @click="goUserCenter()">Senior membership</el-button>
+        </div>
+        <p class="p_center">
+          Already a member, <a @click="goLogin()">login</a> now</p>
       </div>
       <!--<div class="article">
         <div v-html="detail.f_ChineseContent"></div>
@@ -887,6 +902,7 @@
     font-size: 16px;
     min-height: 40px;
     line-height: 40px;
+    text-indent: 30px;
   }
   .noMemeber p a{
     color: #1c92fe;

@@ -979,27 +979,27 @@
 	/*左侧菜单*/
 	#main_content {
 		width: 100%;
-		height: 700px;
+		min-height: 680px;
 		background: #F1F1F1;
 	}
 	#child_content {
 		width: 85%;
 		margin: 0 auto;
-		height: 100%;
+		min-height: 680px;
 		background: #ffffff;
-	}
+    overflow: hidden;
+  }
 	#main_title {
 		width: 85%;
-		height: 70px;
+		height: 80px;
 		margin: 0px auto;
-		margin-top: -30px;
-		line-height: 60px;
+		line-height: 40px;
 		font-size: 30px;
 		color: #0C7DCF;
 	}
 	#main_left {
 		width: 20%;
-		height: 80%;
+		min-height: 680px;
 		float: left;
 		border-right: 1px solid #EAEAEA;
 	}
@@ -1020,7 +1020,7 @@
 	}
 	#main_right {
 		width: 76%;
-		height: 80%;
+		min-height: 680px;
 		float: right;
 		margin-right: 2%;
 		padding: 10px 10px;

@@ -17,24 +17,64 @@
         </div>
         <div class="nav-right">
           <div id="zhengfu" v-show="cur_showType == 'government'">
-            <p>
-              At Dynaso we have carefully chosen the following three core values as the basis of our corporate culture, which have guided us to the success over the past decade, and these values also define how we conduct our business, and help us to create value for our clients, our people and our organization.
-            </p>
-            <h2>Client Value Creation</h2>
-            <p>
-              Helping our clients achieve their goals is our foremost objective and business value. We each have a huge responsibility no matter our role, as we understand that our service affects deeply whether clients’ product can be timely launched, whether their business plans can be moving forward as scheduled, and whether their insight on market would be actual and objective.
-            </p>
-            <h2>Great Place for Employees’ development</h2>
-            <p>
-              We are committed to hiring and retaining the right and talent people in every position, and we make developing others and ourselves as priority for leadership team. We strive to create an open, diverse and inclusive environment where everyone can make the best use of their potentials, succeed professionally and achieve a higher personal value.
-            </p>
-            <h2>Keeping Entrepreneurial Spirit</h2>
-            <p>
-              Our clients reasonably expect us to be more informed, knowledgeable and responsive to meet their request; while we also expect ourselves to be aggressive and innovative, and consistently looking for new ideas to achieve our goals, which implies we shall be business focused, keep alert while adaptable to changes, learning fast and continuously deepening our knowledge of our business, moving quickly and decisively to meet the challenges.
-            </p>
+            <div v-show="$t('language') == 1">
+              <p>
+                中国汽车法规标准网致力于为用户提供可靠、及时和专业的法规内容服务，包括中英版本的中国汽车法规和标准和针对中国汽车行业合规要求的解读和分析。
+              </p>
+              <p>
+                中国汽车法规标准网创建于2018年，定位于成为最优质的中国汽车法规信息网站，帮助用户防范合规风险，并持续满足不断变化的中国汽车法规要求。
+              </p>
+              <p>
+                本网站采用简易便捷的搜索界面和灵活多样的搜索方式。会员可使用标题、关键词、全文等搜索并获取相关信息，网站内容可按多种分类方式进行检索。为确保所有信息内容及时可靠，网站根据中国法规动态实时更新相关法规内容。网站还专设最新翻译和法规更新版块，方便用户查阅翻译文件或内容。
+              </p>
+              <p>
+                您的满意是我们不懈的追求。如有任何问题、要求或建议，请与我们联系
+              </p>
+            </div>
+            <div v-show="$t('language') == 2">
+              <p>
+                Chineseautoregs is dedicated to providing an easy access to reliable, timely and professional China auto regulatory information services, including China automotive regulations and standards in both English and Chinese, most up-to-date and insightful analysis of industry trend, as well as expert and in-depth consulting services for compliance purpose.
+              </p>
+              <p>
+                Founded by Dynaso in 2018, Chineseautoregs.com is positioned as a key source of best-quality regulatory information of Chinese auto sector, whereby aiding our clients to toe the line—stay compliant with Chinese technical requirements.
+              </p>
+              <p>
+                The website employs a simple, intuitive and user-friendly search interface. You can access a Chinese standard or regulation in no time by simply entering title/keyword/content. All the contents, which are properly categorized and well laid-out, will be updated in time to stay up with any regulatory changes in China. We also pick out the latest translation or content in Latest Translation or Regulatory Updates for you.
+              </p>
+              <p>
+                Your satisfaction is our enduring pursuit. Please free to contact us should you have any suggestion，request, or any other issues related to our website.
+              </p>
+            </div>
           </div>
           <div id="renzheng" v-show="cur_showType == 'approve'">
-            <p>关于....</p>
+            <div v-show="$t('language') == 1">
+              <p>
+                迅孚技术咨询有限公司（Dynaso）于2005年7⽉成⽴于北京，是⼀家国际化的专注于汽车⾏业的咨询和技术服务公司。我们主要服务全球化的汽车企业、零部件制造商以及他们的进⼜商，通过专门的服务团队以及定制化的服务项⽬，向客户企业提供市场准⼊咨询和代理服务、市场研究及企业教育与培训服务，帮助他们在市场准⼊、业绩增长以及发展竞争优势⽅⾯处理复杂的⾏业挑战。我们的服务产品包括市场准⼊相关的研究和咨询、技术法规标准服务、产品认证代理服务，市场情报与研究，以及提升组织与个⼈创新思维和能⼒的企业教育与培训服务。
+              </p>
+              <p>
+                我们在上海、新加坡、墨尔本设有办公室，在全球重点汽车市场有诸多的合作伙伴。
+              </p>
+              <p>
+                了解更多信息，请登入迅孚公司网站<a href="http://www.dynaso.com.cn" target="_blank">www.dynaso.com.cn</a> , 也欢迎关注我们的微信公众号“车轨杂谈”。
+              </p>
+              <div class="imgBox">
+                <img src="../../assets/images/gzh.png" alt="">
+              </div>
+            </div>
+            <div v-show="$t('language') == 2">
+              <p>
+                Founded in 2005, Dynaso is a China-based specialist consultancy in automotive industry. We mainly serve global automotive manufacturers, helping them tackle the complex challenges of the industry across fields of market access, business growth and competitive advantage build-up, through dedicated teams and custom-built programs. Our business scope covers market access consulting & service, market research, and corporate training.
+              </p>
+              <p>
+                We have offices in Beijing, Shanghai, Singapore and a joint-office in Melbourne, with some alliance partners in automotive markets around the world.
+              </p>
+              <p>
+                For more information, please visit the website of <a href="http://www.dynaso.com.cn" target="_blank">www.dynaso.com.cn</a>, or you can follow us on WeChat - ID: Vehicle legislation and Certifcation By-talk
+              </p>
+              <div class="imgBox">
+                <img src="../../assets/images/gzh.png" alt="">
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -178,15 +218,22 @@
     background-color: #e6f7ff;
     color: #4a90e2;
   }
-  #zhengfu, #renzheng, #jiance{
+  .imgBox{
+    text-align: center;
+  }
+  .imgBox img{
+    width: 120px;
+  }
+  #zhengfu, #renzheng{
     overflow: hidden;
+    padding-top: 20px;
   }
   #zhengfu p, #renzheng p{
     padding: 0 20px;
-    min-height: 30px;
-    line-height: 30px;
+    text-indent: 32px;
+    min-height: 36px;
+    line-height: 36px;
     font-size: 16px;
-    margin-top: 20px;
   }
   #zhengfu h2, #renzheng h2{
     padding: 0 20px;

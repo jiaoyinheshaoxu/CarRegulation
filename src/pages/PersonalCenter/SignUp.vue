@@ -11,11 +11,11 @@
         <div class="login_tab password">
           <input type="password" name="userPassword" id="userPassword" v-model="userPassword" :placeholder="$t('signUp._0')"/>
         </div>
-        
+
         <div class="login_tab">
           <input type="password" id="againPassword" v-model="confirmPassword"  :placeholder="$t('signUp._1')"/>
         </div>
-        
+
         <!-- 密码强度 -->
         <!--<div class="progressBar">
         	<div class="fLeft progressTitle">密码强度</div>
@@ -24,11 +24,11 @@
 					<el-progress :percentage="66" color="#8e71c7" :stroke-width="10"></el-progress>
 					<el-progress :percentage="100" status="success" :stroke-width="10"></el-progress>
 				</div>-->
-        
-        <el-checkbox :label="$t('signUp._2')" class="fLeft mTop10_anti mBottom20" 
+
+        <el-checkbox :label="$t('signUp._2')" class="fLeft mTop10_anti mBottom20"
         	v-model="isSubscription" false-label="false" true-label="true">
         </el-checkbox>
-        
+
         <div class="login_tab login_btn">
           <input @click="register_user()" type="button" :value="$t('signUp._4')"/>
           <a @click="go_signIn()" class="exists">{{$t('signUp._3')}}</a>
@@ -79,7 +79,7 @@
       		return;
       	}else{
       		// 以上验证全部通过,注册成功
-      		let url = 'LoginService.asmx/Register'
+      		let url = 'LoginService.asmx/CheckAndRegister'
       		let params = {
       		  email: this.email,
       		  userPassword: this.userPassword,
