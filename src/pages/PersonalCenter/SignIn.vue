@@ -41,12 +41,46 @@
     data() {
       return {
         username: '',
-        password: '',
+        password: ''
       }
     },
+    mounted() {
+			this.getParamsFromUrl();
+		},
     methods: {
+    	getParamsFromUrl(){
+    		// 查看地址栏有无 sid 信息
+				let emailFromUrl = this.global.getParamFromUrl('email');
+				let sidFromUrl = this.global.getParamFromUrl('sid');
+				this.ActivateMember(emailFromUrl,sidFromUrl);
+    	},
+    	
+    	// 先调用激活页面进行激活 => 返回成功之后免登录 ActivateMember => 参数 string email, string sid, int language
+			async ActivateMember(email,sid) {
+				let pwdFromSession = sessionStorage.getItem('userPassword');
+				let url = 'LoginService.asmx/ActivateMember';
+				let params = {
+					email: email,
+					sid: sid,
+					language: this.$t('language')
+				}
+				let data = await this.api.post(url, params, { loading: true });
+				if (data.resultCode == 1000) {
+	        // 激活成功 => 登录 => 首页
+	        this.user_login(email,pwdFromSession);
+	      }else{
+	        this.email = "";
+	        this.password = "";
+	        this.$message.error(data.resultMessage);
+	      }
+			},
+    	
     	// 用户登录接口
-      async user_login () {
+      async user_login (email,pwd) {
+      	if(email && pwd){
+      		this.username = email;
+      		this.password = pwd;
+      	}
       	if(!this.global.check_strEmpty(this.username)){
       		this.$message.error(this.$t('signIn._11'));
       		this.username = "";
@@ -80,7 +114,7 @@
             this.$store.commit('get_username', {username: this.username})
 	          this.global.HYType	= data.data.HYType;
 	          sessionStorage.setItem('userEmail', this.username);
-	          sessionStorage.setItem('userPassword', this.password);
+	          sessionStorage.setItem('userPassword', "");
 	          sessionStorage.setItem('memberId', data.data.memberId);
 	          this.$router.push({
 		          name: 'Home'

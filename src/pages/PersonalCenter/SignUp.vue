@@ -91,6 +91,8 @@
       		if (data[0]) {
       			// 注册成功 => 注册成功页面
       			this.global.userEmail = this.email;
+      			// 将 userPassword 存入session 
+      			sessionStorage.setItem('userPassword',this.userPassword);
         		this.$router.push({
 			        name: 'SignUpSuccess'
 			      })

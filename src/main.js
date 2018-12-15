@@ -54,7 +54,6 @@ if(sessionStorage.getItem('userEmail') && sessionStorage.getItem('userPassword')
   user_login()
 }
 router.beforeEach((to, from, next) => {
-  //console.log(to)
   $("#commNav").css({
     position: 'relative'
   })

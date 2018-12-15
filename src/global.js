@@ -7,7 +7,8 @@ export default {
   check_numberMixLetter: check_numberMixLetter,
   check_emailValid: check_emailValid,
   memberId: "",																// 用户 id
-	getCookie: getCookie
+	getCookie: getCookie,
+	getParamFromUrl: getParamFromUrl,						// 获取地址栏参数
 }
 
 // 公共方法
@@ -47,4 +48,11 @@ function getCookie(name,defaultValue) {
     return unescape(arr[2]);
   else
     return defaultValue;
+}
+
+// 5: 截取地址栏中字符串方法
+function getParamFromUrl(name){
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+  var r = window.location.search.substr(1).match(reg);
+  if (r != null) return decodeURI(r[2]); return null;
 }
