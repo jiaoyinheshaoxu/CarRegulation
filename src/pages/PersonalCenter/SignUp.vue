@@ -84,7 +84,8 @@
       		  email: this.email,
       		  password: this.userPassword,
       		  isSubscription: this.isSubscription=='true' ? true : false,
-      		  subscriptionLanguage: this.$t('language')
+      		  subscriptionLanguage: this.$t('language'),
+      		  language: this.$t('language')
       		}
       		let data = await this.api.post(url ,params);
       		if (data[0]) {
