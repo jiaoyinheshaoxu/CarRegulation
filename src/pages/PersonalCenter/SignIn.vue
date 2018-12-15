@@ -52,7 +52,11 @@
     		// 查看地址栏有无 sid 信息
 				let emailFromUrl = this.global.getParamFromUrl('email');
 				let sidFromUrl = this.global.getParamFromUrl('sid');
-				this.ActivateMember(emailFromUrl,sidFromUrl);
+				if(emailFromUrl && sidFromUrl){
+					this.ActivateMember(emailFromUrl,sidFromUrl);
+				}else{
+					return false;
+				}
     	},
     	
     	// 先调用激活页面进行激活 => 返回成功之后免登录 ActivateMember => 参数 string email, string sid, int language
