@@ -82,7 +82,7 @@
       		let url = 'LoginService.asmx/CheckAndRegister'
       		let params = {
       		  email: this.email,
-      		  userPassword: this.userPassword,
+      		  password: this.userPassword,
       		  isSubscription: this.isSubscription=='true' ? true : false,
       		  subscriptionLanguage: this.$t('language')
       		}
